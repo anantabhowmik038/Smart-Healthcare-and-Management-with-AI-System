@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laboratory Results | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="labResultSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Laboratory Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="lab-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">TR</span>
+                    Test Requests
+
+                </a>
+
+
+                <a href="laboratory-results.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">RT</span>
+                    Record Test Result
+
+                </a>
+
+
+                <a href="laboratory-results.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">LR</span>
+                    Laboratory Reports
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">PT</span>
+                    Patient Test Information
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">H</span>
+                    Test History
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="labResultLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="labResultMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Laboratory Portal</p>
+
+                        <h2>Laboratory Results</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="lab-avatar">
+                            LT
+                        </div>
+
+                        <div>
+
+                            <strong>Lab Technician</strong>
+
+                            <span>Laboratory Staff</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="lab-result-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Laboratory Result Management
+                    </p>
+
+                    <h1>
+                        Record Laboratory Test Results
+                    </h1>
+
+                    <p>
+                        Review the selected laboratory request,
+                        enter measured test information and prepare
+                        the completed laboratory report for professional review.
+                    </p>
+
+                </div>
+
+
+                <div class="lab-result-header-icon">
+                    LR
+                </div>
+
+            </section>
+
+
+            <!-- REQUEST INFORMATION -->
+            <section class="lab-result-request-card">
+
+                <div class="lab-result-request-main">
+
+                    <div class="lab-result-request-icon">
+                        CBC
+                    </div>
+
+
+                    <div>
+
+                        <p class="small-title">
+                            Selected Test Request
+                        </p>
+
+                        <h2>
+                            Complete Blood Count
+                        </h2>
+
+                        <p>
+                            Request ID: #LTR2056
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="lab-result-request-details">
+
+                    <div>
+
+                        <span>Patient</span>
+
+                        <strong>
+                            #P1024
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Requested By</span>
+
+                        <strong>
+                            Current Doctor
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Priority</span>
+
+                        <strong class="lab-result-priority">
+                            Routine
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Status</span>
+
+                        <strong class="lab-result-progress-status">
+                            In Progress
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- RESULT LAYOUT -->
+            <section class="lab-result-layout">
+
+                <!-- RESULT FORM -->
+                <div class="lab-result-form-card">
+
+                    <div class="lab-result-section-heading">
+
+                        <div>
+
+                            <h3>
+                                Test Result Information
+                            </h3>
+
+                            <p>
+                                Record laboratory measurements and report information
+                            </p>
+
+                        </div>
+
+
+                        <span>
+                            01
+                        </span>
+
+                    </div>
+
+
+                    <form id="labResultForm">
+
+                        <div
+                            class="lab-result-error"
+                            id="labResultError"
+                        ></div>
+
+
+                        <!-- SAMPLE INFORMATION -->
+                        <div class="lab-result-subheading">
+
+                            <h4>
+                                Sample Information
+                            </h4>
+
+                            <p>
+                                Record basic laboratory sample details
+                            </p>
+
+                        </div>
+
+
+                        <div class="lab-result-form-grid">
+
+                            <div class="lab-result-form-group">
+
+                                <label for="sampleId">
+                                    Sample ID
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="sampleId"
+                                    value="SMP-2056"
+                                    readonly
+                                >
+
+                            </div>
+
+
+                            <div class="lab-result-form-group">
+
+                                <label for="collectionDate">
+                                    Collection Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="collectionDate"
+                                >
+
+                            </div>
+
+
+                            <div class="lab-result-form-group">
+
+                                <label for="sampleType">
+                                    Sample Type
+                                </label>
+
+                                <select id="sampleType">
+
+                                    <option value="">
+                                        Select Sample Type
+                                    </option>
+
+                                    <option value="blood">
+                                        Blood
+                                    </option>
+
+                                    <option value="urine">
+                                        Urine
+                                    </option>
+
+                                    <option value="other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="lab-result-form-group">
+
+                                <label for="resultDate">
+                                    Result Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="resultDate"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- RESULT VALUES -->
+                        <div class="lab-result-subheading">
+
+                            <div>
+
+                                <h4>
+                                    Result Values
+                                </h4>
+
+                                <p>
+                                    Add one or more measured laboratory values
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="lab-result-add-btn"
+                                id="addResultBtn"
+                            >
+                                + Add Result
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="lab-result-value-list"
+                            id="resultValueList"
+                        >
+
+                            <div class="lab-result-value-item">
+
+                                <div class="lab-result-value-number">
+                                    1
+                                </div>
+
+
+                                <div class="lab-result-value-fields">
+
+                                    <div class="lab-result-value-grid">
+
+                                        <div class="lab-result-form-group">
+
+                                            <label>
+                                                Parameter
+                                            </label>
+
+                                            <input
+                                                type="text"
+                                                class="result-parameter"
+                                                placeholder="Enter test parameter"
+                                            >
+
+                                        </div>
+
+
+                                        <div class="lab-result-form-group">
+
+                                            <label>
+                                                Result Value
+                                            </label>
+
+                                            <input
+                                                type="text"
+                                                class="result-value"
+                                                placeholder="Enter measured value"
+                                            >
+
+                                        </div>
+
+
+                                        <div class="lab-result-form-group">
+
+                                            <label>
+                                                Unit
+                                            </label>
+
+                                            <input
+                                                type="text"
+                                                class="result-unit"
+                                                placeholder="Enter unit"
+                                            >
+
+                                        </div>
+
+
+                                        <div class="lab-result-form-group">
+
+                                            <label>
+                                                Reference Information
+                                            </label>
+
+                                            <input
+                                                type="text"
+                                                class="result-reference"
+                                                placeholder="Enter laboratory reference information"
+                                            >
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <button
+                                    type="button"
+                                    class="lab-result-remove-btn"
+                                    disabled
+                                >
+                                    ×
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TECHNICIAN NOTE -->
+                        <div class="lab-result-form-group">
+
+                            <label for="technicianNote">
+                                Laboratory Technician Note
+                            </label>
+
+                            <textarea
+                                id="technicianNote"
+                                rows="4"
+                                placeholder="Enter optional laboratory processing notes..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- REPORT STATUS -->
+                        <div class="lab-result-form-grid">
+
+                            <div class="lab-result-form-group">
+
+                                <label for="reportStatus">
+                                    Report Status
+                                </label>
+
+                                <select id="reportStatus">
+
+                                    <option value="">
+                                        Select Status
+                                    </option>
+
+                                    <option value="completed">
+                                        Completed
+                                    </option>
+
+                                    <option value="review">
+                                        Ready for Doctor Review
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="lab-result-form-group">
+
+                                <label for="verifiedBy">
+                                    Recorded By
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="verifiedBy"
+                                    value="Laboratory Technician"
+                                    readonly
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+                        <div class="lab-result-form-actions">
+
+                            <a
+                                href="lab-dashboard.html"
+                                class="lab-result-cancel-btn"
+                            >
+                                Cancel
+                            </a>
+
+
+                            <button
+                                type="submit"
+                                class="lab-result-submit-btn"
+                            >
+                                Save Laboratory Report
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- REPORT SUMMARY -->
+                <aside class="lab-result-summary-card">
+
+                    <div class="lab-result-summary-heading">
+
+                        <h3>
+                            Report Summary
+                        </h3>
+
+                        <p>
+                            Current laboratory report
+                        </p>
+
+                    </div>
+
+
+                    <div class="lab-result-summary-id">
+
+                        <span>
+                            Report ID
+                        </span>
+
+                        <strong>
+                            #LR2056
+                        </strong>
+
+                    </div>
+
+
+                    <div class="lab-result-summary-list">
+
+                        <div>
+
+                            <span>Request ID</span>
+
+                            <strong>
+                                #LTR2056
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>Patient</span>
+
+                            <strong>
+                                #P1024
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>Test</span>
+
+                            <strong>
+                                CBC
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>Result Parameters</span>
+
+                            <strong id="resultParameterCount">
+                                1
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>Current Status</span>
+
+                            <strong id="labResultSummaryStatus">
+                                In Progress
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="lab-result-summary-note">
+
+                        <div>
+                            i
+                        </div>
+
+                        <p>
+                            Laboratory staff record measured results.
+                            Clinical interpretation and treatment decisions
+                            remain with authorized healthcare professionals.
+                        </p>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- RECENT REPORTS -->
+            <section class="lab-result-history-card">
+
+                <div class="lab-result-history-heading">
+
+                    <div>
+
+                        <h3>
+                            Recent Laboratory Reports
+                        </h3>
+
+                        <p>
+                            Recently completed laboratory records
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="lab-result-history-row">
+
+                    <div class="lab-result-history-icon">
+                        BG
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            Report #LR2042
+                        </h4>
+
+                        <p>
+                            Patient #P1078 — Blood Glucose Test
+                        </p>
+
+                    </div>
+
+
+                    <span class="lab-result-history-date">
+                        10 Aug 2026
+                    </span>
+
+
+                    <span class="lab-result-history-status review">
+                        Doctor Review
+                    </span>
+
+                </div>
+
+
+                <div class="lab-result-history-row">
+
+                    <div class="lab-result-history-icon">
+                        UA
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            Report #LR2038
+                        </h4>
+
+                        <p>
+                            Patient #P1092 — Urine Analysis
+                        </p>
+
+                    </div>
+
+
+                    <span class="lab-result-history-date">
+                        08 Aug 2026
+                    </span>
+
+
+                    <span class="lab-result-history-status completed">
+                        Completed
+                    </span>
+
+                </div>
+
+
+                <div class="lab-result-history-row">
+
+                    <div class="lab-result-history-icon">
+                        LP
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            Report #LR2035
+                        </h4>
+
+                        <p>
+                            Patient #P1116 — Lipid Profile
+                        </p>
+
+                    </div>
+
+
+                    <span class="lab-result-history-date">
+                        06 Aug 2026
+                    </span>
+
+
+                    <span class="lab-result-history-status completed">
+                        Completed
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- NOTE -->
+            <section class="lab-result-note-card">
+
+                <div class="lab-result-note-icon">
+                    i
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Prototype Laboratory Result Module
+                    </h3>
+
+                    <p>
+                        Laboratory values entered here are demonstration
+                        records only. Secure patient linking, report storage,
+                        doctor notification and permanent database records
+                        will be implemented during backend integration.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- SUCCESS MODAL -->
+    <div
+        class="lab-result-success-modal"
+        id="labResultSuccessModal"
+    >
+
+        <div class="lab-result-success-card">
+
+            <div class="lab-result-success-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                Laboratory Report Saved
+            </h2>
+
+
+            <p>
+                Report #LR2056 has been recorded successfully
+                in this prototype session.
+            </p>
+
+
+            <div class="lab-result-success-info">
+
+                <span>
+                    Result Parameters
+                </span>
+
+                <strong id="successResultCount">
+                    1
+                </strong>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="lab-result-success-btn"
+                id="labResultSuccessBtn"
+            >
+                Back to Laboratory Dashboard
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="labResultLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Laboratory Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="labResultCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="labResultConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/laboratory-results.js"></script>
+
+</body>
+
+</html>
