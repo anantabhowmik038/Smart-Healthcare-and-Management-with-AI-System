@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Doctor Dashboard | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="dashboard-sidebar" id="doctorSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Doctor Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="doctor-dashboard.html"
+                   class="dashboard-menu-link active">
+                    <span class="menu-icon">D</span>
+                    Dashboard
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">P</span>
+                    My Profile
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">A</span>
+                    Appointments
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">PR</span>
+                    Patient Records
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">C</span>
+                    Consultations
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">Rx</span>
+                    Prescriptions
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">LT</span>
+                    Lab Test Requests
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">LR</span>
+                    Laboratory Reports
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">AI</span>
+                    AI Referrals
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="doctorLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <main class="dashboard-main">
+
+            <!-- ================= TOPBAR ================= -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="doctorMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+                    <div>
+                        <p>Doctor Portal</p>
+                        <h2>Welcome, Doctor</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-notification">
+                        3
+                    </div>
+
+                    <a href="#" class="dashboard-user-info">
+
+                        <div class="doctor-avatar">
+                            DR
+                        </div>
+
+                        <div>
+                            <strong>Doctor</strong>
+                            <span>Medical Professional</span>
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================= WELCOME ================= -->
+            <section class="doctor-welcome-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Clinical Dashboard
+                    </p>
+
+                    <h1>
+                        Manage Your Patient Care Efficiently
+                    </h1>
+
+                    <p>
+                        Review appointments, access authorized patient records,
+                        conduct consultations, issue digital prescriptions,
+                        request laboratory tests and review AI-referred cases.
+                    </p>
+
+                    <div class="doctor-welcome-actions">
+
+                        <a href="#" class="patient-main-btn">
+                            View Appointments
+                        </a>
+
+                        <a href="#" class="patient-outline-btn">
+                            Start Consultation
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="doctor-welcome-symbol">
+                    +
+                </div>
+
+            </section>
+
+
+            <!-- ================= SUMMARY CARDS ================= -->
+            <section class="doctor-summary-grid">
+
+                <div class="doctor-summary-card">
+
+                    <div class="doctor-summary-icon">
+                        A
+                    </div>
+
+                    <div>
+                        <p>Today's Appointments</p>
+                        <h3>8</h3>
+                        <span>3 consultations completed</span>
+                    </div>
+
+                </div>
+
+
+                <div class="doctor-summary-card">
+
+                    <div class="doctor-summary-icon">
+                        C
+                    </div>
+
+                    <div>
+                        <p>Pending Consultations</p>
+                        <h3>5</h3>
+                        <span>Waiting for consultation</span>
+                    </div>
+
+                </div>
+
+
+                <div class="doctor-summary-card">
+
+                    <div class="doctor-summary-icon">
+                        AI
+                    </div>
+
+                    <div>
+                        <p>AI Referrals</p>
+                        <h3>2</h3>
+                        <span>Cases requiring review</span>
+                    </div>
+
+                </div>
+
+
+                <div class="doctor-summary-card">
+
+                    <div class="doctor-summary-icon">
+                        LR
+                    </div>
+
+                    <div>
+                        <p>New Lab Reports</p>
+                        <h3>4</h3>
+                        <span>Reports ready for review</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= MAIN GRID ================= -->
+            <section class="doctor-dashboard-grid">
+
+                <!-- TODAY'S APPOINTMENTS -->
+                <div class="doctor-dashboard-card">
+
+                    <div class="doctor-card-heading">
+
+                        <div>
+                            <h3>Today's Appointments</h3>
+                            <p>Scheduled patient consultations</p>
+                        </div>
+
+                        <a href="#">
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="doctor-patient-row">
+
+                        <div class="doctor-patient-avatar">
+                            P1
+                        </div>
+
+                        <div class="doctor-patient-details">
+
+                            <h4>Patient #P1024</h4>
+
+                            <p>General Consultation</p>
+
+                            <span>09:30 AM</span>
+
+                        </div>
+
+                        <div class="doctor-status confirmed">
+                            Confirmed
+                        </div>
+
+                    </div>
+
+
+                    <div class="doctor-patient-row">
+
+                        <div class="doctor-patient-avatar">
+                            P2
+                        </div>
+
+                        <div class="doctor-patient-details">
+
+                            <h4>Patient #P1078</h4>
+
+                            <p>Follow-up Consultation</p>
+
+                            <span>10:30 AM</span>
+
+                        </div>
+
+                        <div class="doctor-status waiting">
+                            Waiting
+                        </div>
+
+                    </div>
+
+
+                    <div class="doctor-patient-row">
+
+                        <div class="doctor-patient-avatar">
+                            P3
+                        </div>
+
+                        <div class="doctor-patient-details">
+
+                            <h4>Patient #P1135</h4>
+
+                            <p>Medical Consultation</p>
+
+                            <span>11:15 AM</span>
+
+                        </div>
+
+                        <div class="doctor-status confirmed">
+                            Confirmed
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+                <div class="doctor-dashboard-card">
+
+                    <div class="doctor-card-heading">
+
+                        <div>
+                            <h3>Quick Actions</h3>
+                            <p>Common clinical tasks</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="doctor-quick-grid">
+
+                        <a href="#" class="doctor-quick-item">
+
+                            <span>PR</span>
+
+                            <div>
+                                <h4>Patient Records</h4>
+                                <p>Access medical records</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="doctor-quick-item">
+
+                            <span>C</span>
+
+                            <div>
+                                <h4>Consultation</h4>
+                                <p>Start patient consultation</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="doctor-quick-item">
+
+                            <span>Rx</span>
+
+                            <div>
+                                <h4>Prescription</h4>
+                                <p>Create digital prescription</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="doctor-quick-item">
+
+                            <span>LT</span>
+
+                            <div>
+                                <h4>Lab Test</h4>
+                                <p>Request laboratory test</p>
+                            </div>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= AI REFERRALS ================= -->
+            <section class="doctor-ai-referral">
+
+                <div class="doctor-ai-icon">
+                    AI
+                </div>
+
+                <div class="doctor-ai-content">
+
+                    <h3>
+                        AI-Referred Cases
+                    </h3>
+
+                    <p>
+                        Some symptom assessments have been referred for
+                        professional medical review because additional
+                        clinical evaluation may be required.
+                    </p>
+
+                </div>
+
+                <a href="#" class="doctor-ai-button">
+                    Review Referrals
+                </a>
+
+            </section>
+
+
+            <!-- ================= RECENT CLINICAL ACTIVITY ================= -->
+            <section class="doctor-dashboard-card doctor-activity-card">
+
+                <div class="doctor-card-heading">
+
+                    <div>
+                        <h3>Recent Clinical Activity</h3>
+                        <p>Latest updates from your doctor account</p>
+                    </div>
+
+                </div>
+
+
+                <div class="doctor-activity-row">
+
+                    <div class="doctor-activity-dot"></div>
+
+                    <div>
+                        <h4>Prescription Generated</h4>
+
+                        <p>
+                            A digital prescription was created for
+                            Patient #P1018.
+                        </p>
+                    </div>
+
+                    <span>10 min ago</span>
+
+                </div>
+
+
+                <div class="doctor-activity-row">
+
+                    <div class="doctor-activity-dot"></div>
+
+                    <div>
+                        <h4>Laboratory Report Received</h4>
+
+                        <p>
+                            A requested laboratory report is now
+                            available for review.
+                        </p>
+                    </div>
+
+                    <span>1 hour ago</span>
+
+                </div>
+
+
+                <div class="doctor-activity-row">
+
+                    <div class="doctor-activity-dot"></div>
+
+                    <div>
+                        <h4>Consultation Completed</h4>
+
+                        <p>
+                            Consultation information was added to
+                            the patient's medical record.
+                        </p>
+                    </div>
+
+                    <span>2 hours ago</span>
+
+                </div>
+
+            </section>
+
+
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================= LOGOUT MODAL ================= -->
+    <div class="logout-modal" id="doctorLogoutModal">
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Doctor Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="doctorCancelLogout"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="doctorConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/doctor-dashboard.js"></script>
+
+</body>
+
+</html>
