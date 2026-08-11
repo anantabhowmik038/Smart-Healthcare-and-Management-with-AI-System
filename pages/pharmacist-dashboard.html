@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pharmacist Dashboard | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="dashboard-sidebar" id="pharmacistSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Pharmacist Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="pharmacist-dashboard.html"
+                   class="dashboard-menu-link active">
+                    <span class="menu-icon">D</span>
+                    Dashboard
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">Rx</span>
+                    Prescriptions
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">MA</span>
+                    Medicine Availability
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">DM</span>
+                    Dispense Medicine
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">MI</span>
+                    Medicine Inventory
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">H</span>
+                    Dispensing History
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="pharmacistLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <main class="dashboard-main">
+
+            <!-- ================= TOPBAR ================= -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="pharmacistMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+                    <div>
+                        <p>Pharmacist Portal</p>
+                        <h2>Welcome, Pharmacist</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-notification">
+                        3
+                    </div>
+
+                    <div class="dashboard-user-info">
+
+                        <div class="pharmacist-avatar">
+                            PH
+                        </div>
+
+                        <div>
+                            <strong>Pharmacist</strong>
+                            <span>Pharmacy Staff</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================= WELCOME ================= -->
+            <section class="pharmacist-welcome-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Pharmacy Management
+                    </p>
+
+                    <h1>
+                        Manage Prescriptions and Medicines
+                    </h1>
+
+                    <p>
+                        Verify digital prescriptions, check medicine availability,
+                        dispense prescribed medicines and maintain accurate
+                        medicine inventory records.
+                    </p>
+
+
+                    <div class="pharmacist-welcome-actions">
+
+                        <a href="#" class="patient-main-btn">
+                            View Prescriptions
+                        </a>
+
+                        <a href="#" class="patient-outline-btn">
+                            Manage Inventory
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pharmacist-welcome-symbol">
+                    Rx
+                </div>
+
+            </section>
+
+
+            <!-- ================= SUMMARY CARDS ================= -->
+            <section class="pharmacist-summary-grid">
+
+                <div class="pharmacist-summary-card">
+
+                    <div class="pharmacist-summary-icon">
+                        Rx
+                    </div>
+
+                    <div>
+                        <p>Pending Prescriptions</p>
+                        <h3>7</h3>
+                        <span>Awaiting verification</span>
+                    </div>
+
+                </div>
+
+
+                <div class="pharmacist-summary-card">
+
+                    <div class="pharmacist-summary-icon">
+                        DM
+                    </div>
+
+                    <div>
+                        <p>Dispensed Today</p>
+                        <h3>21</h3>
+                        <span>Completed dispensing records</span>
+                    </div>
+
+                </div>
+
+
+                <div class="pharmacist-summary-card">
+
+                    <div class="pharmacist-summary-icon">
+                        LS
+                    </div>
+
+                    <div>
+                        <p>Low Stock Medicines</p>
+                        <h3>5</h3>
+                        <span>Inventory attention required</span>
+                    </div>
+
+                </div>
+
+
+                <div class="pharmacist-summary-card">
+
+                    <div class="pharmacist-summary-icon">
+                        M
+                    </div>
+
+                    <div>
+                        <p>Total Medicines</p>
+                        <h3>148</h3>
+                        <span>Available inventory items</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= MAIN GRID ================= -->
+            <section class="pharmacist-dashboard-grid">
+
+                <!-- PENDING PRESCRIPTIONS -->
+                <div class="pharmacist-dashboard-card">
+
+                    <div class="pharmacist-card-heading">
+
+                        <div>
+                            <h3>Pending Prescriptions</h3>
+                            <p>Digital prescriptions waiting for processing</p>
+                        </div>
+
+                        <a href="#">
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="pharmacist-prescription-row">
+
+                        <div class="pharmacist-prescription-icon">
+                            Rx
+                        </div>
+
+                        <div class="pharmacist-prescription-details">
+
+                            <h4>Prescription #RX1042</h4>
+
+                            <p>Patient #P1024</p>
+
+                            <span>Dr. Sarah Ahmed</span>
+
+                        </div>
+
+                        <div class="pharmacist-status pending">
+                            Pending
+                        </div>
+
+                    </div>
+
+
+                    <div class="pharmacist-prescription-row">
+
+                        <div class="pharmacist-prescription-icon">
+                            Rx
+                        </div>
+
+                        <div class="pharmacist-prescription-details">
+
+                            <h4>Prescription #RX1048</h4>
+
+                            <p>Patient #P1078</p>
+
+                            <span>Dr. Mahmud Hasan</span>
+
+                        </div>
+
+                        <div class="pharmacist-status verified">
+                            Verified
+                        </div>
+
+                    </div>
+
+
+                    <div class="pharmacist-prescription-row">
+
+                        <div class="pharmacist-prescription-icon">
+                            Rx
+                        </div>
+
+                        <div class="pharmacist-prescription-details">
+
+                            <h4>Prescription #RX1051</h4>
+
+                            <p>Patient #P1135</p>
+
+                            <span>Dr. Sarah Ahmed</span>
+
+                        </div>
+
+                        <div class="pharmacist-status pending">
+                            Pending
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+                <div class="pharmacist-dashboard-card">
+
+                    <div class="pharmacist-card-heading">
+
+                        <div>
+                            <h3>Quick Actions</h3>
+                            <p>Common pharmacy operations</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="pharmacist-quick-grid">
+
+                        <a href="#" class="pharmacist-quick-item">
+
+                            <span>Rx</span>
+
+                            <div>
+                                <h4>Verify Prescription</h4>
+                                <p>Review digital prescription</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="pharmacist-quick-item">
+
+                            <span>MA</span>
+
+                            <div>
+                                <h4>Check Availability</h4>
+                                <p>Search medicine stock</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="pharmacist-quick-item">
+
+                            <span>DM</span>
+
+                            <div>
+                                <h4>Dispense Medicine</h4>
+                                <p>Record medicine dispensing</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="pharmacist-quick-item">
+
+                            <span>MI</span>
+
+                            <div>
+                                <h4>Update Inventory</h4>
+                                <p>Maintain medicine stock</p>
+                            </div>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= INVENTORY ALERT ================= -->
+            <section class="pharmacist-alert-card">
+
+                <div class="pharmacist-alert-icon">
+                    !
+                </div>
+
+                <div class="pharmacist-alert-content">
+
+                    <h3>
+                        Low Stock Alert
+                    </h3>
+
+                    <p>
+                        Five medicine items have reached the low-stock level.
+                        Review the inventory and update medicine availability
+                        information to maintain accurate pharmacy records.
+                    </p>
+
+                </div>
+
+                <a href="#" class="pharmacist-alert-btn">
+                    View Inventory
+                </a>
+
+            </section>
+
+
+            <!-- ================= INVENTORY TABLE ================= -->
+            <section class="pharmacist-dashboard-card pharmacist-inventory-card">
+
+                <div class="pharmacist-card-heading">
+
+                    <div>
+                        <h3>Medicine Inventory Overview</h3>
+                        <p>Current stock information</p>
+                    </div>
+
+                    <a href="#">
+                        Manage Inventory
+                    </a>
+
+                </div>
+
+
+                <div class="pharmacist-table-wrapper">
+
+                    <table class="pharmacist-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Medicine</th>
+                                <th>Category</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+                                <td>Paracetamol 500mg</td>
+                                <td>Analgesic</td>
+                                <td>120</td>
+                                <td>
+                                    <span class="inventory-status available">
+                                        Available
+                                    </span>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>Amoxicillin 500mg</td>
+                                <td>Antibiotic</td>
+                                <td>18</td>
+                                <td>
+                                    <span class="inventory-status low">
+                                        Low Stock
+                                    </span>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>Omeprazole 20mg</td>
+                                <td>Gastric Medicine</td>
+                                <td>76</td>
+                                <td>
+                                    <span class="inventory-status available">
+                                        Available
+                                    </span>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>Cetirizine 10mg</td>
+                                <td>Antihistamine</td>
+                                <td>12</td>
+                                <td>
+                                    <span class="inventory-status low">
+                                        Low Stock
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= RECENT ACTIVITY ================= -->
+            <section class="pharmacist-dashboard-card pharmacist-activity-card">
+
+                <div class="pharmacist-card-heading">
+
+                    <div>
+                        <h3>Recent Pharmacy Activity</h3>
+                        <p>Latest prescription and inventory updates</p>
+                    </div>
+
+                </div>
+
+
+                <div class="pharmacist-activity-row">
+
+                    <div class="pharmacist-activity-dot"></div>
+
+                    <div>
+
+                        <h4>Medicine Dispensed</h4>
+
+                        <p>
+                            Prescription #RX1039 was successfully dispensed.
+                        </p>
+
+                    </div>
+
+                    <span>15 min ago</span>
+
+                </div>
+
+
+                <div class="pharmacist-activity-row">
+
+                    <div class="pharmacist-activity-dot"></div>
+
+                    <div>
+
+                        <h4>Prescription Verified</h4>
+
+                        <p>
+                            Prescription #RX1048 was verified for processing.
+                        </p>
+
+                    </div>
+
+                    <span>40 min ago</span>
+
+                </div>
+
+
+                <div class="pharmacist-activity-row">
+
+                    <div class="pharmacist-activity-dot"></div>
+
+                    <div>
+
+                        <h4>Inventory Updated</h4>
+
+                        <p>
+                            Medicine stock information was updated successfully.
+                        </p>
+
+                    </div>
+
+                    <span>1 hour ago</span>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= FOOTER ================= -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================= LOGOUT MODAL ================= -->
+    <div class="logout-modal" id="pharmacistLogoutModal">
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Pharmacist Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="pharmacistCancelLogout"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="pharmacistConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/pharmacist-dashboard.js"></script>
+
+</body>
+
+</html>
