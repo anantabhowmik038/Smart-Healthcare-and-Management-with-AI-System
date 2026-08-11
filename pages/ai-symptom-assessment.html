@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Symptom Assessment | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="aiSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Patient Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="patient-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="patient-profile.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">P</span>
+                    My Profile
+
+                </a>
+
+
+                <a href="doctor-availability.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">DA</span>
+                    Doctor Availability
+
+                </a>
+
+
+                <a href="appointment-booking.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">BA</span>
+                    Book Appointment
+
+                </a>
+
+
+                <a href="appointment-management.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">A</span>
+                    My Appointments
+
+                </a>
+
+
+                <a href="ai-symptom-assessment.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">AI</span>
+                    AI Symptom Assessment
+
+                </a>
+
+
+                <a href="medical-records.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">MR</span>
+                    Medical Records
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">Rx</span>
+                    Prescriptions
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">LR</span>
+                    Laboratory Reports
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="aiLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="aiMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Patient Portal</p>
+
+                        <h2>AI Symptom Assessment</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="dashboard-user-avatar">
+                            P
+                        </div>
+
+                        <div>
+
+                            <strong>Patient</strong>
+
+                            <span>Patient Account</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="ai-assessment-header">
+
+                <div>
+
+                    <p class="small-title">
+                        AI-Assisted Healthcare Support
+                    </p>
+
+                    <h1>
+                        Preliminary Symptom Assessment
+                    </h1>
+
+                    <p>
+                        Describe your symptoms and provide basic information
+                        to receive preliminary AI-assisted guidance and
+                        determine whether professional medical review
+                        may be appropriate.
+                    </p>
+
+                </div>
+
+
+                <div class="ai-assessment-header-icon">
+                    AI
+                </div>
+
+            </section>
+
+
+            <!-- SAFETY NOTICE -->
+            <section class="ai-safety-notice">
+
+                <div class="ai-safety-icon">
+                    i
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Important Information
+                    </h3>
+
+                    <p>
+                        This AI assessment is designed only for preliminary
+                        support and does not provide a medical diagnosis or
+                        replace consultation with a qualified healthcare
+                        professional.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ASSESSMENT LAYOUT -->
+            <section class="ai-assessment-layout">
+
+                <!-- FORM -->
+                <div class="ai-assessment-form-card">
+
+                    <div class="ai-section-heading">
+
+                        <div>
+
+                            <h3>
+                                Symptom Information
+                            </h3>
+
+                            <p>
+                                Tell the system what you are experiencing
+                            </p>
+
+                        </div>
+
+
+                        <span>
+                            01
+                        </span>
+
+                    </div>
+
+
+                    <form id="aiAssessmentForm">
+
+                        <div
+                            class="ai-assessment-error"
+                            id="aiAssessmentError"
+                        ></div>
+
+
+                        <!-- SYMPTOMS -->
+                        <div class="ai-form-group">
+
+                            <label for="symptomDescription">
+                                Describe Your Symptoms
+                            </label>
+
+                            <textarea
+                                id="symptomDescription"
+                                rows="6"
+                                placeholder="Example: I have been feeling unwell and experiencing some symptoms for the last few days..."
+                            ></textarea>
+
+                            <small>
+                                Provide a short and clear description.
+                            </small>
+
+                        </div>
+
+
+                        <div class="ai-form-grid">
+
+                            <!-- DURATION -->
+                            <div class="ai-form-group">
+
+                                <label for="symptomDuration">
+                                    Symptom Duration
+                                </label>
+
+                                <select id="symptomDuration">
+
+                                    <option value="">
+                                        Select Duration
+                                    </option>
+
+                                    <option value="today">
+                                        Started Today
+                                    </option>
+
+                                    <option value="few-days">
+                                        A Few Days
+                                    </option>
+
+                                    <option value="week">
+                                        About One Week
+                                    </option>
+
+                                    <option value="longer">
+                                        More Than One Week
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- SEVERITY -->
+                            <div class="ai-form-group">
+
+                                <label for="symptomSeverity">
+                                    Current Severity
+                                </label>
+
+                                <select id="symptomSeverity">
+
+                                    <option value="">
+                                        Select Severity
+                                    </option>
+
+                                    <option value="mild">
+                                        Mild
+                                    </option>
+
+                                    <option value="moderate">
+                                        Moderate
+                                    </option>
+
+                                    <option value="severe">
+                                        Severe
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- AGE GROUP -->
+                            <div class="ai-form-group">
+
+                                <label for="patientAgeGroup">
+                                    Age Group
+                                </label>
+
+                                <select id="patientAgeGroup">
+
+                                    <option value="">
+                                        Select Age Group
+                                    </option>
+
+                                    <option value="child">
+                                        Child
+                                    </option>
+
+                                    <option value="teen">
+                                        Teenager
+                                    </option>
+
+                                    <option value="adult">
+                                        Adult
+                                    </option>
+
+                                    <option value="older">
+                                        Older Adult
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- EXISTING CONDITION -->
+                            <div class="ai-form-group">
+
+                                <label for="existingCondition">
+                                    Existing Medical Condition
+                                </label>
+
+                                <select id="existingCondition">
+
+                                    <option value="">
+                                        Select Option
+                                    </option>
+
+                                    <option value="no">
+                                        None Known
+                                    </option>
+
+                                    <option value="yes">
+                                        Yes
+                                    </option>
+
+                                    <option value="unsure">
+                                        Not Sure
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ADDITIONAL INFORMATION -->
+                        <div class="ai-form-group">
+
+                            <label for="additionalSymptoms">
+                                Additional Information
+                            </label>
+
+                            <textarea
+                                id="additionalSymptoms"
+                                rows="4"
+                                placeholder="Add any other information you think may be useful..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- AGREEMENT -->
+                        <label class="ai-assessment-agreement">
+
+                            <input
+                                type="checkbox"
+                                id="aiAgreement"
+                            >
+
+                            <span>
+                                I understand that this is a preliminary
+                                AI-assisted assessment and not a medical diagnosis.
+                            </span>
+
+                        </label>
+
+
+                        <!-- BUTTON -->
+                        <button
+                            type="submit"
+                            class="ai-assessment-submit-btn"
+                        >
+                            Analyze Symptoms
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- HOW IT WORKS -->
+                <aside class="ai-process-card">
+
+                    <div class="ai-process-heading">
+
+                        <h3>
+                            How It Works
+                        </h3>
+
+                        <p>
+                            Preliminary assessment workflow
+                        </p>
+
+                    </div>
+
+
+                    <div class="ai-process-step">
+
+                        <span>
+                            1
+                        </span>
+
+                        <div>
+
+                            <h4>
+                                Describe Symptoms
+                            </h4>
+
+                            <p>
+                                Enter basic symptom information.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ai-process-line"></div>
+
+
+                    <div class="ai-process-step">
+
+                        <span>
+                            2
+                        </span>
+
+                        <div>
+
+                            <h4>
+                                AI Assessment
+                            </h4>
+
+                            <p>
+                                The system reviews the supplied information.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ai-process-line"></div>
+
+
+                    <div class="ai-process-step">
+
+                        <span>
+                            3
+                        </span>
+
+                        <div>
+
+                            <h4>
+                                Preliminary Guidance
+                            </h4>
+
+                            <p>
+                                A support recommendation is displayed.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ai-process-line"></div>
+
+
+                    <div class="ai-process-step">
+
+                        <span>
+                            4
+                        </span>
+
+                        <div>
+
+                            <h4>
+                                Doctor Referral
+                            </h4>
+
+                            <p>
+                                Cases requiring additional review can be
+                                referred for professional consultation.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ai-process-note">
+
+                        <strong>
+                            AI Support Only
+                        </strong>
+
+                        <p>
+                            Professional healthcare decisions remain
+                            with qualified medical professionals.
+                        </p>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- RESULT SECTION -->
+            <section
+                class="ai-result-card"
+                id="aiResultCard"
+            >
+
+                <div class="ai-result-top">
+
+                    <div
+                        class="ai-result-icon"
+                        id="aiResultIcon"
+                    >
+                        AI
+                    </div>
+
+
+                    <div>
+
+                        <p>
+                            AI Assessment Result
+                        </p>
+
+                        <h2 id="aiResultTitle">
+                            Preliminary Guidance
+                        </h2>
+
+                    </div>
+
+
+                    <span
+                        class="ai-result-status"
+                        id="aiResultStatus"
+                    >
+                        Assessment Complete
+                    </span>
+
+                </div>
+
+
+                <div class="ai-result-grid">
+
+                    <div>
+
+                        <span>
+                            Assessment Level
+                        </span>
+
+                        <strong id="aiAssessmentLevel">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Recommended Action
+                        </span>
+
+                        <strong id="aiRecommendedAction">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Professional Review
+                        </span>
+
+                        <strong id="aiDoctorReview">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ai-result-message">
+
+                    <h4>
+                        Preliminary Assessment
+                    </h4>
+
+                    <p id="aiResultMessage">
+                        -
+                    </p>
+
+                </div>
+
+
+                <div class="ai-result-warning">
+
+                    <strong>
+                        Important:
+                    </strong>
+
+                    <p>
+                        This result is generated for prototype demonstration
+                        and should not be interpreted as a medical diagnosis.
+                    </p>
+
+                </div>
+
+
+                <div class="ai-result-actions">
+
+                    <button
+                        type="button"
+                        class="ai-new-assessment-btn"
+                        id="newAssessmentBtn"
+                    >
+                        New Assessment
+                    </button>
+
+
+                    <a
+                        href="doctor-availability.html"
+                        class="ai-doctor-btn"
+                    >
+                        Find a Doctor
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- PROTOTYPE NOTE -->
+            <section class="ai-prototype-note">
+
+                <div class="ai-prototype-note-icon">
+                    AI
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Prototype AI Module
+                    </h3>
+
+                    <p>
+                        The current prototype demonstrates the assessment
+                        workflow and referral logic. A trained AI model and
+                        secure backend integration can be connected during
+                        the implementation phase.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="aiLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Patient Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="aiCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="aiConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/ai-symptom-assessment.js"></script>
+
+</body>
+
+</html>
