@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Patient Profile | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="profileSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Patient Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="patient-dashboard.html" class="dashboard-menu-link">
+                    <span class="menu-icon">D</span>
+                    Dashboard
+                </a>
+
+                <a href="patient-profile.html"
+                   class="dashboard-menu-link active">
+                    <span class="menu-icon">P</span>
+                    My Profile
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">A</span>
+                    Appointments
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">AI</span>
+                    AI Symptom Assessment
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">MR</span>
+                    Medical Records
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">Rx</span>
+                    Prescriptions
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">LR</span>
+                    Laboratory Reports
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">B</span>
+                    Billing & Payment
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">F</span>
+                    Feedback & Complaint
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="profileLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="profileMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+                    <div>
+                        <p>Patient Portal</p>
+                        <h2>My Profile</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-notification">
+                        1
+                    </div>
+
+                    <div class="dashboard-user-info">
+
+                        <div class="dashboard-user-avatar">
+                            P
+                        </div>
+
+                        <div>
+                            <strong>Patient</strong>
+                            <span>Patient Account</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PROFILE HEADER -->
+            <section class="profile-header-card">
+
+                <div class="profile-main-info">
+
+                    <div class="profile-large-avatar">
+                        P
+                    </div>
+
+
+                    <div>
+
+                        <p class="small-title">
+                            Patient Profile
+                        </p>
+
+                        <h1 id="profileDisplayName">
+                            Patient User
+                        </h1>
+
+                        <p>
+                            Patient ID:
+                            <strong>#P1024</strong>
+                        </p>
+
+                        <span class="profile-status">
+                            Active Patient
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="profile-edit-btn"
+                    id="editProfileBtn"
+                >
+                    Edit Profile
+                </button>
+
+            </section>
+
+
+            <!-- PROFILE FORM -->
+            <form id="profileForm">
+
+                <!-- PERSONAL INFORMATION -->
+                <section class="profile-section-card">
+
+                    <div class="profile-section-heading">
+
+                        <div>
+                            <h3>Personal Information</h3>
+
+                            <p>
+                                Basic personal details of the patient
+                            </p>
+                        </div>
+
+                        <span>01</span>
+
+                    </div>
+
+
+                    <div class="profile-form-grid">
+
+                        <div class="form-group">
+
+                            <label for="profileFullName">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="profileFullName"
+                                value="Patient User"
+                                disabled
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="patientId">
+                                Patient ID
+                            </label>
+
+                            <input
+                                type="text"
+                                id="patientId"
+                                value="#P1024"
+                                disabled
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="profileDob">
+                                Date of Birth
+                            </label>
+
+                            <input
+                                type="date"
+                                id="profileDob"
+                                value="2003-05-18"
+                                disabled
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="profileGender">
+                                Gender
+                            </label>
+
+                            <select
+                                id="profileGender"
+                                disabled
+                                required
+                            >
+
+                                <option value="male" selected>
+                                    Male
+                                </option>
+
+                                <option value="female">
+                                    Female
+                                </option>
+
+                                <option value="other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- CONTACT INFORMATION -->
+                <section class="profile-section-card">
+
+                    <div class="profile-section-heading">
+
+                        <div>
+                            <h3>Contact Information</h3>
+
+                            <p>
+                                Communication and address details
+                            </p>
+                        </div>
+
+                        <span>02</span>
+
+                    </div>
+
+
+                    <div class="profile-form-grid">
+
+                        <div class="form-group">
+
+                            <label for="profileEmail">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="profileEmail"
+                                value="patient@example.com"
+                                disabled
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="profilePhone">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="profilePhone"
+                                value="01700000000"
+                                disabled
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group profile-full-width">
+
+                            <label for="profileAddress">
+                                Address
+                            </label>
+
+                            <input
+                                type="text"
+                                id="profileAddress"
+                                value="Dhaka, Bangladesh"
+                                disabled
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- BASIC HEALTH INFORMATION -->
+                <section class="profile-section-card">
+
+                    <div class="profile-section-heading">
+
+                        <div>
+                            <h3>Basic Health Information</h3>
+
+                            <p>
+                                Basic healthcare information associated with the profile
+                            </p>
+                        </div>
+
+                        <span>03</span>
+
+                    </div>
+
+
+                    <div class="profile-form-grid">
+
+                        <div class="form-group">
+
+                            <label for="bloodGroup">
+                                Blood Group
+                            </label>
+
+                            <select
+                                id="bloodGroup"
+                                disabled
+                            >
+
+                                <option value="">Select Blood Group</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+" selected>B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="allergies">
+                                Known Allergies
+                            </label>
+
+                            <input
+                                type="text"
+                                id="allergies"
+                                value="None recorded"
+                                disabled
+                            >
+
+                        </div>
+
+
+                        <div class="form-group profile-full-width">
+
+                            <label for="medicalConditions">
+                                Existing Medical Conditions
+                            </label>
+
+                            <input
+                                type="text"
+                                id="medicalConditions"
+                                value="None recorded"
+                                disabled
+                            >
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- EMERGENCY CONTACT -->
+                <section class="profile-section-card">
+
+                    <div class="profile-section-heading">
+
+                        <div>
+                            <h3>Emergency Contact</h3>
+
+                            <p>
+                                Contact information for emergency communication
+                            </p>
+                        </div>
+
+                        <span>04</span>
+
+                    </div>
+
+
+                    <div class="profile-form-grid">
+
+                        <div class="form-group">
+
+                            <label for="emergencyName">
+                                Contact Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="emergencyName"
+                                value="Emergency Contact"
+                                disabled
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="emergencyRelation">
+                                Relationship
+                            </label>
+
+                            <input
+                                type="text"
+                                id="emergencyRelation"
+                                value="Family Member"
+                                disabled
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="emergencyPhone">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="emergencyPhone"
+                                value="01800000000"
+                                disabled
+                            >
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- FORM ACTIONS -->
+                <div
+                    class="profile-form-actions"
+                    id="profileFormActions"
+                >
+
+                    <button
+                        type="button"
+                        class="profile-cancel-btn"
+                        id="cancelProfileBtn"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="profile-save-btn"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- PROFILE NOTE -->
+            <section class="profile-note-card">
+
+                <div class="profile-note-icon">
+                    i
+                </div>
+
+                <div>
+
+                    <h3>
+                        Profile Information
+                    </h3>
+
+                    <p>
+                        This prototype displays sample patient information.
+                        Persistent storage and secure database synchronization
+                        will be handled during backend integration.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- SAVE SUCCESS MODAL -->
+    <div class="profile-success-modal" id="profileSuccessModal">
+
+        <div class="profile-success-card">
+
+            <div class="profile-success-icon">
+                ✓
+            </div>
+
+            <h2>
+                Profile Updated
+            </h2>
+
+            <p>
+                Your profile information has been updated successfully
+                in this prototype session.
+            </p>
+
+            <button
+                type="button"
+                class="profile-success-btn"
+                id="profileSuccessBtn"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div class="logout-modal" id="profileLogoutModal">
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Patient Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="profileCancelLogout"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="profileConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/patient-profile.js"></script>
+
+</body>
+
+</html>
