@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Medicine Inventory | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="inventorySidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Pharmacist Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="pharmacist-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">Rx</span>
+                    Prescriptions
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">MA</span>
+                    Medicine Availability
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">DM</span>
+                    Dispense Medicine
+
+                </a>
+
+
+                <a href="medicine-inventory.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">MI</span>
+                    Medicine Inventory
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">H</span>
+                    Dispensing History
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="inventoryLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="inventoryMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Pharmacist Portal</p>
+
+                        <h2>Medicine Inventory</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="pharmacist-avatar">
+                            PH
+                        </div>
+
+                        <div>
+
+                            <strong>Pharmacist</strong>
+
+                            <span>Pharmacy Staff</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="inventory-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Pharmacy Management
+                    </p>
+
+                    <h1>
+                        Medicine Inventory Management
+                    </h1>
+
+                    <p>
+                        Monitor medicine stock levels, identify low-stock
+                        items and maintain pharmacy inventory information.
+                    </p>
+
+                </div>
+
+
+                <div class="inventory-header-icon">
+                    MI
+                </div>
+
+            </section>
+
+
+            <!-- SUMMARY -->
+            <section class="inventory-summary-grid">
+
+                <div class="inventory-summary-card">
+
+                    <div class="inventory-summary-icon">
+                        T
+                    </div>
+
+                    <div>
+
+                        <p>Total Medicines</p>
+
+                        <h3 id="inventoryTotalCount">
+                            6
+                        </h3>
+
+                        <span>Inventory items</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="inventory-summary-card">
+
+                    <div class="inventory-summary-icon">
+                        S
+                    </div>
+
+                    <div>
+
+                        <p>In Stock</p>
+
+                        <h3 id="inventoryInStockCount">
+                            3
+                        </h3>
+
+                        <span>Available items</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="inventory-summary-card">
+
+                    <div class="inventory-summary-icon">
+                        L
+                    </div>
+
+                    <div>
+
+                        <p>Low Stock</p>
+
+                        <h3 id="inventoryLowStockCount">
+                            2
+                        </h3>
+
+                        <span>Need attention</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="inventory-summary-card">
+
+                    <div class="inventory-summary-icon">
+                        O
+                    </div>
+
+                    <div>
+
+                        <p>Out of Stock</p>
+
+                        <h3 id="inventoryOutStockCount">
+                            1
+                        </h3>
+
+                        <span>Unavailable items</span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FILTER -->
+            <section class="inventory-filter-card">
+
+                <div class="inventory-search-group">
+
+                    <label for="inventorySearch">
+                        Search Medicine
+                    </label>
+
+                    <input
+                        type="text"
+                        id="inventorySearch"
+                        placeholder="Search by medicine name or ID..."
+                    >
+
+                </div>
+
+
+                <div class="inventory-filter-group">
+
+                    <label for="inventoryCategoryFilter">
+                        Category
+                    </label>
+
+                    <select id="inventoryCategoryFilter">
+
+                        <option value="all">
+                            All Categories
+                        </option>
+
+                        <option value="tablet">
+                            Tablet
+                        </option>
+
+                        <option value="capsule">
+                            Capsule
+                        </option>
+
+                        <option value="syrup">
+                            Syrup
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="inventory-filter-group">
+
+                    <label for="inventoryStatusFilter">
+                        Stock Status
+                    </label>
+
+                    <select id="inventoryStatusFilter">
+
+                        <option value="all">
+                            All Status
+                        </option>
+
+                        <option value="in-stock">
+                            In Stock
+                        </option>
+
+                        <option value="low-stock">
+                            Low Stock
+                        </option>
+
+                        <option value="out-of-stock">
+                            Out of Stock
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </section>
+
+
+            <!-- INVENTORY CARD -->
+            <section class="inventory-table-card">
+
+                <div class="inventory-table-heading">
+
+                    <div>
+
+                        <h3>
+                            Current Medicine Stock
+                        </h3>
+
+                        <p id="inventoryResultCount">
+                            Showing 6 medicines
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="inventory-table-wrapper">
+
+                    <table class="inventory-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Medicine ID</th>
+
+                                <th>Medicine</th>
+
+                                <th>Category</th>
+
+                                <th>Quantity</th>
+
+                                <th>Expiry Date</th>
+
+                                <th>Status</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="inventoryTableBody">
+
+                            <tr
+                                class="inventory-row"
+                                data-search="med101 medicine a"
+                                data-category="tablet"
+                                data-status="in-stock"
+                                data-id="MED101"
+                                data-name="Medicine A"
+                                data-quantity="120"
+                            >
+
+                                <td>#MED101</td>
+
+                                <td>
+
+                                    <strong>
+                                        Medicine A
+                                    </strong>
+
+                                    <span>
+                                        Tablet
+                                    </span>
+
+                                </td>
+
+                                <td>Tablet</td>
+
+                                <td class="inventory-quantity">
+                                    120
+                                </td>
+
+                                <td>18 Dec 2027</td>
+
+                                <td>
+
+                                    <span class="inventory-status in-stock">
+                                        In Stock
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="inventory-update-btn"
+                                    >
+                                        Update Stock
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="inventory-row"
+                                data-search="med102 medicine b"
+                                data-category="capsule"
+                                data-status="low-stock"
+                                data-id="MED102"
+                                data-name="Medicine B"
+                                data-quantity="18"
+                            >
+
+                                <td>#MED102</td>
+
+                                <td>
+
+                                    <strong>
+                                        Medicine B
+                                    </strong>
+
+                                    <span>
+                                        Capsule
+                                    </span>
+
+                                </td>
+
+                                <td>Capsule</td>
+
+                                <td class="inventory-quantity">
+                                    18
+                                </td>
+
+                                <td>05 Oct 2027</td>
+
+                                <td>
+
+                                    <span class="inventory-status low-stock">
+                                        Low Stock
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="inventory-update-btn"
+                                    >
+                                        Update Stock
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="inventory-row"
+                                data-search="med103 medicine c"
+                                data-category="syrup"
+                                data-status="in-stock"
+                                data-id="MED103"
+                                data-name="Medicine C"
+                                data-quantity="75"
+                            >
+
+                                <td>#MED103</td>
+
+                                <td>
+
+                                    <strong>
+                                        Medicine C
+                                    </strong>
+
+                                    <span>
+                                        Syrup
+                                    </span>
+
+                                </td>
+
+                                <td>Syrup</td>
+
+                                <td class="inventory-quantity">
+                                    75
+                                </td>
+
+                                <td>12 Feb 2028</td>
+
+                                <td>
+
+                                    <span class="inventory-status in-stock">
+                                        In Stock
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="inventory-update-btn"
+                                    >
+                                        Update Stock
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="inventory-row"
+                                data-search="med104 medicine d"
+                                data-category="tablet"
+                                data-status="out-of-stock"
+                                data-id="MED104"
+                                data-name="Medicine D"
+                                data-quantity="0"
+                            >
+
+                                <td>#MED104</td>
+
+                                <td>
+
+                                    <strong>
+                                        Medicine D
+                                    </strong>
+
+                                    <span>
+                                        Tablet
+                                    </span>
+
+                                </td>
+
+                                <td>Tablet</td>
+
+                                <td class="inventory-quantity">
+                                    0
+                                </td>
+
+                                <td>26 Nov 2027</td>
+
+                                <td>
+
+                                    <span class="inventory-status out-of-stock">
+                                        Out of Stock
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="inventory-update-btn"
+                                    >
+                                        Update Stock
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="inventory-row"
+                                data-search="med105 medicine e"
+                                data-category="other"
+                                data-status="low-stock"
+                                data-id="MED105"
+                                data-name="Medicine E"
+                                data-quantity="12"
+                            >
+
+                                <td>#MED105</td>
+
+                                <td>
+
+                                    <strong>
+                                        Medicine E
+                                    </strong>
+
+                                    <span>
+                                        Other
+                                    </span>
+
+                                </td>
+
+                                <td>Other</td>
+
+                                <td class="inventory-quantity">
+                                    12
+                                </td>
+
+                                <td>15 Jan 2028</td>
+
+                                <td>
+
+                                    <span class="inventory-status low-stock">
+                                        Low Stock
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="inventory-update-btn"
+                                    >
+                                        Update Stock
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="inventory-row"
+                                data-search="med106 medicine f"
+                                data-category="capsule"
+                                data-status="in-stock"
+                                data-id="MED106"
+                                data-name="Medicine F"
+                                data-quantity="96"
+                            >
+
+                                <td>#MED106</td>
+
+                                <td>
+
+                                    <strong>
+                                        Medicine F
+                                    </strong>
+
+                                    <span>
+                                        Capsule
+                                    </span>
+
+                                </td>
+
+                                <td>Capsule</td>
+
+                                <td class="inventory-quantity">
+                                    96
+                                </td>
+
+                                <td>22 Mar 2028</td>
+
+                                <td>
+
+                                    <span class="inventory-status in-stock">
+                                        In Stock
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="inventory-update-btn"
+                                    >
+                                        Update Stock
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- NO RESULTS -->
+                <div
+                    class="inventory-no-results"
+                    id="inventoryNoResults"
+                >
+
+                    <div>
+                        !
+                    </div>
+
+                    <h3>
+                        No Medicines Found
+                    </h3>
+
+                    <p>
+                        Try changing your search or inventory filters.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- LOW STOCK NOTICE -->
+            <section class="inventory-alert-card">
+
+                <div class="inventory-alert-icon">
+                    !
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Inventory Attention Required
+                    </h3>
+
+                    <p>
+                        Some medicine items currently have low or unavailable
+                        stock levels. Pharmacy staff can review these records
+                        and update inventory quantities when stock changes.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- NOTE -->
+            <section class="inventory-note-card">
+
+                <div class="inventory-note-icon">
+                    i
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Prototype Inventory Module
+                    </h3>
+
+                    <p>
+                        Inventory quantities shown here are demonstration
+                        data. Permanent stock records, supplier updates,
+                        dispensing adjustments and database synchronization
+                        will be handled during backend integration.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- UPDATE STOCK MODAL -->
+    <div
+        class="inventory-stock-modal"
+        id="inventoryStockModal"
+    >
+
+        <div class="inventory-stock-modal-card">
+
+            <div class="inventory-stock-modal-header">
+
+                <div>
+
+                    <p>
+                        Inventory Update
+                    </p>
+
+                    <h2>
+                        Update Medicine Stock
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="inventory-modal-close"
+                    id="inventoryModalClose"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="inventory-selected-medicine">
+
+                <span>
+                    Selected Medicine
+                </span>
+
+                <strong id="selectedMedicineName">
+                    -
+                </strong>
+
+                <small id="selectedMedicineId">
+                    -
+                </small>
+
+            </div>
+
+
+            <div class="inventory-modal-quantity-info">
+
+                <span>
+                    Current Quantity
+                </span>
+
+                <strong id="currentStockQuantity">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="inventory-modal-form-group">
+
+                <label for="newStockQuantity">
+                    New Stock Quantity
+                </label>
+
+                <input
+                    type="number"
+                    id="newStockQuantity"
+                    min="0"
+                    placeholder="Enter new quantity"
+                >
+
+            </div>
+
+
+            <div
+                class="inventory-modal-error"
+                id="inventoryModalError"
+            ></div>
+
+
+            <div class="inventory-modal-actions">
+
+                <button
+                    type="button"
+                    class="inventory-modal-cancel-btn"
+                    id="inventoryModalCancel"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="inventory-modal-save-btn"
+                    id="inventoryModalSave"
+                >
+                    Save Stock
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUCCESS MODAL -->
+    <div
+        class="inventory-success-modal"
+        id="inventorySuccessModal"
+    >
+
+        <div class="inventory-success-card">
+
+            <div class="inventory-success-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                Stock Updated
+            </h2>
+
+
+            <p>
+                The medicine inventory quantity has been updated
+                successfully in this prototype session.
+            </p>
+
+
+            <button
+                type="button"
+                class="inventory-success-btn"
+                id="inventorySuccessBtn"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="inventoryLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Pharmacist Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="inventoryCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="inventoryConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/medicine-inventory.js"></script>
+
+</body>
+
+</html>
