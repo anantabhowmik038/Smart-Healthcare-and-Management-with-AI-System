@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User & Role Management | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="userRoleSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Administrator Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="admin-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="user-role-management.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">UM</span>
+                    User Management
+
+                </a>
+
+
+                <a href="user-role-management.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">RP</span>
+                    Roles & Permissions
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">C</span>
+                    Complaints
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">F</span>
+                    Feedback
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">SA</span>
+                    System Activities
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">AL</span>
+                    Audit Logs
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="userRoleLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="userRoleMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Administrator Portal</p>
+
+                        <h2>User & Role Management</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="admin-avatar">
+                            AD
+                        </div>
+
+                        <div>
+
+                            <strong>Administrator</strong>
+
+                            <span>System Administrator</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="user-role-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Access Management
+                    </p>
+
+                    <h1>
+                        Manage System Users & Roles
+                    </h1>
+
+                    <p>
+                        Review registered users, monitor account status
+                        and manage role assignments across the healthcare
+                        management system.
+                    </p>
+
+                </div>
+
+
+                <div class="user-role-header-icon">
+                    UR
+                </div>
+
+            </section>
+
+
+            <!-- SUMMARY -->
+            <section class="user-role-summary-grid">
+
+                <div class="user-role-summary-card">
+
+                    <div class="user-role-summary-icon">
+                        U
+                    </div>
+
+                    <div>
+
+                        <p>Total Users</p>
+
+                        <h3 id="totalUsersCount">
+                            8
+                        </h3>
+
+                        <span>Registered accounts</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="user-role-summary-card">
+
+                    <div class="user-role-summary-icon">
+                        A
+                    </div>
+
+                    <div>
+
+                        <p>Active</p>
+
+                        <h3 id="activeUsersCount">
+                            7
+                        </h3>
+
+                        <span>Active accounts</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="user-role-summary-card">
+
+                    <div class="user-role-summary-icon">
+                        I
+                    </div>
+
+                    <div>
+
+                        <p>Inactive</p>
+
+                        <h3 id="inactiveUsersCount">
+                            1
+                        </h3>
+
+                        <span>Inactive accounts</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="user-role-summary-card">
+
+                    <div class="user-role-summary-icon">
+                        R
+                    </div>
+
+                    <div>
+
+                        <p>System Roles</p>
+
+                        <h3>
+                            6
+                        </h3>
+
+                        <span>Configured user roles</span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ROLE OVERVIEW -->
+            <section class="user-role-overview-card">
+
+                <div class="user-role-overview-heading">
+
+                    <div>
+
+                        <h3>
+                            System Role Overview
+                        </h3>
+
+                        <p>
+                            Main authorized user groups
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="user-role-overview-grid">
+
+                    <div class="user-role-item">
+
+                        <span>P</span>
+
+                        <div>
+
+                            <h4>Patient</h4>
+
+                            <p>
+                                Personal healthcare access
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="user-role-item">
+
+                        <span>DR</span>
+
+                        <div>
+
+                            <h4>Doctor</h4>
+
+                            <p>
+                                Clinical consultation access
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="user-role-item">
+
+                        <span>RC</span>
+
+                        <div>
+
+                            <h4>Receptionist</h4>
+
+                            <p>
+                                Front desk management
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="user-role-item">
+
+                        <span>PH</span>
+
+                        <div>
+
+                            <h4>Pharmacist</h4>
+
+                            <p>
+                                Pharmacy management
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="user-role-item">
+
+                        <span>LT</span>
+
+                        <div>
+
+                            <h4>Lab Technician</h4>
+
+                            <p>
+                                Laboratory management
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="user-role-item">
+
+                        <span>AD</span>
+
+                        <div>
+
+                            <h4>Administrator</h4>
+
+                            <p>
+                                System administration
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FILTER -->
+            <section class="user-role-filter-card">
+
+                <div class="user-role-search-group">
+
+                    <label for="userSearch">
+                        Search User
+                    </label>
+
+                    <input
+                        type="text"
+                        id="userSearch"
+                        placeholder="Search by user ID or name..."
+                    >
+
+                </div>
+
+
+                <div class="user-role-filter-group">
+
+                    <label for="roleFilter">
+                        Role
+                    </label>
+
+                    <select id="roleFilter">
+
+                        <option value="all">
+                            All Roles
+                        </option>
+
+                        <option value="patient">
+                            Patient
+                        </option>
+
+                        <option value="doctor">
+                            Doctor
+                        </option>
+
+                        <option value="receptionist">
+                            Receptionist
+                        </option>
+
+                        <option value="pharmacist">
+                            Pharmacist
+                        </option>
+
+                        <option value="lab">
+                            Lab Technician
+                        </option>
+
+                        <option value="admin">
+                            Administrator
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="user-role-filter-group">
+
+                    <label for="userStatusFilter">
+                        Status
+                    </label>
+
+                    <select id="userStatusFilter">
+
+                        <option value="all">
+                            All Status
+                        </option>
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </section>
+
+
+            <!-- USER TABLE -->
+            <section class="user-role-table-card">
+
+                <div class="user-role-table-heading">
+
+                    <div>
+
+                        <h3>
+                            Registered Users
+                        </h3>
+
+                        <p id="userResultCount">
+                            Showing 8 users
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="user-role-table-wrapper">
+
+                    <table class="user-role-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>User ID</th>
+
+                                <th>User</th>
+
+                                <th>Role</th>
+
+                                <th>Account Status</th>
+
+                                <th>Last Activity</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                class="user-management-row"
+                                data-search="p1024 patient 1024"
+                                data-role="patient"
+                                data-status="active"
+                                data-id="P1024"
+                                data-name="Patient #P1024"
+                            >
+
+                                <td>#P1024</td>
+
+                                <td>
+
+                                    <strong>
+                                        Patient #P1024
+                                    </strong>
+
+                                    <span>
+                                        Patient Account
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-role-badge patient">
+                                        Patient
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-status-badge active">
+                                        Active
+                                    </span>
+
+                                </td>
+
+                                <td>11 Aug 2026</td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="user-manage-btn"
+                                    >
+                                        Manage
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="user-management-row"
+                                data-search="d201 sarah ahmed doctor"
+                                data-role="doctor"
+                                data-status="active"
+                                data-id="D201"
+                                data-name="Dr. Sarah Ahmed"
+                            >
+
+                                <td>#D201</td>
+
+                                <td>
+
+                                    <strong>
+                                        Dr. Sarah Ahmed
+                                    </strong>
+
+                                    <span>
+                                        Medical Professional
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-role-badge doctor">
+                                        Doctor
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-status-badge active">
+                                        Active
+                                    </span>
+
+                                </td>
+
+                                <td>11 Aug 2026</td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="user-manage-btn"
+                                    >
+                                        Manage
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="user-management-row"
+                                data-search="d202 mahmud hasan doctor"
+                                data-role="doctor"
+                                data-status="active"
+                                data-id="D202"
+                                data-name="Dr. Mahmud Hasan"
+                            >
+
+                                <td>#D202</td>
+
+                                <td>
+
+                                    <strong>
+                                        Dr. Mahmud Hasan
+                                    </strong>
+
+                                    <span>
+                                        Medical Professional
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-role-badge doctor">
+                                        Doctor
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-status-badge active">
+                                        Active
+                                    </span>
+
+                                </td>
+
+                                <td>10 Aug 2026</td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="user-manage-btn"
+                                    >
+                                        Manage
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="user-management-row"
+                                data-search="r301 receptionist"
+                                data-role="receptionist"
+                                data-status="active"
+                                data-id="R301"
+                                data-name="Receptionist #R301"
+                            >
+
+                                <td>#R301</td>
+
+                                <td>
+
+                                    <strong>
+                                        Receptionist #R301
+                                    </strong>
+
+                                    <span>
+                                        Front Desk Staff
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-role-badge receptionist">
+                                        Receptionist
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-status-badge active">
+                                        Active
+                                    </span>
+
+                                </td>
+
+                                <td>11 Aug 2026</td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="user-manage-btn"
+                                    >
+                                        Manage
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="user-management-row"
+                                data-search="ph401 pharmacist"
+                                data-role="pharmacist"
+                                data-status="active"
+                                data-id="PH401"
+                                data-name="Pharmacist #PH401"
+                            >
+
+                                <td>#PH401</td>
+
+                                <td>
+
+                                    <strong>
+                                        Pharmacist #PH401
+                                    </strong>
+
+                                    <span>
+                                        Pharmacy Staff
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-role-badge pharmacist">
+                                        Pharmacist
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-status-badge active">
+                                        Active
+                                    </span>
+
+                                </td>
+
+                                <td>11 Aug 2026</td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="user-manage-btn"
+                                    >
+                                        Manage
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="user-management-row"
+                                data-search="lt501 laboratory technician"
+                                data-role="lab"
+                                data-status="active"
+                                data-id="LT501"
+                                data-name="Lab Technician #LT501"
+                            >
+
+                                <td>#LT501</td>
+
+                                <td>
+
+                                    <strong>
+                                        Lab Technician #LT501
+                                    </strong>
+
+                                    <span>
+                                        Laboratory Staff
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-role-badge lab">
+                                        Lab Technician
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-status-badge active">
+                                        Active
+                                    </span>
+
+                                </td>
+
+                                <td>10 Aug 2026</td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="user-manage-btn"
+                                    >
+                                        Manage
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="user-management-row"
+                                data-search="p1087 patient 1087"
+                                data-role="patient"
+                                data-status="inactive"
+                                data-id="P1087"
+                                data-name="Patient #P1087"
+                            >
+
+                                <td>#P1087</td>
+
+                                <td>
+
+                                    <strong>
+                                        Patient #P1087
+                                    </strong>
+
+                                    <span>
+                                        Patient Account
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-role-badge patient">
+                                        Patient
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-status-badge inactive">
+                                        Inactive
+                                    </span>
+
+                                </td>
+
+                                <td>03 Aug 2026</td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="user-manage-btn"
+                                    >
+                                        Manage
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="user-management-row"
+                                data-search="ad001 administrator admin"
+                                data-role="admin"
+                                data-status="active"
+                                data-id="AD001"
+                                data-name="Administrator #AD001"
+                            >
+
+                                <td>#AD001</td>
+
+                                <td>
+
+                                    <strong>
+                                        Administrator #AD001
+                                    </strong>
+
+                                    <span>
+                                        System Administrator
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-role-badge admin">
+                                        Administrator
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="user-status-badge active">
+                                        Active
+                                    </span>
+
+                                </td>
+
+                                <td>11 Aug 2026</td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="user-manage-btn"
+                                    >
+                                        Manage
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- NO RESULTS -->
+                <div
+                    class="user-role-no-results"
+                    id="userRoleNoResults"
+                >
+
+                    <div>
+                        !
+                    </div>
+
+                    <h3>
+                        No Users Found
+                    </h3>
+
+                    <p>
+                        Try changing your search or user filters.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ACCESS NOTE -->
+            <section class="user-role-note-card">
+
+                <div class="user-role-note-icon">
+                    i
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Role-Based Access Control
+                    </h3>
+
+                    <p>
+                        Each user role should only access authorized
+                        system functions. Permanent role assignments,
+                        permissions and account changes will be enforced
+                        through backend authentication and authorization.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- MANAGE USER MODAL -->
+    <div
+        class="user-manage-modal"
+        id="userManageModal"
+    >
+
+        <div class="user-manage-modal-card">
+
+            <div class="user-manage-modal-header">
+
+                <div>
+
+                    <p>
+                        User Account Management
+                    </p>
+
+                    <h2 id="manageUserName">
+                        User
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="user-manage-modal-close"
+                    id="userManageModalClose"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="user-manage-id-card">
+
+                <span>
+                    User ID
+                </span>
+
+                <strong id="manageUserId">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="user-manage-form-group">
+
+                <label for="manageUserRole">
+                    Assigned Role
+                </label>
+
+                <select id="manageUserRole">
+
+                    <option value="patient">
+                        Patient
+                    </option>
+
+                    <option value="doctor">
+                        Doctor
+                    </option>
+
+                    <option value="receptionist">
+                        Receptionist
+                    </option>
+
+                    <option value="pharmacist">
+                        Pharmacist
+                    </option>
+
+                    <option value="lab">
+                        Lab Technician
+                    </option>
+
+                    <option value="admin">
+                        Administrator
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="user-manage-form-group">
+
+                <label for="manageUserStatus">
+                    Account Status
+                </label>
+
+                <select id="manageUserStatus">
+
+                    <option value="active">
+                        Active
+                    </option>
+
+                    <option value="inactive">
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                class="user-manage-error"
+                id="userManageError"
+            ></div>
+
+
+            <div class="user-manage-modal-actions">
+
+                <button
+                    type="button"
+                    class="user-manage-cancel-btn"
+                    id="userManageCancelBtn"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="user-manage-save-btn"
+                    id="userManageSaveBtn"
+                >
+                    Save Changes
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUCCESS MODAL -->
+    <div
+        class="user-role-success-modal"
+        id="userRoleSuccessModal"
+    >
+
+        <div class="user-role-success-card">
+
+            <div class="user-role-success-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                User Updated
+            </h2>
+
+
+            <p>
+                The user role and account status have been updated
+                successfully in this prototype session.
+            </p>
+
+
+            <button
+                type="button"
+                class="user-role-success-btn"
+                id="userRoleSuccessBtn"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="userRoleLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+
+            <p>
+                Are you sure you want to leave the Administrator Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="userRoleCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="userRoleConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/user-role-management.js"></script>
+
+</body>
+
+</html>
