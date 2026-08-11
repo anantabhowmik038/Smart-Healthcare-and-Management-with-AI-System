@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Administrator Dashboard | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="adminSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Administrator Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="admin-dashboard.html"
+                   class="dashboard-menu-link active">
+                    <span class="menu-icon">D</span>
+                    Dashboard
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">U</span>
+                    User Management
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">R</span>
+                    Roles & Permissions
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">C</span>
+                    Complaints
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">F</span>
+                    Feedback
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">SA</span>
+                    System Activities
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">AL</span>
+                    Audit Logs
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">S</span>
+                    System Settings
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="adminLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="adminMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+                    <div>
+                        <p>Administrator Portal</p>
+                        <h2>Welcome, Administrator</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-notification">
+                        5
+                    </div>
+
+                    <div class="dashboard-user-info">
+
+                        <div class="admin-avatar">
+                            AD
+                        </div>
+
+                        <div>
+                            <strong>Administrator</strong>
+                            <span>System Administrator</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- WELCOME -->
+            <section class="admin-welcome-card">
+
+                <div>
+
+                    <p class="small-title">
+                        System Administration
+                    </p>
+
+                    <h1>
+                        Monitor and Manage the Healthcare System
+                    </h1>
+
+                    <p>
+                        Manage users and roles, review complaints and feedback,
+                        monitor system activities and maintain administrative
+                        oversight through one centralized dashboard.
+                    </p>
+
+
+                    <div class="admin-welcome-actions">
+
+                        <a href="#" class="patient-main-btn">
+                            Manage Users
+                        </a>
+
+                        <a href="#" class="patient-outline-btn">
+                            View Audit Logs
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-welcome-symbol">
+                    AD
+                </div>
+
+            </section>
+
+
+            <!-- SUMMARY -->
+            <section class="admin-summary-grid">
+
+                <div class="admin-summary-card">
+
+                    <div class="admin-summary-icon">
+                        U
+                    </div>
+
+                    <div>
+                        <p>Total Users</p>
+                        <h3>248</h3>
+                        <span>Registered system users</span>
+                    </div>
+
+                </div>
+
+
+                <div class="admin-summary-card">
+
+                    <div class="admin-summary-icon">
+                        C
+                    </div>
+
+                    <div>
+                        <p>Open Complaints</p>
+                        <h3>7</h3>
+                        <span>Waiting for review</span>
+                    </div>
+
+                </div>
+
+
+                <div class="admin-summary-card">
+
+                    <div class="admin-summary-icon">
+                        A
+                    </div>
+
+                    <div>
+                        <p>Active Staff</p>
+                        <h3>32</h3>
+                        <span>Healthcare staff accounts</span>
+                    </div>
+
+                </div>
+
+
+                <div class="admin-summary-card">
+
+                    <div class="admin-summary-icon">
+                        AL
+                    </div>
+
+                    <div>
+                        <p>Activities Today</p>
+                        <h3>156</h3>
+                        <span>Recorded system activities</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- MAIN GRID -->
+            <section class="admin-dashboard-grid">
+
+                <!-- USER OVERVIEW -->
+                <div class="admin-dashboard-card">
+
+                    <div class="admin-card-heading">
+
+                        <div>
+                            <h3>User Overview</h3>
+                            <p>Registered users by system role</p>
+                        </div>
+
+                        <a href="#">
+                            Manage Users
+                        </a>
+
+                    </div>
+
+
+                    <div class="admin-user-row">
+
+                        <div class="admin-user-icon">
+                            P
+                        </div>
+
+                        <div class="admin-user-details">
+
+                            <h4>Patients</h4>
+                            <p>Registered patient accounts</p>
+
+                        </div>
+
+                        <strong>186</strong>
+
+                    </div>
+
+
+                    <div class="admin-user-row">
+
+                        <div class="admin-user-icon">
+                            D
+                        </div>
+
+                        <div class="admin-user-details">
+
+                            <h4>Doctors</h4>
+                            <p>Authorized doctor accounts</p>
+
+                        </div>
+
+                        <strong>18</strong>
+
+                    </div>
+
+
+                    <div class="admin-user-row">
+
+                        <div class="admin-user-icon">
+                            ST
+                        </div>
+
+                        <div class="admin-user-details">
+
+                            <h4>Healthcare Staff</h4>
+                            <p>Receptionist, pharmacy and laboratory staff</p>
+
+                        </div>
+
+                        <strong>26</strong>
+
+                    </div>
+
+
+                    <div class="admin-user-row">
+
+                        <div class="admin-user-icon">
+                            AD
+                        </div>
+
+                        <div class="admin-user-details">
+
+                            <h4>Administrators</h4>
+                            <p>System administration accounts</p>
+
+                        </div>
+
+                        <strong>3</strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+                <div class="admin-dashboard-card">
+
+                    <div class="admin-card-heading">
+
+                        <div>
+                            <h3>Quick Actions</h3>
+                            <p>Common administrative tasks</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="admin-quick-grid">
+
+                        <a href="#" class="admin-quick-item">
+
+                            <span>U</span>
+
+                            <div>
+                                <h4>Manage Users</h4>
+                                <p>Review user accounts</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="admin-quick-item">
+
+                            <span>R</span>
+
+                            <div>
+                                <h4>Manage Roles</h4>
+                                <p>Update permissions</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="admin-quick-item">
+
+                            <span>C</span>
+
+                            <div>
+                                <h4>Complaints</h4>
+                                <p>Review complaints</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="admin-quick-item">
+
+                            <span>AL</span>
+
+                            <div>
+                                <h4>Audit Logs</h4>
+                                <p>Monitor system records</p>
+                            </div>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SYSTEM NOTICE -->
+            <section class="admin-notice-card">
+
+                <div class="admin-notice-icon">
+                    i
+                </div>
+
+                <div class="admin-notice-content">
+
+                    <h3>
+                        Administrative Monitoring
+                    </h3>
+
+                    <p>
+                        Review system activities regularly and ensure that
+                        user roles and permissions remain appropriate.
+                        Administrative actions should be recorded in the
+                        system audit log.
+                    </p>
+
+                </div>
+
+                <a href="#" class="admin-notice-btn">
+                    View Activities
+                </a>
+
+            </section>
+
+
+            <!-- COMPLAINT TABLE -->
+            <section class="admin-dashboard-card admin-complaint-card">
+
+                <div class="admin-card-heading">
+
+                    <div>
+                        <h3>Recent Complaints</h3>
+                        <p>Complaints requiring administrative review</p>
+                    </div>
+
+                    <a href="#">
+                        View All
+                    </a>
+
+                </div>
+
+
+                <div class="admin-table-wrapper">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Complaint ID</th>
+                                <th>User</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+                                <td>#C1021</td>
+                                <td>Patient #P1024</td>
+                                <td>Appointment</td>
+
+                                <td>
+                                    <span class="admin-table-status pending">
+                                        Pending
+                                    </span>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>#C1020</td>
+                                <td>Patient #P1078</td>
+                                <td>Billing</td>
+
+                                <td>
+                                    <span class="admin-table-status review">
+                                        Under Review
+                                    </span>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>#C1018</td>
+                                <td>Patient #P1116</td>
+                                <td>Service</td>
+
+                                <td>
+                                    <span class="admin-table-status resolved">
+                                        Resolved
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- RECENT ACTIVITY -->
+            <section class="admin-dashboard-card admin-activity-card">
+
+                <div class="admin-card-heading">
+
+                    <div>
+                        <h3>Recent System Activity</h3>
+                        <p>Latest administrative and system events</p>
+                    </div>
+
+                </div>
+
+
+                <div class="admin-activity-row">
+
+                    <div class="admin-activity-dot"></div>
+
+                    <div>
+
+                        <h4>User Role Updated</h4>
+
+                        <p>
+                            A healthcare staff role and permission
+                            record was updated.
+                        </p>
+
+                    </div>
+
+                    <span>10 min ago</span>
+
+                </div>
+
+
+                <div class="admin-activity-row">
+
+                    <div class="admin-activity-dot"></div>
+
+                    <div>
+
+                        <h4>Complaint Reviewed</h4>
+
+                        <p>
+                            Complaint #C1020 was moved to
+                            Under Review status.
+                        </p>
+
+                    </div>
+
+                    <span>30 min ago</span>
+
+                </div>
+
+
+                <div class="admin-activity-row">
+
+                    <div class="admin-activity-dot"></div>
+
+                    <div>
+
+                        <h4>New User Account Created</h4>
+
+                        <p>
+                            A new patient account was registered
+                            in the healthcare system.
+                        </p>
+
+                    </div>
+
+                    <span>1 hour ago</span>
+
+                </div>
+
+
+                <div class="admin-activity-row">
+
+                    <div class="admin-activity-dot"></div>
+
+                    <div>
+
+                        <h4>Audit Record Generated</h4>
+
+                        <p>
+                            A new administrative activity was
+                            added to the audit log.
+                        </p>
+
+                    </div>
+
+                    <span>2 hours ago</span>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div class="logout-modal" id="adminLogoutModal">
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Administrator Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="adminCancelLogout"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="adminConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/admin-dashboard.js"></script>
+
+</body>
+
+</html>
