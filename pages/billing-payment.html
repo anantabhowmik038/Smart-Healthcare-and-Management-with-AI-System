@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Billing & Payment | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="billingSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Patient Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="patient-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="patient-profile.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">P</span>
+                    My Profile
+
+                </a>
+
+
+                <a href="doctor-availability.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">DA</span>
+                    Doctor Availability
+
+                </a>
+
+
+                <a href="appointment-booking.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">BA</span>
+                    Book Appointment
+
+                </a>
+
+
+                <a href="appointment-management.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">A</span>
+                    My Appointments
+
+                </a>
+
+
+                <a href="ai-symptom-assessment.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">AI</span>
+                    AI Symptom Assessment
+
+                </a>
+
+
+                <a href="medical-records.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">MR</span>
+                    Medical Records
+
+                </a>
+
+
+                <a href="billing-payment.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">BP</span>
+                    Billing & Payment
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="billingLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="billingMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Patient Portal</p>
+
+                        <h2>Billing & Payment</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="dashboard-user-avatar">
+                            P
+                        </div>
+
+                        <div>
+
+                            <strong>Patient</strong>
+
+                            <span>Patient Account</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="billing-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Billing Management
+                    </p>
+
+                    <h1>
+                        Manage Healthcare Bills
+                    </h1>
+
+                    <p>
+                        Review consultation and laboratory bills,
+                        check payment status and complete prototype
+                        payment transactions.
+                    </p>
+
+                </div>
+
+
+                <div class="billing-header-icon">
+                    BP
+                </div>
+
+            </section>
+
+
+            <!-- SUMMARY -->
+            <section class="billing-summary-grid">
+
+                <div class="billing-summary-card">
+
+                    <div class="billing-summary-icon">
+                        T
+                    </div>
+
+                    <div>
+
+                        <p>Total Bills</p>
+
+                        <h3 id="billingTotalCount">
+                            5
+                        </h3>
+
+                        <span>Billing records</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="billing-summary-card">
+
+                    <div class="billing-summary-icon">
+                        P
+                    </div>
+
+                    <div>
+
+                        <p>Pending Bills</p>
+
+                        <h3 id="billingPendingCount">
+                            2
+                        </h3>
+
+                        <span>Awaiting payment</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="billing-summary-card">
+
+                    <div class="billing-summary-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <p>Paid Bills</p>
+
+                        <h3 id="billingPaidCount">
+                            3
+                        </h3>
+
+                        <span>Completed payments</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="billing-summary-card">
+
+                    <div class="billing-summary-icon">
+                        ৳
+                    </div>
+
+                    <div>
+
+                        <p>Pending Amount</p>
+
+                        <h3 id="billingPendingAmount">
+                            ৳3,000
+                        </h3>
+
+                        <span>Outstanding balance</span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FILTER -->
+            <section class="billing-filter-card">
+
+                <div>
+
+                    <h3>
+                        Billing History
+                    </h3>
+
+                    <p>
+                        Review and manage your billing records
+                    </p>
+
+                </div>
+
+
+                <div class="billing-filter-buttons">
+
+                    <button
+                        type="button"
+                        class="billing-filter-btn active"
+                        data-filter="all"
+                    >
+                        All
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="billing-filter-btn"
+                        data-filter="pending"
+                    >
+                        Pending
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="billing-filter-btn"
+                        data-filter="paid"
+                    >
+                        Paid
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- BILL LIST -->
+            <section class="billing-list" id="billingList">
+
+                <!-- BILL 1 -->
+                <article
+                    class="billing-item-card"
+                    data-status="pending"
+                    data-id="#BILL2081"
+                    data-service="General Consultation"
+                    data-date="10 August 2026"
+                    data-amount="1500"
+                >
+
+                    <div class="billing-item-icon">
+                        C
+                    </div>
+
+
+                    <div class="billing-item-main">
+
+                        <div class="billing-item-top">
+
+                            <div>
+
+                                <h3>
+                                    General Consultation
+                                </h3>
+
+                                <p>
+                                    Bill ID: #BILL2081
+                                </p>
+
+                            </div>
+
+
+                            <span class="billing-status pending">
+                                Pending
+                            </span>
+
+                        </div>
+
+
+                        <div class="billing-item-details">
+
+                            <div>
+
+                                <span>Date</span>
+
+                                <strong>
+                                    10 Aug 2026
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Appointment</span>
+
+                                <strong>
+                                    #APT2041
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Service</span>
+
+                                <strong>
+                                    Consultation
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Amount</span>
+
+                                <strong class="billing-amount">
+                                    ৳1,500
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="billing-item-actions">
+
+                            <button
+                                type="button"
+                                class="billing-details-btn"
+                            >
+                                View Details
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="billing-pay-btn"
+                            >
+                                Pay Now
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- BILL 2 -->
+                <article
+                    class="billing-item-card"
+                    data-status="pending"
+                    data-id="#BILL2075"
+                    data-service="Laboratory Test"
+                    data-date="08 August 2026"
+                    data-amount="1500"
+                >
+
+                    <div class="billing-item-icon">
+                        LT
+                    </div>
+
+
+                    <div class="billing-item-main">
+
+                        <div class="billing-item-top">
+
+                            <div>
+
+                                <h3>
+                                    Laboratory Test
+                                </h3>
+
+                                <p>
+                                    Bill ID: #BILL2075
+                                </p>
+
+                            </div>
+
+
+                            <span class="billing-status pending">
+                                Pending
+                            </span>
+
+                        </div>
+
+
+                        <div class="billing-item-details">
+
+                            <div>
+
+                                <span>Date</span>
+
+                                <strong>
+                                    08 Aug 2026
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Reference</span>
+
+                                <strong>
+                                    #LTR2056
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Service</span>
+
+                                <strong>
+                                    Laboratory
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Amount</span>
+
+                                <strong class="billing-amount">
+                                    ৳1,500
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="billing-item-actions">
+
+                            <button
+                                type="button"
+                                class="billing-details-btn"
+                            >
+                                View Details
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="billing-pay-btn"
+                            >
+                                Pay Now
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- BILL 3 -->
+                <article
+                    class="billing-item-card"
+                    data-status="paid"
+                    data-id="#BILL2048"
+                    data-service="Follow-up Consultation"
+                    data-date="21 July 2026"
+                    data-amount="1200"
+                >
+
+                    <div class="billing-item-icon">
+                        C
+                    </div>
+
+
+                    <div class="billing-item-main">
+
+                        <div class="billing-item-top">
+
+                            <div>
+
+                                <h3>
+                                    Follow-up Consultation
+                                </h3>
+
+                                <p>
+                                    Bill ID: #BILL2048
+                                </p>
+
+                            </div>
+
+
+                            <span class="billing-status paid">
+                                Paid
+                            </span>
+
+                        </div>
+
+
+                        <div class="billing-item-details">
+
+                            <div>
+
+                                <span>Date</span>
+
+                                <strong>
+                                    21 Jul 2026
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Appointment</span>
+
+                                <strong>
+                                    #APT1987
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Service</span>
+
+                                <strong>
+                                    Consultation
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Amount</span>
+
+                                <strong class="billing-amount">
+                                    ৳1,200
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="billing-item-actions">
+
+                            <button
+                                type="button"
+                                class="billing-details-btn"
+                            >
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- BILL 4 -->
+                <article
+                    class="billing-item-card"
+                    data-status="paid"
+                    data-id="#BILL2029"
+                    data-service="Routine Check-up"
+                    data-date="08 July 2026"
+                    data-amount="1000"
+                >
+
+                    <div class="billing-item-icon">
+                        C
+                    </div>
+
+
+                    <div class="billing-item-main">
+
+                        <div class="billing-item-top">
+
+                            <div>
+
+                                <h3>
+                                    Routine Check-up
+                                </h3>
+
+                                <p>
+                                    Bill ID: #BILL2029
+                                </p>
+
+                            </div>
+
+
+                            <span class="billing-status paid">
+                                Paid
+                            </span>
+
+                        </div>
+
+
+                        <div class="billing-item-details">
+
+                            <div>
+
+                                <span>Date</span>
+
+                                <strong>
+                                    08 Jul 2026
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Appointment</span>
+
+                                <strong>
+                                    #APT1954
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Service</span>
+
+                                <strong>
+                                    Consultation
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Amount</span>
+
+                                <strong class="billing-amount">
+                                    ৳1,000
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="billing-item-actions">
+
+                            <button
+                                type="button"
+                                class="billing-details-btn"
+                            >
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- BILL 5 -->
+                <article
+                    class="billing-item-card"
+                    data-status="paid"
+                    data-id="#BILL2017"
+                    data-service="Laboratory Test"
+                    data-date="18 June 2026"
+                    data-amount="1800"
+                >
+
+                    <div class="billing-item-icon">
+                        LT
+                    </div>
+
+
+                    <div class="billing-item-main">
+
+                        <div class="billing-item-top">
+
+                            <div>
+
+                                <h3>
+                                    Laboratory Test
+                                </h3>
+
+                                <p>
+                                    Bill ID: #BILL2017
+                                </p>
+
+                            </div>
+
+
+                            <span class="billing-status paid">
+                                Paid
+                            </span>
+
+                        </div>
+
+
+                        <div class="billing-item-details">
+
+                            <div>
+
+                                <span>Date</span>
+
+                                <strong>
+                                    18 Jun 2026
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Reference</span>
+
+                                <strong>
+                                    #LTR1988
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Service</span>
+
+                                <strong>
+                                    Laboratory
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Amount</span>
+
+                                <strong class="billing-amount">
+                                    ৳1,800
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="billing-item-actions">
+
+                            <button
+                                type="button"
+                                class="billing-details-btn"
+                            >
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- NO RESULTS -->
+            <div
+                class="billing-no-results"
+                id="billingNoResults"
+            >
+
+                <div>
+                    i
+                </div>
+
+                <h3>
+                    No Billing Records Found
+                </h3>
+
+                <p>
+                    No bills are available for the selected status.
+                </p>
+
+            </div>
+
+
+            <!-- PAYMENT INFORMATION -->
+            <section class="billing-payment-note">
+
+                <div class="billing-payment-note-icon">
+                    i
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Payment Gateway Integration
+                    </h3>
+
+                    <p>
+                        Payments on this prototype are simulated only.
+                        Real transactions will later be processed securely
+                        through an authorized external payment gateway.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- BILL DETAILS MODAL -->
+    <div
+        class="billing-details-modal"
+        id="billingDetailsModal"
+    >
+
+        <div class="billing-details-modal-card">
+
+            <div class="billing-modal-header">
+
+                <div>
+
+                    <p>
+                        Billing Information
+                    </p>
+
+                    <h2 id="detailsService">
+                        Service
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="billing-modal-close"
+                    id="billingDetailsClose"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="billing-modal-id">
+
+                <span>
+                    Bill ID
+                </span>
+
+                <strong id="detailsBillId">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="billing-modal-grid">
+
+                <div>
+
+                    <span>Patient</span>
+
+                    <strong>
+                        #P1024
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Billing Date</span>
+
+                    <strong id="detailsDate">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Service</span>
+
+                    <strong id="detailsServiceName">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Payment Status</span>
+
+                    <strong id="detailsStatus">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="billing-modal-total">
+
+                <span>
+                    Total Amount
+                </span>
+
+                <strong id="detailsAmount">
+                    ৳0
+                </strong>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="billing-modal-done"
+                id="billingDetailsDone"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- PAYMENT MODAL -->
+    <div
+        class="billing-pay-modal"
+        id="billingPayModal"
+    >
+
+        <div class="billing-pay-modal-card">
+
+            <div class="billing-modal-header">
+
+                <div>
+
+                    <p>
+                        Prototype Payment
+                    </p>
+
+                    <h2>
+                        Complete Payment
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="billing-modal-close"
+                    id="billingPayClose"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="billing-pay-summary">
+
+                <div>
+
+                    <span>Bill ID</span>
+
+                    <strong id="paymentBillId">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Amount</span>
+
+                    <strong id="paymentAmount">
+                        ৳0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="billing-payment-method">
+
+                <label for="paymentMethod">
+                    Payment Method
+                </label>
+
+                <select id="paymentMethod">
+
+                    <option value="">
+                        Select Payment Method
+                    </option>
+
+                    <option value="card">
+                        Card Payment
+                    </option>
+
+                    <option value="mobile">
+                        Mobile Banking
+                    </option>
+
+                    <option value="gateway">
+                        Online Payment Gateway
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="billing-demo-message">
+
+                <div>
+                    i
+                </div>
+
+                <p>
+                    This is a prototype transaction. Do not enter
+                    real card, bank or mobile financial information.
+                </p>
+
+            </div>
+
+
+            <div
+                class="billing-payment-error"
+                id="billingPaymentError"
+            ></div>
+
+
+            <div class="billing-payment-actions">
+
+                <button
+                    type="button"
+                    class="billing-payment-cancel"
+                    id="billingPaymentCancel"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="billing-payment-confirm"
+                    id="billingPaymentConfirm"
+                >
+                    Confirm Demo Payment
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUCCESS MODAL -->
+    <div
+        class="billing-success-modal"
+        id="billingSuccessModal"
+    >
+
+        <div class="billing-success-card">
+
+            <div class="billing-success-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                Payment Successful
+            </h2>
+
+
+            <p>
+                The bill has been marked as paid successfully
+                in this prototype session.
+            </p>
+
+
+            <div class="billing-success-info">
+
+                <span>
+                    Transaction Reference
+                </span>
+
+                <strong id="billingTransactionId">
+                    -
+                </strong>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="billing-success-btn"
+                id="billingSuccessBtn"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="billingLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+
+            <p>
+                Are you sure you want to leave the Patient Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="billingCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="billingConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/billing-payment.js"></script>
+
+</body>
+
+</html>
