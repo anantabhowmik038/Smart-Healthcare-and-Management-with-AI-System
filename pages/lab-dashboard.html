@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laboratory Technician Dashboard | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="labSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Laboratory Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="lab-dashboard.html"
+                   class="dashboard-menu-link active">
+                    <span class="menu-icon">D</span>
+                    Dashboard
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">TR</span>
+                    Test Requests
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">RT</span>
+                    Record Test Result
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">LR</span>
+                    Laboratory Reports
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">PT</span>
+                    Patient Test Information
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">H</span>
+                    Test History
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="labLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="labMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+                    <div>
+                        <p>Laboratory Portal</p>
+                        <h2>Welcome, Laboratory Technician</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-notification">
+                        4
+                    </div>
+
+                    <div class="dashboard-user-info">
+
+                        <div class="lab-avatar">
+                            LT
+                        </div>
+
+                        <div>
+                            <strong>Lab Technician</strong>
+                            <span>Laboratory Staff</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- WELCOME -->
+            <section class="lab-welcome-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Laboratory Management
+                    </p>
+
+                    <h1>
+                        Manage Laboratory Tests Efficiently
+                    </h1>
+
+                    <p>
+                        Review laboratory test requests, record test results,
+                        generate laboratory reports and maintain accurate
+                        patient test information through one centralized portal.
+                    </p>
+
+
+                    <div class="lab-welcome-actions">
+
+                        <a href="#" class="patient-main-btn">
+                            View Test Requests
+                        </a>
+
+                        <a href="#" class="patient-outline-btn">
+                            Record Test Result
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="lab-welcome-symbol">
+                    LT
+                </div>
+
+            </section>
+
+
+            <!-- SUMMARY -->
+            <section class="lab-summary-grid">
+
+                <div class="lab-summary-card">
+
+                    <div class="lab-summary-icon">
+                        TR
+                    </div>
+
+                    <div>
+                        <p>Pending Test Requests</p>
+                        <h3>9</h3>
+                        <span>Awaiting laboratory processing</span>
+                    </div>
+
+                </div>
+
+
+                <div class="lab-summary-card">
+
+                    <div class="lab-summary-icon">
+                        IP
+                    </div>
+
+                    <div>
+                        <p>Tests In Progress</p>
+                        <h3>5</h3>
+                        <span>Currently being processed</span>
+                    </div>
+
+                </div>
+
+
+                <div class="lab-summary-card">
+
+                    <div class="lab-summary-icon">
+                        C
+                    </div>
+
+                    <div>
+                        <p>Completed Today</p>
+                        <h3>14</h3>
+                        <span>Laboratory tests completed</span>
+                    </div>
+
+                </div>
+
+
+                <div class="lab-summary-card">
+
+                    <div class="lab-summary-icon">
+                        LR
+                    </div>
+
+                    <div>
+                        <p>Reports Ready</p>
+                        <h3>6</h3>
+                        <span>Ready for doctor review</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- MAIN GRID -->
+            <section class="lab-dashboard-grid">
+
+                <!-- TEST REQUESTS -->
+                <div class="lab-dashboard-card">
+
+                    <div class="lab-card-heading">
+
+                        <div>
+                            <h3>Recent Test Requests</h3>
+                            <p>Laboratory tests waiting for processing</p>
+                        </div>
+
+                        <a href="#">
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="lab-test-row">
+
+                        <div class="lab-test-icon">
+                            CBC
+                        </div>
+
+                        <div class="lab-test-details">
+
+                            <h4>Complete Blood Count</h4>
+
+                            <p>Patient #P1024</p>
+
+                            <span>Requested by Dr. Sarah Ahmed</span>
+
+                        </div>
+
+                        <div class="lab-status pending">
+                            Pending
+                        </div>
+
+                    </div>
+
+
+                    <div class="lab-test-row">
+
+                        <div class="lab-test-icon">
+                            BG
+                        </div>
+
+                        <div class="lab-test-details">
+
+                            <h4>Blood Glucose Test</h4>
+
+                            <p>Patient #P1078</p>
+
+                            <span>Requested by Dr. Mahmud Hasan</span>
+
+                        </div>
+
+                        <div class="lab-status progress">
+                            In Progress
+                        </div>
+
+                    </div>
+
+
+                    <div class="lab-test-row">
+
+                        <div class="lab-test-icon">
+                            LP
+                        </div>
+
+                        <div class="lab-test-details">
+
+                            <h4>Lipid Profile</h4>
+
+                            <p>Patient #P1135</p>
+
+                            <span>Requested by Dr. Sarah Ahmed</span>
+
+                        </div>
+
+                        <div class="lab-status pending">
+                            Pending
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+                <div class="lab-dashboard-card">
+
+                    <div class="lab-card-heading">
+
+                        <div>
+                            <h3>Quick Actions</h3>
+                            <p>Common laboratory tasks</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="lab-quick-grid">
+
+                        <a href="#" class="lab-quick-item">
+
+                            <span>TR</span>
+
+                            <div>
+                                <h4>Test Requests</h4>
+                                <p>Review requested tests</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="lab-quick-item">
+
+                            <span>RT</span>
+
+                            <div>
+                                <h4>Record Result</h4>
+                                <p>Enter laboratory result</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="lab-quick-item">
+
+                            <span>LR</span>
+
+                            <div>
+                                <h4>Generate Report</h4>
+                                <p>Create laboratory report</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="lab-quick-item">
+
+                            <span>H</span>
+
+                            <div>
+                                <h4>Test History</h4>
+                                <p>Review previous tests</p>
+                            </div>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- LAB NOTICE -->
+            <section class="lab-notice-card">
+
+                <div class="lab-notice-icon">
+                    i
+                </div>
+
+                <div class="lab-notice-content">
+
+                    <h3>
+                        Laboratory Record Reminder
+                    </h3>
+
+                    <p>
+                        Verify the correct patient and test request before
+                        recording laboratory results. Completed results should
+                        be stored accurately before generating the final report.
+                    </p>
+
+                </div>
+
+                <a href="#" class="lab-notice-btn">
+                    View Requests
+                </a>
+
+            </section>
+
+
+            <!-- TEST TABLE -->
+            <section class="lab-dashboard-card lab-test-table-card">
+
+                <div class="lab-card-heading">
+
+                    <div>
+                        <h3>Laboratory Test Overview</h3>
+                        <p>Current test processing information</p>
+                    </div>
+
+                    <a href="#">
+                        Manage Tests
+                    </a>
+
+                </div>
+
+
+                <div class="lab-table-wrapper">
+
+                    <table class="lab-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Test ID</th>
+                                <th>Patient</th>
+                                <th>Test Name</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+                                <td>#LT2041</td>
+                                <td>#P1024</td>
+                                <td>Complete Blood Count</td>
+                                <td>
+                                    <span class="lab-table-status pending">
+                                        Pending
+                                    </span>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>#LT2042</td>
+                                <td>#P1078</td>
+                                <td>Blood Glucose Test</td>
+                                <td>
+                                    <span class="lab-table-status progress">
+                                        In Progress
+                                    </span>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>#LT2038</td>
+                                <td>#P1092</td>
+                                <td>Urine Analysis</td>
+                                <td>
+                                    <span class="lab-table-status completed">
+                                        Completed
+                                    </span>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>#LT2035</td>
+                                <td>#P1116</td>
+                                <td>Lipid Profile</td>
+                                <td>
+                                    <span class="lab-table-status completed">
+                                        Completed
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- RECENT ACTIVITY -->
+            <section class="lab-dashboard-card lab-activity-card">
+
+                <div class="lab-card-heading">
+
+                    <div>
+                        <h3>Recent Laboratory Activity</h3>
+                        <p>Latest laboratory updates</p>
+                    </div>
+
+                </div>
+
+
+                <div class="lab-activity-row">
+
+                    <div class="lab-activity-dot"></div>
+
+                    <div>
+
+                        <h4>Test Result Recorded</h4>
+
+                        <p>
+                            Laboratory result for Test #LT2038 was recorded.
+                        </p>
+
+                    </div>
+
+                    <span>15 min ago</span>
+
+                </div>
+
+
+                <div class="lab-activity-row">
+
+                    <div class="lab-activity-dot"></div>
+
+                    <div>
+
+                        <h4>Laboratory Report Generated</h4>
+
+                        <p>
+                            A completed test report is now available
+                            for doctor review.
+                        </p>
+
+                    </div>
+
+                    <span>40 min ago</span>
+
+                </div>
+
+
+                <div class="lab-activity-row">
+
+                    <div class="lab-activity-dot"></div>
+
+                    <div>
+
+                        <h4>New Test Request Received</h4>
+
+                        <p>
+                            A new laboratory test request was submitted
+                            by an authorized doctor.
+                        </p>
+
+                    </div>
+
+                    <span>1 hour ago</span>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div class="logout-modal" id="labLogoutModal">
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Laboratory Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="labCancelLogout"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="labConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/lab-dashboard.js"></script>
+
+</body>
+
+</html>
