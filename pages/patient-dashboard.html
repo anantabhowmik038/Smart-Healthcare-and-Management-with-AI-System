@@ -15,11 +15,11 @@
     <div class="dashboard-layout">
 
         <!-- ================= SIDEBAR ================= -->
-        <aside class="dashboard-sidebar">
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
 
-            <div class="sidebar-logo">
+            <div class="dashboard-sidebar-header">
 
-                <a href="../index.html" class="logo">
+                <a href="../index.html" class="dashboard-logo">
                     Smart<span>Healthcare</span>
                 </a>
 
@@ -28,95 +28,105 @@
             </div>
 
 
-            <nav class="sidebar-menu">
+            <nav class="dashboard-menu">
 
-                <a href="patient-dashboard.html" class="sidebar-link active">
-                    <span>⌂</span>
+                <a href="patient-dashboard.html" class="dashboard-menu-link active">
+                    <span class="menu-icon">D</span>
                     Dashboard
                 </a>
 
-                <a href="patient-profile.html" class="sidebar-link">
-                    <span>◉</span>
+                <a href="patient-profile.html" class="dashboard-menu-link">
+                    <span class="menu-icon">P</span>
                     My Profile
                 </a>
 
-                <a href="#" class="sidebar-link">
-                    <span>▣</span>
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">A</span>
                     Appointments
                 </a>
 
-                <a href="#" class="sidebar-link">
-                    <span>✦</span>
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">AI</span>
                     AI Symptom Assessment
                 </a>
 
-                <a href="#" class="sidebar-link">
-                    <span>▤</span>
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">MR</span>
                     Medical Records
                 </a>
 
-                <a href="#" class="sidebar-link">
-                    <span>Rx</span>
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">Rx</span>
                     Prescriptions
                 </a>
 
-                <a href="#" class="sidebar-link">
-                    <span>⌁</span>
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">LR</span>
                     Laboratory Reports
                 </a>
 
-                <a href="#" class="sidebar-link">
-                    <span>৳</span>
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">B</span>
                     Billing & Payment
                 </a>
 
-                <a href="#" class="sidebar-link">
-                    <span>!</span>
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">F</span>
                     Feedback & Complaint
                 </a>
 
             </nav>
 
 
-            <div class="sidebar-bottom">
+            <div class="dashboard-sidebar-footer">
 
-                <a href="login.html" class="logout-link">
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="logoutBtn"
+                >
                     Logout
-                </a>
+                </button>
 
             </div>
 
         </aside>
 
 
-        <!-- ================= MAIN AREA ================= -->
+        <!-- ================= MAIN CONTENT ================= -->
         <main class="dashboard-main">
 
-            <!-- TOPBAR -->
+            <!-- ================= TOPBAR ================= -->
             <header class="dashboard-topbar">
 
-                <div>
+                <div class="dashboard-topbar-left">
 
-                    <p class="dashboard-small-text">
-                        Patient Portal
-                    </p>
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="dashboardMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
 
-                    <h2>
-                        Welcome, Patient
-                    </h2>
+                    <div>
+                        <p>Patient Portal</p>
+                        <h2>Welcome Back</h2>
+                    </div>
 
                 </div>
 
 
-                <div class="topbar-profile">
+                <div class="dashboard-user">
 
-                    <div class="notification-icon">
-                        🔔
+                    <div class="dashboard-notification">
+                        1
                     </div>
 
-                    <a href="patient-profile.html" class="profile-summary">
+                    <a href="patient-profile.html" class="dashboard-user-info">
 
-                        <div class="profile-avatar">
+                        <div class="dashboard-user-avatar">
                             P
                         </div>
 
@@ -132,10 +142,10 @@
             </header>
 
 
-            <!-- ================= WELCOME BANNER ================= -->
-            <section class="dashboard-welcome">
+            <!-- ================= WELCOME SECTION ================= -->
+            <section class="patient-welcome-card">
 
-                <div>
+                <div class="patient-welcome-content">
 
                     <p class="small-title">
                         Smart Healthcare
@@ -146,18 +156,19 @@
                     </h1>
 
                     <p>
-                        Manage appointments, access medical information,
-                        review prescriptions and laboratory reports,
-                        and receive AI-assisted preliminary health guidance.
+                        Manage appointments, access healthcare information,
+                        review prescriptions and laboratory reports, and use
+                        AI-assisted preliminary symptom assessment services.
                     </p>
 
-                    <div class="welcome-buttons">
 
-                        <a href="#" class="dashboard-primary-btn">
+                    <div class="patient-welcome-actions">
+
+                        <a href="#" class="patient-main-btn">
                             Book Appointment
                         </a>
 
-                        <a href="#" class="dashboard-outline-btn">
+                        <a href="#" class="patient-outline-btn">
                             AI Symptom Assessment
                         </a>
 
@@ -166,35 +177,35 @@
                 </div>
 
 
-                <div class="welcome-symbol">
+                <div class="patient-welcome-icon">
                     +
                 </div>
 
             </section>
 
 
-            <!-- ================= SUMMARY CARDS ================= -->
-            <section class="dashboard-stats">
+            <!-- ================= SUMMARY ================= -->
+            <section class="patient-summary-grid">
 
-                <div class="stat-card">
+                <div class="patient-summary-card">
 
-                    <div class="stat-icon">
-                        01
+                    <div class="patient-summary-icon">
+                        A
                     </div>
 
                     <div>
                         <p>Upcoming Appointments</p>
                         <h3>2</h3>
-                        <span>Next: 15 Aug 2026</span>
+                        <span>Next appointment available</span>
                     </div>
 
                 </div>
 
 
-                <div class="stat-card">
+                <div class="patient-summary-card">
 
-                    <div class="stat-icon">
-                        02
+                    <div class="patient-summary-icon">
+                        Rx
                     </div>
 
                     <div>
@@ -206,10 +217,10 @@
                 </div>
 
 
-                <div class="stat-card">
+                <div class="patient-summary-card">
 
-                    <div class="stat-icon">
-                        03
+                    <div class="patient-summary-icon">
+                        LR
                     </div>
 
                     <div>
@@ -221,16 +232,16 @@
                 </div>
 
 
-                <div class="stat-card">
+                <div class="patient-summary-card">
 
-                    <div class="stat-icon">
-                        04
+                    <div class="patient-summary-icon">
+                        B
                     </div>
 
                     <div>
                         <p>Pending Bills</p>
                         <h3>1</h3>
-                        <span>Payment status available</span>
+                        <span>Check payment information</span>
                     </div>
 
                 </div>
@@ -238,22 +249,17 @@
             </section>
 
 
-            <!-- ================= MAIN CONTENT GRID ================= -->
-            <section class="dashboard-content-grid">
+            <!-- ================= CONTENT GRID ================= -->
+            <section class="patient-dashboard-grid">
 
-                <!-- UPCOMING APPOINTMENTS -->
-                <div class="dashboard-panel">
+                <!-- APPOINTMENTS -->
+                <div class="patient-dashboard-card">
 
-                    <div class="panel-header">
+                    <div class="patient-card-heading">
 
                         <div>
-                            <h3>
-                                Upcoming Appointments
-                            </h3>
-
-                            <p>
-                                Your scheduled medical consultations
-                            </p>
+                            <h3>Upcoming Appointments</h3>
+                            <p>Your scheduled consultations</p>
                         </div>
 
                         <a href="#">
@@ -263,64 +269,48 @@
                     </div>
 
 
-                    <div class="appointment-item">
+                    <div class="patient-appointment">
 
-                        <div class="appointment-date">
+                        <div class="appointment-date-box">
                             <strong>15</strong>
                             <span>AUG</span>
                         </div>
 
+                        <div class="appointment-details">
 
-                        <div class="appointment-info">
+                            <h4>General Consultation</h4>
 
-                            <h4>
-                                General Consultation
-                            </h4>
+                            <p>Dr. Sarah Ahmed</p>
 
-                            <p>
-                                Dr. Sarah Ahmed
-                            </p>
-
-                            <span>
-                                10:30 AM
-                            </span>
+                            <span>10:30 AM</span>
 
                         </div>
 
-
-                        <div class="status-badge confirmed">
+                        <div class="appointment-status confirmed">
                             Confirmed
                         </div>
 
                     </div>
 
 
-                    <div class="appointment-item">
+                    <div class="patient-appointment">
 
-                        <div class="appointment-date">
+                        <div class="appointment-date-box">
                             <strong>22</strong>
                             <span>AUG</span>
                         </div>
 
+                        <div class="appointment-details">
 
-                        <div class="appointment-info">
+                            <h4>Follow-up Consultation</h4>
 
-                            <h4>
-                                Follow-up Consultation
-                            </h4>
+                            <p>Dr. Mahmud Hasan</p>
 
-                            <p>
-                                Dr. Mahmud Hasan
-                            </p>
-
-                            <span>
-                                04:00 PM
-                            </span>
+                            <span>04:00 PM</span>
 
                         </div>
 
-
-                        <div class="status-badge pending">
+                        <div class="appointment-status pending">
                             Pending
                         </div>
 
@@ -330,28 +320,23 @@
 
 
                 <!-- QUICK ACTIONS -->
-                <div class="dashboard-panel">
+                <div class="patient-dashboard-card">
 
-                    <div class="panel-header">
+                    <div class="patient-card-heading">
 
                         <div>
-                            <h3>
-                                Quick Actions
-                            </h3>
-
-                            <p>
-                                Frequently used healthcare services
-                            </p>
+                            <h3>Quick Actions</h3>
+                            <p>Frequently used services</p>
                         </div>
 
                     </div>
 
 
-                    <div class="quick-actions-grid">
+                    <div class="patient-quick-grid">
 
-                        <a href="#" class="quick-action-card">
+                        <a href="#" class="patient-quick-item">
 
-                            <span>+</span>
+                            <span>A</span>
 
                             <div>
                                 <h4>Book Appointment</h4>
@@ -361,37 +346,37 @@
                         </a>
 
 
-                        <a href="#" class="quick-action-card">
+                        <a href="#" class="patient-quick-item">
 
                             <span>AI</span>
 
                             <div>
                                 <h4>AI Assessment</h4>
-                                <p>Submit symptom information</p>
+                                <p>Submit symptoms</p>
                             </div>
 
                         </a>
 
 
-                        <a href="#" class="quick-action-card">
+                        <a href="#" class="patient-quick-item">
 
                             <span>Rx</span>
 
                             <div>
                                 <h4>Prescription</h4>
-                                <p>View digital prescriptions</p>
+                                <p>View prescriptions</p>
                             </div>
 
                         </a>
 
 
-                        <a href="#" class="quick-action-card">
+                        <a href="#" class="patient-quick-item">
 
                             <span>LR</span>
 
                             <div>
                                 <h4>Lab Reports</h4>
-                                <p>Access laboratory results</p>
+                                <p>View test reports</p>
                             </div>
 
                         </a>
@@ -403,15 +388,15 @@
             </section>
 
 
-            <!-- ================= AI HEALTH SUPPORT ================= -->
-            <section class="ai-support-card">
+            <!-- ================= AI SECTION ================= -->
+            <section class="patient-ai-card">
 
-                <div class="ai-support-icon">
+                <div class="patient-ai-icon">
                     AI
                 </div>
 
 
-                <div class="ai-support-content">
+                <div class="patient-ai-content">
 
                     <h3>
                         AI-Assisted Symptom Assessment
@@ -419,15 +404,16 @@
 
                     <p>
                         Describe your symptoms to receive preliminary
-                        AI-assisted health guidance. Serious, uncertain,
-                        or high-risk cases should be referred to a
-                        qualified healthcare professional.
+                        AI-assisted health guidance. The AI assistant does not
+                        replace professional medical consultation. Serious,
+                        uncertain, or high-risk cases should be referred to
+                        a qualified doctor.
                     </p>
 
                 </div>
 
 
-                <a href="#" class="dashboard-primary-btn">
+                <a href="#" class="patient-ai-btn">
                     Start Assessment
                 </a>
 
@@ -435,95 +421,70 @@
 
 
             <!-- ================= RECENT ACTIVITY ================= -->
-            <section class="dashboard-panel recent-activity-panel">
+            <section class="patient-dashboard-card patient-activity-card">
 
-                <div class="panel-header">
+                <div class="patient-card-heading">
 
                     <div>
-
-                        <h3>
-                            Recent Activity
-                        </h3>
-
-                        <p>
-                            Latest updates from your healthcare account
-                        </p>
-
+                        <h3>Recent Activity</h3>
+                        <p>Latest updates from your healthcare account</p>
                     </div>
 
                 </div>
 
 
-                <div class="activity-list">
+                <div class="patient-activity-list">
 
-                    <div class="activity-item">
+                    <div class="patient-activity-item">
 
-                        <div class="activity-dot"></div>
+                        <div class="patient-activity-dot"></div>
 
                         <div>
-
-                            <h4>
-                                Appointment Confirmed
-                            </h4>
+                            <h4>Appointment Confirmed</h4>
 
                             <p>
-                                Your appointment for 15 August 2026
-                                has been confirmed.
+                                Your upcoming medical appointment has
+                                been confirmed.
                             </p>
-
                         </div>
 
-                        <span>
-                            Today
-                        </span>
+                        <span>Today</span>
 
                     </div>
 
 
-                    <div class="activity-item">
+                    <div class="patient-activity-item">
 
-                        <div class="activity-dot"></div>
+                        <div class="patient-activity-dot"></div>
 
                         <div>
-
-                            <h4>
-                                Laboratory Report Available
-                            </h4>
+                            <h4>Laboratory Report Available</h4>
 
                             <p>
                                 A new laboratory report has been added
                                 to your account.
                             </p>
-
                         </div>
 
-                        <span>
-                            Yesterday
-                        </span>
+                        <span>Yesterday</span>
 
                     </div>
 
 
-                    <div class="activity-item">
+                    <div class="patient-activity-item">
 
-                        <div class="activity-dot"></div>
+                        <div class="patient-activity-dot"></div>
 
                         <div>
-
-                            <h4>
-                                Digital Prescription Updated
-                            </h4>
+                            <h4>Prescription Updated</h4>
 
                             <p>
-                                Your latest consultation prescription
+                                Your latest digital prescription
                                 is now available.
                             </p>
-
                         </div>
 
-                        <span>
-                            2 days ago
-                        </span>
+                        <span>2 days ago</span>
 
                     </div>
 
@@ -532,8 +493,8 @@
             </section>
 
 
-            <!-- ================= DASHBOARD FOOTER ================= -->
-            <footer class="dashboard-footer">
+            <!-- ================= FOOTER ================= -->
+            <footer class="patient-dashboard-footer">
 
                 <p>
                     © 2026 Smart Healthcare and Management with AI System
@@ -544,6 +505,52 @@
         </main>
 
     </div>
+
+
+    <!-- ================= LOGOUT MODAL ================= -->
+    <div class="logout-modal" id="logoutModal">
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Patient Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="cancelLogoutBtn"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="confirmLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/patient-dashboard.js"></script>
 
 </body>
 
