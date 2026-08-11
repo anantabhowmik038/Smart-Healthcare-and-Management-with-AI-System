@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book Appointment | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="bookingSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Patient Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="patient-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="patient-profile.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">P</span>
+                    My Profile
+
+                </a>
+
+
+                <a href="doctor-availability.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">DA</span>
+                    Doctor Availability
+
+                </a>
+
+
+                <a href="appointment-booking.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">A</span>
+                    Book Appointment
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">AI</span>
+                    AI Symptom Assessment
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">MR</span>
+                    Medical Records
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">Rx</span>
+                    Prescriptions
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">LR</span>
+                    Laboratory Reports
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="bookingLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="bookingMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Patient Portal</p>
+
+                        <h2>Book Appointment</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="dashboard-user-avatar">
+                            P
+                        </div>
+
+                        <div>
+
+                            <strong>Patient</strong>
+
+                            <span>Patient Account</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="booking-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Appointment Management
+                    </p>
+
+                    <h1>
+                        Schedule Your Appointment
+                    </h1>
+
+                    <p>
+                        Select a medical specialty, available doctor,
+                        preferred date and consultation time to create
+                        an appointment request.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="doctor-availability.html"
+                    class="booking-availability-btn"
+                >
+                    Check Doctor Availability
+                </a>
+
+            </section>
+
+
+            <!-- BOOKING CONTENT -->
+            <section class="booking-layout">
+
+                <!-- BOOKING FORM -->
+                <div class="booking-form-card">
+
+                    <div class="booking-section-heading">
+
+                        <div>
+
+                            <h3>
+                                Appointment Information
+                            </h3>
+
+                            <p>
+                                Complete the information below
+                            </p>
+
+                        </div>
+
+                        <span>
+                            01
+                        </span>
+
+                    </div>
+
+
+                    <form id="appointmentBookingForm">
+
+                        <div
+                            class="booking-error-message"
+                            id="bookingError"
+                        ></div>
+
+
+                        <div class="booking-form-grid">
+
+                            <!-- SPECIALTY -->
+                            <div class="booking-form-group">
+
+                                <label for="bookingSpecialty">
+                                    Medical Specialty
+                                </label>
+
+                                <select id="bookingSpecialty">
+
+                                    <option value="">
+                                        Select Specialty
+                                    </option>
+
+                                    <option value="general">
+                                        General Medicine
+                                    </option>
+
+                                    <option value="cardiology">
+                                        Cardiology
+                                    </option>
+
+                                    <option value="dermatology">
+                                        Dermatology
+                                    </option>
+
+                                    <option value="pediatrics">
+                                        Pediatrics
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- DOCTOR -->
+                            <div class="booking-form-group">
+
+                                <label for="bookingDoctor">
+                                    Doctor
+                                </label>
+
+                                <select id="bookingDoctor" disabled>
+
+                                    <option value="">
+                                        Select Specialty First
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- DATE -->
+                            <div class="booking-form-group">
+
+                                <label for="bookingDate">
+                                    Appointment Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="bookingDate"
+                                >
+
+                            </div>
+
+
+                            <!-- CONSULTATION TYPE -->
+                            <div class="booking-form-group">
+
+                                <label for="consultationType">
+                                    Consultation Type
+                                </label>
+
+                                <select id="consultationType">
+
+                                    <option value="">
+                                        Select Consultation Type
+                                    </option>
+
+                                    <option value="general">
+                                        General Consultation
+                                    </option>
+
+                                    <option value="follow-up">
+                                        Follow-up Consultation
+                                    </option>
+
+                                    <option value="routine">
+                                        Routine Check-up
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TIME SLOT -->
+                        <div class="booking-time-section">
+
+                            <div class="booking-time-heading">
+
+                                <h4>
+                                    Available Time
+                                </h4>
+
+                                <p>
+                                    Select one available consultation slot
+                                </p>
+
+                            </div>
+
+
+                            <div
+                                class="booking-time-slots"
+                                id="bookingTimeSlots"
+                            >
+
+                                <p class="booking-time-placeholder">
+                                    Select a doctor to view available time slots.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- REASON -->
+                        <div class="booking-form-group booking-full-width">
+
+                            <label for="appointmentReason">
+                                Reason for Appointment
+                            </label>
+
+                            <textarea
+                                id="appointmentReason"
+                                rows="5"
+                                placeholder="Briefly describe the reason for your appointment..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- FORM ACTIONS -->
+                        <div class="booking-form-actions">
+
+                            <a
+                                href="patient-dashboard.html"
+                                class="booking-cancel-btn"
+                            >
+                                Cancel
+                            </a>
+
+
+                            <button
+                                type="submit"
+                                class="booking-submit-btn"
+                            >
+                                Confirm Appointment
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- BOOKING SUMMARY -->
+                <aside class="booking-summary-card">
+
+                    <div class="booking-summary-heading">
+
+                        <h3>
+                            Appointment Summary
+                        </h3>
+
+                        <p>
+                            Review your selected information
+                        </p>
+
+                    </div>
+
+
+                    <div class="booking-summary-doctor">
+
+                        <div
+                            class="booking-summary-avatar"
+                            id="summaryDoctorAvatar"
+                        >
+                            DR
+                        </div>
+
+
+                        <div>
+
+                            <h4 id="summaryDoctorName">
+                                No Doctor Selected
+                            </h4>
+
+                            <p id="summarySpecialty">
+                                Select a specialty
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="booking-summary-list">
+
+                        <div>
+
+                            <span>
+                                Appointment Date
+                            </span>
+
+                            <strong id="summaryDate">
+                                Not Selected
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Appointment Time
+                            </span>
+
+                            <strong id="summaryTime">
+                                Not Selected
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Consultation Type
+                            </span>
+
+                            <strong id="summaryConsultation">
+                                Not Selected
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="booking-summary-notice">
+
+                        <div>
+                            i
+                        </div>
+
+                        <p>
+                            Appointment requests may require confirmation
+                            according to doctor availability.
+                        </p>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- INFORMATION -->
+            <section class="booking-info-card">
+
+                <div class="booking-info-icon">
+                    i
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Prototype Appointment Booking
+                    </h3>
+
+                    <p>
+                        This page currently demonstrates the appointment
+                        booking workflow. Real appointment records, slot
+                        conflicts and notifications will be handled during
+                        backend and database integration.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- SUCCESS MODAL -->
+    <div
+        class="booking-success-modal"
+        id="bookingSuccessModal"
+    >
+
+        <div class="booking-success-card">
+
+            <div class="booking-success-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                Appointment Requested
+            </h2>
+
+
+            <p>
+                Your appointment request has been created successfully
+                in this prototype session.
+            </p>
+
+
+            <div class="booking-success-details">
+
+                <div>
+
+                    <span>Doctor</span>
+
+                    <strong id="modalDoctor">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Date</span>
+
+                    <strong id="modalDate">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Time</span>
+
+                    <strong id="modalTime">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="booking-success-btn"
+                id="bookingSuccessBtn"
+            >
+                Back to Dashboard
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="bookingLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Patient Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="bookingCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="bookingConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/appointment-booking.js"></script>
+
+</body>
+
+</html>
