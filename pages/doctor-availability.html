@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Doctor Availability | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="availabilitySidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Patient Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="patient-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="patient-profile.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">P</span>
+                    My Profile
+
+                </a>
+
+
+                <a href="doctor-availability.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">DA</span>
+                    Doctor Availability
+
+                </a>
+
+
+                <a href="appointment-booking.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">A</span>
+                    Book Appointment
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">AI</span>
+                    AI Symptom Assessment
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">MR</span>
+                    Medical Records
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">Rx</span>
+                    Prescriptions
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">LR</span>
+                    Laboratory Reports
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="availabilityLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="availabilityMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Patient Portal</p>
+
+                        <h2>Doctor Availability</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="dashboard-user-avatar">
+                            P
+                        </div>
+
+                        <div>
+
+                            <strong>Patient</strong>
+
+                            <span>Patient Account</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE INTRO -->
+            <section class="availability-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Find a Doctor
+                    </p>
+
+                    <h1>
+                        Check Doctor Availability
+                    </h1>
+
+                    <p>
+                        Search doctors by name or specialty and review
+                        their available consultation schedules before
+                        booking an appointment.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="appointment-booking.html"
+                    class="availability-book-main-btn"
+                >
+                    Book Appointment
+                </a>
+
+            </section>
+
+
+            <!-- SEARCH AND FILTER -->
+            <section class="availability-filter-card">
+
+                <div class="availability-search-group">
+
+                    <label for="doctorSearch">
+                        Search Doctor
+                    </label>
+
+                    <input
+                        type="text"
+                        id="doctorSearch"
+                        placeholder="Search by doctor name..."
+                    >
+
+                </div>
+
+
+                <div class="availability-filter-group">
+
+                    <label for="specialtyFilter">
+                        Specialty
+                    </label>
+
+                    <select id="specialtyFilter">
+
+                        <option value="all">
+                            All Specialties
+                        </option>
+
+                        <option value="general">
+                            General Medicine
+                        </option>
+
+                        <option value="cardiology">
+                            Cardiology
+                        </option>
+
+                        <option value="dermatology">
+                            Dermatology
+                        </option>
+
+                        <option value="pediatrics">
+                            Pediatrics
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </section>
+
+
+            <!-- RESULTS INFORMATION -->
+            <section class="availability-result-heading">
+
+                <div>
+
+                    <h3>
+                        Available Doctors
+                    </h3>
+
+                    <p id="doctorResultCount">
+                        Showing 4 doctors
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- DOCTOR CARDS -->
+            <section class="doctor-availability-grid"
+                     id="doctorAvailabilityGrid">
+
+
+                <!-- DOCTOR 1 -->
+                <article
+                    class="doctor-availability-card"
+                    data-name="sarah ahmed"
+                    data-specialty="general"
+                >
+
+                    <div class="availability-doctor-top">
+
+                        <div class="availability-doctor-avatar">
+                            SA
+                        </div>
+
+
+                        <div class="availability-doctor-info">
+
+                            <h3>
+                                Dr. Sarah Ahmed
+                            </h3>
+
+                            <p>
+                                General Medicine
+                            </p>
+
+                            <span>
+                                8 Years Experience
+                            </span>
+
+                        </div>
+
+
+                        <span class="doctor-available-badge">
+                            Available
+                        </span>
+
+                    </div>
+
+
+                    <div class="availability-doctor-details">
+
+                        <div>
+
+                            <span>Consultation Type</span>
+
+                            <strong>
+                                General Consultation
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>Available Days</span>
+
+                            <strong>
+                                Sun, Tue, Thu
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="availability-time-section">
+
+                        <p>
+                            Available Time
+                        </p>
+
+
+                        <div class="availability-time-list">
+
+                            <span>09:30 AM</span>
+
+                            <span>10:30 AM</span>
+
+                            <span>11:30 AM</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="appointment-booking.html"
+                        class="doctor-book-btn"
+                    >
+                        Book Appointment
+                    </a>
+
+                </article>
+
+
+                <!-- DOCTOR 2 -->
+                <article
+                    class="doctor-availability-card"
+                    data-name="mahmud hasan"
+                    data-specialty="cardiology"
+                >
+
+                    <div class="availability-doctor-top">
+
+                        <div class="availability-doctor-avatar">
+                            MH
+                        </div>
+
+
+                        <div class="availability-doctor-info">
+
+                            <h3>
+                                Dr. Mahmud Hasan
+                            </h3>
+
+                            <p>
+                                Cardiology
+                            </p>
+
+                            <span>
+                                12 Years Experience
+                            </span>
+
+                        </div>
+
+
+                        <span class="doctor-available-badge">
+                            Available
+                        </span>
+
+                    </div>
+
+
+                    <div class="availability-doctor-details">
+
+                        <div>
+
+                            <span>Consultation Type</span>
+
+                            <strong>
+                                Cardiology Consultation
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>Available Days</span>
+
+                            <strong>
+                                Mon, Wed, Sat
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="availability-time-section">
+
+                        <p>
+                            Available Time
+                        </p>
+
+
+                        <div class="availability-time-list">
+
+                            <span>02:00 PM</span>
+
+                            <span>03:00 PM</span>
+
+                            <span>04:00 PM</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="appointment-booking.html"
+                        class="doctor-book-btn"
+                    >
+                        Book Appointment
+                    </a>
+
+                </article>
+
+
+                <!-- DOCTOR 3 -->
+                <article
+                    class="doctor-availability-card"
+                    data-name="nabila rahman"
+                    data-specialty="dermatology"
+                >
+
+                    <div class="availability-doctor-top">
+
+                        <div class="availability-doctor-avatar">
+                            NR
+                        </div>
+
+
+                        <div class="availability-doctor-info">
+
+                            <h3>
+                                Dr. Nabila Rahman
+                            </h3>
+
+                            <p>
+                                Dermatology
+                            </p>
+
+                            <span>
+                                7 Years Experience
+                            </span>
+
+                        </div>
+
+
+                        <span class="doctor-available-badge">
+                            Available
+                        </span>
+
+                    </div>
+
+
+                    <div class="availability-doctor-details">
+
+                        <div>
+
+                            <span>Consultation Type</span>
+
+                            <strong>
+                                Skin Consultation
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>Available Days</span>
+
+                            <strong>
+                                Sun, Mon, Wed
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="availability-time-section">
+
+                        <p>
+                            Available Time
+                        </p>
+
+
+                        <div class="availability-time-list">
+
+                            <span>10:00 AM</span>
+
+                            <span>12:00 PM</span>
+
+                            <span>01:30 PM</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="appointment-booking.html"
+                        class="doctor-book-btn"
+                    >
+                        Book Appointment
+                    </a>
+
+                </article>
+
+
+                <!-- DOCTOR 4 -->
+                <article
+                    class="doctor-availability-card"
+                    data-name="farhana islam"
+                    data-specialty="pediatrics"
+                >
+
+                    <div class="availability-doctor-top">
+
+                        <div class="availability-doctor-avatar">
+                            FI
+                        </div>
+
+
+                        <div class="availability-doctor-info">
+
+                            <h3>
+                                Dr. Farhana Islam
+                            </h3>
+
+                            <p>
+                                Pediatrics
+                            </p>
+
+                            <span>
+                                9 Years Experience
+                            </span>
+
+                        </div>
+
+
+                        <span class="doctor-available-badge">
+                            Available
+                        </span>
+
+                    </div>
+
+
+                    <div class="availability-doctor-details">
+
+                        <div>
+
+                            <span>Consultation Type</span>
+
+                            <strong>
+                                Pediatric Consultation
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>Available Days</span>
+
+                            <strong>
+                                Tue, Thu, Sat
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="availability-time-section">
+
+                        <p>
+                            Available Time
+                        </p>
+
+
+                        <div class="availability-time-list">
+
+                            <span>09:00 AM</span>
+
+                            <span>11:00 AM</span>
+
+                            <span>02:30 PM</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="appointment-booking.html"
+                        class="doctor-book-btn"
+                    >
+                        Book Appointment
+                    </a>
+
+                </article>
+
+            </section>
+
+
+            <!-- NO RESULTS -->
+            <div
+                class="availability-no-results"
+                id="availabilityNoResults"
+            >
+
+                <div>
+                    !
+                </div>
+
+                <h3>
+                    No Doctors Found
+                </h3>
+
+                <p>
+                    Try changing the doctor name or specialty filter.
+                </p>
+
+            </div>
+
+
+            <!-- NOTICE -->
+            <section class="availability-notice-card">
+
+                <div class="availability-notice-icon">
+                    i
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Appointment Availability
+                    </h3>
+
+                    <p>
+                        Doctor schedules displayed here are sample prototype
+                        information. Real-time appointment slots will later
+                        be managed through the backend and database.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div class="logout-modal" id="availabilityLogoutModal">
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Patient Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="availabilityCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="availabilityConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/doctor-availability.js"></script>
+
+</body>
+
+</html>
