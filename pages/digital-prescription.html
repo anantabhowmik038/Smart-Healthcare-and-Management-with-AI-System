@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Digital Prescription | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="prescriptionSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Doctor Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="doctor-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">A</span>
+                    Appointments
+
+                </a>
+
+
+                <a href="medical-records.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">PR</span>
+                    Patient Records
+
+                </a>
+
+
+                <a href="consultation.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">C</span>
+                    Consultations
+
+                </a>
+
+
+                <a href="digital-prescription.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">Rx</span>
+                    Prescriptions
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">LT</span>
+                    Laboratory Requests
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">LR</span>
+                    Laboratory Reports
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="prescriptionLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="prescriptionMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Doctor Portal</p>
+
+                        <h2>Digital Prescription</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="doctor-avatar">
+                            DR
+                        </div>
+
+                        <div>
+
+                            <strong>Doctor</strong>
+
+                            <span>Medical Professional</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="prescription-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Prescription Management
+                    </p>
+
+                    <h1>
+                        Create Digital Prescription
+                    </h1>
+
+                    <p>
+                        Prepare an electronic prescription for the selected
+                        patient and record medicine instructions as part
+                        of the consultation workflow.
+                    </p>
+
+                </div>
+
+
+                <div class="prescription-header-icon">
+                    Rx
+                </div>
+
+            </section>
+
+
+            <!-- PATIENT INFORMATION -->
+            <section class="prescription-patient-card">
+
+                <div class="prescription-patient-main">
+
+                    <div class="prescription-patient-avatar">
+                        P
+                    </div>
+
+
+                    <div>
+
+                        <p class="small-title">
+                            Selected Patient
+                        </p>
+
+                        <h2>
+                            Patient #P1024
+                        </h2>
+
+                        <p>
+                            Consultation: #APT2041
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="prescription-patient-details">
+
+                    <div>
+
+                        <span>Consultation Type</span>
+
+                        <strong>
+                            General Consultation
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Prescription Date</span>
+
+                        <strong id="prescriptionDateDisplay">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Status</span>
+
+                        <strong class="prescription-draft-status">
+                            Draft
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PRESCRIPTION LAYOUT -->
+            <section class="prescription-layout">
+
+                <!-- MAIN FORM -->
+                <div class="prescription-form-card">
+
+                    <div class="prescription-section-heading">
+
+                        <div>
+
+                            <h3>
+                                Prescription Information
+                            </h3>
+
+                            <p>
+                                Enter medicine and professional instructions
+                            </p>
+
+                        </div>
+
+                        <span>
+                            01
+                        </span>
+
+                    </div>
+
+
+                    <form id="prescriptionForm">
+
+                        <div
+                            class="prescription-error"
+                            id="prescriptionError"
+                        ></div>
+
+
+                        <!-- MEDICINE LIST -->
+                        <div class="prescription-medicine-heading">
+
+                            <div>
+
+                                <h4>
+                                    Medicines
+                                </h4>
+
+                                <p>
+                                    Add one or more prescribed medicines
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="prescription-add-medicine-btn"
+                                id="addMedicineBtn"
+                            >
+                                + Add Medicine
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="prescription-medicine-list"
+                            id="medicineList"
+                        >
+
+                            <!-- FIRST MEDICINE -->
+                            <div class="prescription-medicine-item">
+
+                                <div class="prescription-medicine-number">
+                                    1
+                                </div>
+
+
+                                <div class="prescription-medicine-fields">
+
+                                    <div class="prescription-form-grid">
+
+                                        <div class="prescription-form-group">
+
+                                            <label>
+                                                Medicine Name
+                                            </label>
+
+                                            <input
+                                                type="text"
+                                                class="medicine-name"
+                                                placeholder="Enter medicine name"
+                                            >
+
+                                        </div>
+
+
+                                        <div class="prescription-form-group">
+
+                                            <label>
+                                                Dosage
+                                            </label>
+
+                                            <input
+                                                type="text"
+                                                class="medicine-dosage"
+                                                placeholder="Enter prescribed dosage"
+                                            >
+
+                                        </div>
+
+
+                                        <div class="prescription-form-group">
+
+                                            <label>
+                                                Frequency
+                                            </label>
+
+                                            <select class="medicine-frequency">
+
+                                                <option value="">
+                                                    Select Frequency
+                                                </option>
+
+                                                <option value="once">
+                                                    Once Daily
+                                                </option>
+
+                                                <option value="twice">
+                                                    Twice Daily
+                                                </option>
+
+                                                <option value="three">
+                                                    Three Times Daily
+                                                </option>
+
+                                                <option value="other">
+                                                    Other
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+
+                                        <div class="prescription-form-group">
+
+                                            <label>
+                                                Duration
+                                            </label>
+
+                                            <input
+                                                type="text"
+                                                class="medicine-duration"
+                                                placeholder="Enter duration"
+                                            >
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="prescription-form-group">
+
+                                        <label>
+                                            Medicine Instructions
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="medicine-instruction"
+                                            placeholder="Enter doctor-provided instructions"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <button
+                                    type="button"
+                                    class="prescription-remove-btn"
+                                    disabled
+                                >
+                                    ×
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- GENERAL INSTRUCTIONS -->
+                        <div class="prescription-form-group">
+
+                            <label for="prescriptionAdvice">
+                                General Instructions
+                            </label>
+
+                            <textarea
+                                id="prescriptionAdvice"
+                                rows="4"
+                                placeholder="Enter additional professional instructions..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- FOLLOW UP -->
+                        <div class="prescription-form-grid">
+
+                            <div class="prescription-form-group">
+
+                                <label for="prescriptionFollowUp">
+                                    Follow-up
+                                </label>
+
+                                <select id="prescriptionFollowUp">
+
+                                    <option value="">
+                                        Select Option
+                                    </option>
+
+                                    <option value="not-required">
+                                        Not Required
+                                    </option>
+
+                                    <option value="1-week">
+                                        Within 1 Week
+                                    </option>
+
+                                    <option value="2-weeks">
+                                        Within 2 Weeks
+                                    </option>
+
+                                    <option value="1-month">
+                                        Within 1 Month
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="prescription-form-group">
+
+                                <label for="prescriptionValidity">
+                                    Prescription Validity
+                                </label>
+
+                                <select id="prescriptionValidity">
+
+                                    <option value="">
+                                        Select Validity
+                                    </option>
+
+                                    <option value="7">
+                                        7 Days
+                                    </option>
+
+                                    <option value="14">
+                                        14 Days
+                                    </option>
+
+                                    <option value="30">
+                                        30 Days
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+                        <div class="prescription-form-actions">
+
+                            <a
+                                href="consultation.html"
+                                class="prescription-cancel-btn"
+                            >
+                                Cancel
+                            </a>
+
+
+                            <button
+                                type="submit"
+                                class="prescription-create-btn"
+                            >
+                                Create Prescription
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- SUMMARY -->
+                <aside class="prescription-summary-card">
+
+                    <div class="prescription-summary-heading">
+
+                        <h3>
+                            Prescription Summary
+                        </h3>
+
+                        <p>
+                            Current prescription overview
+                        </p>
+
+                    </div>
+
+
+                    <div class="prescription-summary-id">
+
+                        <span>
+                            Prescription ID
+                        </span>
+
+                        <strong>
+                            #RX1062
+                        </strong>
+
+                    </div>
+
+
+                    <div class="prescription-summary-list">
+
+                        <div>
+
+                            <span>
+                                Patient
+                            </span>
+
+                            <strong>
+                                #P1024
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Doctor
+                            </span>
+
+                            <strong>
+                                Current Doctor
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Medicines
+                            </span>
+
+                            <strong id="medicineCount">
+                                1
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Status
+                            </span>
+
+                            <strong>
+                                Draft
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="prescription-summary-note">
+
+                        <div>
+                            i
+                        </div>
+
+                        <p>
+                            Prescription information should only be created
+                            or modified by an authorized healthcare professional.
+                        </p>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- RECENT PRESCRIPTIONS -->
+            <section class="prescription-history-card">
+
+                <div class="prescription-history-heading">
+
+                    <div>
+
+                        <h3>
+                            Recent Prescriptions
+                        </h3>
+
+                        <p>
+                            Previous prescription records
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="prescription-history-row">
+
+                    <div class="prescription-history-icon">
+                        Rx
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            Prescription #RX1048
+                        </h4>
+
+                        <p>
+                            Patient #P1078
+                        </p>
+
+                    </div>
+
+
+                    <span class="prescription-history-date">
+                        08 Aug 2026
+                    </span>
+
+
+                    <span class="prescription-history-status">
+                        Active
+                    </span>
+
+                </div>
+
+
+                <div class="prescription-history-row">
+
+                    <div class="prescription-history-icon">
+                        Rx
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            Prescription #RX1039
+                        </h4>
+
+                        <p>
+                            Patient #P1018
+                        </p>
+
+                    </div>
+
+
+                    <span class="prescription-history-date">
+                        05 Aug 2026
+                    </span>
+
+
+                    <span class="prescription-history-status completed">
+                        Dispensed
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- NOTE -->
+            <section class="prescription-note-card">
+
+                <div class="prescription-note-icon">
+                    i
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Prototype Prescription Module
+                    </h3>
+
+                    <p>
+                        This interface demonstrates digital prescription
+                        creation only. Secure storage, doctor authentication,
+                        pharmacy verification and permanent prescription
+                        records will be handled during backend integration.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- SUCCESS MODAL -->
+    <div
+        class="prescription-success-modal"
+        id="prescriptionSuccessModal"
+    >
+
+        <div class="prescription-success-card">
+
+            <div class="prescription-success-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                Prescription Created
+            </h2>
+
+
+            <p>
+                Digital prescription #RX1062 has been created
+                successfully in this prototype session.
+            </p>
+
+
+            <div class="prescription-success-info">
+
+                <span>
+                    Medicines Added
+                </span>
+
+                <strong id="successMedicineCount">
+                    1
+                </strong>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="prescription-success-btn"
+                id="prescriptionSuccessBtn"
+            >
+                Back to Doctor Dashboard
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="prescriptionLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Doctor Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="prescriptionCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="prescriptionConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/digital-prescription.js"></script>
+
+</body>
+
+</html>
