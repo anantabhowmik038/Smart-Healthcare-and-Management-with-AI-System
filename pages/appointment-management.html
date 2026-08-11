@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Appointments | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="appointmentSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Patient Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="patient-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="patient-profile.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">P</span>
+                    My Profile
+
+                </a>
+
+
+                <a href="doctor-availability.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">DA</span>
+                    Doctor Availability
+
+                </a>
+
+
+                <a href="appointment-booking.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">BA</span>
+                    Book Appointment
+
+                </a>
+
+
+                <a href="appointment-management.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">A</span>
+                    My Appointments
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">AI</span>
+                    AI Symptom Assessment
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">MR</span>
+                    Medical Records
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">Rx</span>
+                    Prescriptions
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="appointmentLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="appointmentMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Patient Portal</p>
+
+                        <h2>My Appointments</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-notification">
+                        2
+                    </div>
+
+
+                    <div class="dashboard-user-info">
+
+                        <div class="dashboard-user-avatar">
+                            P
+                        </div>
+
+                        <div>
+
+                            <strong>Patient</strong>
+
+                            <span>Patient Account</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="appointment-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Appointment Management
+                    </p>
+
+                    <h1>
+                        Manage Your Appointments
+                    </h1>
+
+                    <p>
+                        Review upcoming and previous consultations,
+                        monitor appointment status and manage your
+                        scheduled healthcare visits.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="appointment-booking.html"
+                    class="appointment-new-btn"
+                >
+                    + Book New Appointment
+                </a>
+
+            </section>
+
+
+            <!-- SUMMARY -->
+            <section class="appointment-summary-grid">
+
+                <div class="appointment-summary-card">
+
+                    <div class="appointment-summary-icon">
+                        U
+                    </div>
+
+                    <div>
+
+                        <p>Upcoming</p>
+
+                        <h3 id="upcomingCount">
+                            3
+                        </h3>
+
+                        <span>Scheduled appointments</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="appointment-summary-card">
+
+                    <div class="appointment-summary-icon">
+                        C
+                    </div>
+
+                    <div>
+
+                        <p>Completed</p>
+
+                        <h3 id="completedCount">
+                            2
+                        </h3>
+
+                        <span>Previous consultations</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="appointment-summary-card">
+
+                    <div class="appointment-summary-icon">
+                        X
+                    </div>
+
+                    <div>
+
+                        <p>Cancelled</p>
+
+                        <h3 id="cancelledCount">
+                            1
+                        </h3>
+
+                        <span>Cancelled appointments</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="appointment-summary-card">
+
+                    <div class="appointment-summary-icon">
+                        T
+                    </div>
+
+                    <div>
+
+                        <p>Total</p>
+
+                        <h3 id="totalCount">
+                            6
+                        </h3>
+
+                        <span>Appointment records</span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FILTER -->
+            <section class="appointment-filter-card">
+
+                <div>
+
+                    <h3>
+                        Appointment History
+                    </h3>
+
+                    <p>
+                        Filter appointments by current status
+                    </p>
+
+                </div>
+
+
+                <div class="appointment-filter-buttons">
+
+                    <button
+                        type="button"
+                        class="appointment-filter-btn active"
+                        data-filter="all"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        type="button"
+                        class="appointment-filter-btn"
+                        data-filter="upcoming"
+                    >
+                        Upcoming
+                    </button>
+
+                    <button
+                        type="button"
+                        class="appointment-filter-btn"
+                        data-filter="completed"
+                    >
+                        Completed
+                    </button>
+
+                    <button
+                        type="button"
+                        class="appointment-filter-btn"
+                        data-filter="cancelled"
+                    >
+                        Cancelled
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- APPOINTMENTS -->
+            <section
+                class="appointment-list"
+                id="appointmentList"
+            >
+
+                <!-- APPOINTMENT 1 -->
+                <article
+                    class="appointment-item-card"
+                    data-status="upcoming"
+                    data-appointment-id="#APT2041"
+                    data-doctor="Dr. Sarah Ahmed"
+                >
+
+                    <div class="appointment-date-card">
+
+                        <span>AUG</span>
+
+                        <strong>15</strong>
+
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="appointment-main-info">
+
+                        <div class="appointment-title-row">
+
+                            <div>
+
+                                <h3>
+                                    General Consultation
+                                </h3>
+
+                                <p>
+                                    Appointment ID: #APT2041
+                                </p>
+
+                            </div>
+
+
+                            <span class="appointment-status-badge upcoming">
+                                Upcoming
+                            </span>
+
+                        </div>
+
+
+                        <div class="appointment-details-grid">
+
+                            <div>
+
+                                <span>Doctor</span>
+
+                                <strong>
+                                    Dr. Sarah Ahmed
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Specialty</span>
+
+                                <strong>
+                                    General Medicine
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Time</span>
+
+                                <strong>
+                                    10:30 AM
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Type</span>
+
+                                <strong>
+                                    General Consultation
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="appointment-card-actions">
+
+                            <a
+                                href="appointment-booking.html"
+                                class="appointment-reschedule-btn"
+                            >
+                                Reschedule
+                            </a>
+
+
+                            <button
+                                type="button"
+                                class="appointment-cancel-action"
+                            >
+                                Cancel Appointment
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- APPOINTMENT 2 -->
+                <article
+                    class="appointment-item-card"
+                    data-status="upcoming"
+                    data-appointment-id="#APT2048"
+                    data-doctor="Dr. Mahmud Hasan"
+                >
+
+                    <div class="appointment-date-card">
+
+                        <span>AUG</span>
+
+                        <strong>22</strong>
+
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="appointment-main-info">
+
+                        <div class="appointment-title-row">
+
+                            <div>
+
+                                <h3>
+                                    Follow-up Consultation
+                                </h3>
+
+                                <p>
+                                    Appointment ID: #APT2048
+                                </p>
+
+                            </div>
+
+
+                            <span class="appointment-status-badge upcoming">
+                                Upcoming
+                            </span>
+
+                        </div>
+
+
+                        <div class="appointment-details-grid">
+
+                            <div>
+
+                                <span>Doctor</span>
+
+                                <strong>
+                                    Dr. Mahmud Hasan
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Specialty</span>
+
+                                <strong>
+                                    Cardiology
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Time</span>
+
+                                <strong>
+                                    04:00 PM
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Type</span>
+
+                                <strong>
+                                    Follow-up Consultation
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="appointment-card-actions">
+
+                            <a
+                                href="appointment-booking.html"
+                                class="appointment-reschedule-btn"
+                            >
+                                Reschedule
+                            </a>
+
+
+                            <button
+                                type="button"
+                                class="appointment-cancel-action"
+                            >
+                                Cancel Appointment
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- APPOINTMENT 3 -->
+                <article
+                    class="appointment-item-card"
+                    data-status="upcoming"
+                    data-appointment-id="#APT2055"
+                    data-doctor="Dr. Nabila Rahman"
+                >
+
+                    <div class="appointment-date-card">
+
+                        <span>SEP</span>
+
+                        <strong>03</strong>
+
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="appointment-main-info">
+
+                        <div class="appointment-title-row">
+
+                            <div>
+
+                                <h3>
+                                    Routine Check-up
+                                </h3>
+
+                                <p>
+                                    Appointment ID: #APT2055
+                                </p>
+
+                            </div>
+
+
+                            <span class="appointment-status-badge upcoming">
+                                Upcoming
+                            </span>
+
+                        </div>
+
+
+                        <div class="appointment-details-grid">
+
+                            <div>
+
+                                <span>Doctor</span>
+
+                                <strong>
+                                    Dr. Nabila Rahman
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Specialty</span>
+
+                                <strong>
+                                    Dermatology
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Time</span>
+
+                                <strong>
+                                    12:00 PM
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Type</span>
+
+                                <strong>
+                                    Routine Check-up
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="appointment-card-actions">
+
+                            <a
+                                href="appointment-booking.html"
+                                class="appointment-reschedule-btn"
+                            >
+                                Reschedule
+                            </a>
+
+
+                            <button
+                                type="button"
+                                class="appointment-cancel-action"
+                            >
+                                Cancel Appointment
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- APPOINTMENT 4 -->
+                <article
+                    class="appointment-item-card"
+                    data-status="completed"
+                >
+
+                    <div class="appointment-date-card completed">
+
+                        <span>JUL</span>
+
+                        <strong>21</strong>
+
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="appointment-main-info">
+
+                        <div class="appointment-title-row">
+
+                            <div>
+
+                                <h3>
+                                    General Consultation
+                                </h3>
+
+                                <p>
+                                    Appointment ID: #APT1987
+                                </p>
+
+                            </div>
+
+
+                            <span class="appointment-status-badge completed">
+                                Completed
+                            </span>
+
+                        </div>
+
+
+                        <div class="appointment-details-grid">
+
+                            <div>
+
+                                <span>Doctor</span>
+
+                                <strong>
+                                    Dr. Sarah Ahmed
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Specialty</span>
+
+                                <strong>
+                                    General Medicine
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Time</span>
+
+                                <strong>
+                                    09:30 AM
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Type</span>
+
+                                <strong>
+                                    General Consultation
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- APPOINTMENT 5 -->
+                <article
+                    class="appointment-item-card"
+                    data-status="completed"
+                >
+
+                    <div class="appointment-date-card completed">
+
+                        <span>JUL</span>
+
+                        <strong>08</strong>
+
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="appointment-main-info">
+
+                        <div class="appointment-title-row">
+
+                            <div>
+
+                                <h3>
+                                    Follow-up Consultation
+                                </h3>
+
+                                <p>
+                                    Appointment ID: #APT1954
+                                </p>
+
+                            </div>
+
+
+                            <span class="appointment-status-badge completed">
+                                Completed
+                            </span>
+
+                        </div>
+
+
+                        <div class="appointment-details-grid">
+
+                            <div>
+
+                                <span>Doctor</span>
+
+                                <strong>
+                                    Dr. Mahmud Hasan
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Specialty</span>
+
+                                <strong>
+                                    Cardiology
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Time</span>
+
+                                <strong>
+                                    03:00 PM
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Type</span>
+
+                                <strong>
+                                    Follow-up Consultation
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- APPOINTMENT 6 -->
+                <article
+                    class="appointment-item-card"
+                    data-status="cancelled"
+                >
+
+                    <div class="appointment-date-card cancelled">
+
+                        <span>JUN</span>
+
+                        <strong>24</strong>
+
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="appointment-main-info">
+
+                        <div class="appointment-title-row">
+
+                            <div>
+
+                                <h3>
+                                    Routine Check-up
+                                </h3>
+
+                                <p>
+                                    Appointment ID: #APT1892
+                                </p>
+
+                            </div>
+
+
+                            <span class="appointment-status-badge cancelled">
+                                Cancelled
+                            </span>
+
+                        </div>
+
+
+                        <div class="appointment-details-grid">
+
+                            <div>
+
+                                <span>Doctor</span>
+
+                                <strong>
+                                    Dr. Farhana Islam
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Specialty</span>
+
+                                <strong>
+                                    Pediatrics
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Time</span>
+
+                                <strong>
+                                    11:00 AM
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Type</span>
+
+                                <strong>
+                                    Routine Check-up
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- NO RESULTS -->
+            <div
+                class="appointment-no-results"
+                id="appointmentNoResults"
+            >
+
+                <div>
+                    i
+                </div>
+
+                <h3>
+                    No Appointments Found
+                </h3>
+
+                <p>
+                    There are no appointments available for this status.
+                </p>
+
+            </div>
+
+
+            <!-- NOTICE -->
+            <section class="appointment-note-card">
+
+                <div class="appointment-note-icon">
+                    i
+                </div>
+
+                <div>
+
+                    <h3>
+                        Appointment Records
+                    </h3>
+
+                    <p>
+                        The information shown on this page is prototype
+                        data. Appointment changes will be permanently stored
+                        and synchronized after backend and database integration.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- CANCEL APPOINTMENT MODAL -->
+    <div
+        class="appointment-cancel-modal"
+        id="appointmentCancelModal"
+    >
+
+        <div class="appointment-cancel-modal-card">
+
+            <div class="appointment-cancel-modal-icon">
+                !
+            </div>
+
+
+            <h2>
+                Cancel Appointment?
+            </h2>
+
+
+            <p>
+                Are you sure you want to cancel
+                <strong id="cancelAppointmentId"></strong>
+                with
+                <strong id="cancelDoctorName"></strong>?
+            </p>
+
+
+            <div class="appointment-modal-actions">
+
+                <button
+                    type="button"
+                    class="appointment-modal-back-btn"
+                    id="keepAppointmentBtn"
+                >
+                    Keep Appointment
+                </button>
+
+
+                <button
+                    type="button"
+                    class="appointment-modal-cancel-btn"
+                    id="confirmCancelAppointmentBtn"
+                >
+                    Cancel Appointment
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CANCEL SUCCESS MODAL -->
+    <div
+        class="appointment-success-modal"
+        id="appointmentSuccessModal"
+    >
+
+        <div class="appointment-success-modal-card">
+
+            <div class="appointment-success-modal-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                Appointment Cancelled
+            </h2>
+
+
+            <p>
+                The appointment has been marked as cancelled
+                in this prototype session.
+            </p>
+
+
+            <button
+                type="button"
+                class="appointment-success-close-btn"
+                id="appointmentSuccessBtn"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="appointmentLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Patient Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="appointmentCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="appointmentConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/appointment-management.js"></script>
+
+</body>
+
+</html>
