@@ -32,12 +32,12 @@
 
 
     <!-- ================= LOGIN SECTION ================= -->
-    <section class="auth-section">
+    <main class="login-page">
 
-        <div class="auth-container">
+        <div class="login-container">
 
             <!-- LEFT SIDE -->
-            <div class="auth-info">
+            <section class="login-information">
 
                 <p class="small-title">
                     Welcome Back
@@ -47,44 +47,82 @@
                     Access Your Smart Healthcare Account
                 </h1>
 
-                <p>
-                    Login securely to access healthcare services,
-                    appointments, medical records, prescriptions,
-                    laboratory services and other role-based features.
+                <p class="login-description">
+                    Securely access appointments, medical records,
+                    prescriptions, laboratory services, pharmacy support,
+                    and other role-based healthcare features.
                 </p>
 
 
-                <div class="login-features">
+                <div class="login-feature-list">
 
-                    <div class="login-feature">
+                    <div class="login-feature-item">
+
                         <span>✓</span>
-                        <p>Secure Role-Based Access</p>
+
+                        <div>
+                            <h3>Secure Role-Based Access</h3>
+
+                            <p>
+                                Access system features according to
+                                your authorized healthcare role.
+                            </p>
+                        </div>
+
                     </div>
 
-                    <div class="login-feature">
+
+                    <div class="login-feature-item">
+
                         <span>✓</span>
-                        <p>Centralized Healthcare Services</p>
+
+                        <div>
+                            <h3>Centralized Healthcare Services</h3>
+
+                            <p>
+                                Access important healthcare information
+                                through one integrated platform.
+                            </p>
+                        </div>
+
                     </div>
 
-                    <div class="login-feature">
+
+                    <div class="login-feature-item">
+
                         <span>✓</span>
-                        <p>AI-Assisted Patient Support</p>
+
+                        <div>
+                            <h3>AI-Assisted Patient Support</h3>
+
+                            <p>
+                                Patients can access preliminary
+                                AI-assisted symptom assessment services.
+                            </p>
+                        </div>
+
                     </div>
 
                 </div>
 
-            </div>
+            </section>
 
 
-            <!-- RIGHT SIDE LOGIN FORM -->
-            <div class="auth-card">
+            <!-- RIGHT SIDE LOGIN CARD -->
+            <section class="login-card">
 
-                <div class="auth-card-header">
+                <div class="login-card-header">
 
-                    <h2>Login</h2>
+                    <div class="login-icon">
+                        +
+                    </div>
+
+                    <h2>
+                        Login
+                    </h2>
 
                     <p>
-                        Enter your account information
+                        Enter your account information to continue
                     </p>
 
                 </div>
@@ -99,7 +137,11 @@
                             Login As
                         </label>
 
-                        <select id="role" name="role" required>
+                        <select
+                            id="role"
+                            name="role"
+                            required
+                        >
 
                             <option value="">
                                 Select your role
@@ -145,7 +187,7 @@
                             type="email"
                             id="email"
                             name="email"
-                            placeholder="Enter your email"
+                            placeholder="Enter your email address"
                             required
                         >
 
@@ -164,6 +206,7 @@
                             id="password"
                             name="password"
                             placeholder="Enter your password"
+                            minlength="6"
                             required
                         >
 
@@ -171,32 +214,48 @@
 
 
                     <!-- OPTIONS -->
-                    <div class="form-options">
+                    <div class="login-options">
 
-                        <label class="remember-me">
+                        <label class="remember-option">
 
-                            <input type="checkbox">
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                            >
 
-                            Remember me
+                            <span>
+                                Remember me
+                            </span>
 
                         </label>
 
-                        <a href="#" class="forgot-password">
+
+                        <a href="#" class="forgot-link">
                             Forgot Password?
                         </a>
 
                     </div>
 
 
-                    <!-- LOGIN BUTTON -->
-                    <button type="submit" class="auth-btn">
-                        Login
+                    <!-- ERROR MESSAGE -->
+                    <p
+                        class="login-error-message"
+                        id="loginError"
+                    ></p>
+
+
+                    <!-- BUTTON -->
+                    <button
+                        type="submit"
+                        class="login-submit-btn"
+                    >
+                        Login to Account
                     </button>
 
                 </form>
 
 
-                <div class="auth-footer">
+                <div class="login-register-link">
 
                     <p>
                         Don't have an account?
@@ -208,11 +267,11 @@
 
                 </div>
 
-            </div>
+            </section>
 
         </div>
 
-    </section>
+    </main>
 
 
     <!-- ================= FOOTER ================= -->
@@ -226,64 +285,7 @@
     </footer>
 
 
-    <!-- ================= TEMPORARY LOGIN SCRIPT ================= -->
-    <script>
-
-        document
-            .getElementById("loginForm")
-            .addEventListener("submit", function(event) {
-
-                event.preventDefault();
-
-                const role =
-                    document.getElementById("role").value;
-
-
-                if (role === "patient") {
-
-                    window.location.href =
-                        "patient-dashboard.html";
-
-                }
-
-                else if (role === "doctor") {
-
-                    window.location.href =
-                        "doctor-dashboard.html";
-
-                }
-
-                else if (role === "receptionist") {
-
-                    window.location.href =
-                        "receptionist-dashboard.html";
-
-                }
-
-                else if (role === "pharmacist") {
-
-                    window.location.href =
-                        "pharmacist-dashboard.html";
-
-                }
-
-                else if (role === "lab") {
-
-                    window.location.href =
-                        "lab-dashboard.html";
-
-                }
-
-                else if (role === "admin") {
-
-                    window.location.href =
-                        "admin-dashboard.html";
-
-                }
-
-            });
-
-    </script>
+    <script src="../js/login.js"></script>
 
 </body>
 
