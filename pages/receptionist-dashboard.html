@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Receptionist Dashboard | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="dashboard-sidebar" id="receptionistSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Receptionist Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="receptionist-dashboard.html"
+                   class="dashboard-menu-link active">
+                    <span class="menu-icon">D</span>
+                    Dashboard
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">PR</span>
+                    Patient Registration
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">PP</span>
+                    Patient Profiles
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">A</span>
+                    Appointments
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">DA</span>
+                    Doctor Availability
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">B</span>
+                    Billing Information
+                </a>
+
+                <a href="#" class="dashboard-menu-link">
+                    <span class="menu-icon">P</span>
+                    Payment Status
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="receptionistLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <main class="dashboard-main">
+
+            <!-- ================= TOPBAR ================= -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="receptionistMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+                    <div>
+                        <p>Receptionist Portal</p>
+                        <h2>Welcome, Receptionist</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-notification">
+                        4
+                    </div>
+
+                    <div class="dashboard-user-info">
+
+                        <div class="receptionist-avatar">
+                            R
+                        </div>
+
+                        <div>
+                            <strong>Receptionist</strong>
+                            <span>Front Desk Staff</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================= WELCOME ================= -->
+            <section class="receptionist-welcome-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Front Desk Management
+                    </p>
+
+                    <h1>
+                        Manage Patient Services Efficiently
+                    </h1>
+
+                    <p>
+                        Register patients, manage profiles, coordinate
+                        appointments, check doctor availability and monitor
+                        billing and payment information from one dashboard.
+                    </p>
+
+
+                    <div class="receptionist-welcome-actions">
+
+                        <a href="#" class="patient-main-btn">
+                            Register Patient
+                        </a>
+
+                        <a href="#" class="patient-outline-btn">
+                            Book Appointment
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="receptionist-welcome-symbol">
+                    +
+                </div>
+
+            </section>
+
+
+            <!-- ================= SUMMARY CARDS ================= -->
+            <section class="receptionist-summary-grid">
+
+                <div class="receptionist-summary-card">
+
+                    <div class="receptionist-summary-icon">
+                        A
+                    </div>
+
+                    <div>
+                        <p>Today's Appointments</p>
+                        <h3>18</h3>
+                        <span>5 awaiting confirmation</span>
+                    </div>
+
+                </div>
+
+
+                <div class="receptionist-summary-card">
+
+                    <div class="receptionist-summary-icon">
+                        NP
+                    </div>
+
+                    <div>
+                        <p>New Patients</p>
+                        <h3>6</h3>
+                        <span>Registered today</span>
+                    </div>
+
+                </div>
+
+
+                <div class="receptionist-summary-card">
+
+                    <div class="receptionist-summary-icon">
+                        C
+                    </div>
+
+                    <div>
+                        <p>Pending Confirmation</p>
+                        <h3>5</h3>
+                        <span>Appointments to review</span>
+                    </div>
+
+                </div>
+
+
+                <div class="receptionist-summary-card">
+
+                    <div class="receptionist-summary-icon">
+                        B
+                    </div>
+
+                    <div>
+                        <p>Pending Payments</p>
+                        <h3>4</h3>
+                        <span>Payment status to verify</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= MAIN GRID ================= -->
+            <section class="receptionist-dashboard-grid">
+
+                <!-- TODAY APPOINTMENTS -->
+                <div class="receptionist-dashboard-card">
+
+                    <div class="receptionist-card-heading">
+
+                        <div>
+                            <h3>Today's Appointments</h3>
+                            <p>Recent appointment schedule</p>
+                        </div>
+
+                        <a href="#">
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="receptionist-appointment-row">
+
+                        <div class="receptionist-time-box">
+                            09:30
+                        </div>
+
+                        <div class="receptionist-appointment-details">
+
+                            <h4>Patient #P1024</h4>
+
+                            <p>
+                                General Consultation
+                            </p>
+
+                            <span>
+                                Dr. Sarah Ahmed
+                            </span>
+
+                        </div>
+
+                        <div class="receptionist-status confirmed">
+                            Confirmed
+                        </div>
+
+                    </div>
+
+
+                    <div class="receptionist-appointment-row">
+
+                        <div class="receptionist-time-box">
+                            10:30
+                        </div>
+
+                        <div class="receptionist-appointment-details">
+
+                            <h4>Patient #P1078</h4>
+
+                            <p>
+                                Follow-up Consultation
+                            </p>
+
+                            <span>
+                                Dr. Mahmud Hasan
+                            </span>
+
+                        </div>
+
+                        <div class="receptionist-status pending">
+                            Pending
+                        </div>
+
+                    </div>
+
+
+                    <div class="receptionist-appointment-row">
+
+                        <div class="receptionist-time-box">
+                            11:15
+                        </div>
+
+                        <div class="receptionist-appointment-details">
+
+                            <h4>Patient #P1135</h4>
+
+                            <p>
+                                Medical Consultation
+                            </p>
+
+                            <span>
+                                Dr. Sarah Ahmed
+                            </span>
+
+                        </div>
+
+                        <div class="receptionist-status confirmed">
+                            Confirmed
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+                <div class="receptionist-dashboard-card">
+
+                    <div class="receptionist-card-heading">
+
+                        <div>
+                            <h3>Quick Actions</h3>
+                            <p>Common receptionist tasks</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="receptionist-quick-grid">
+
+                        <a href="#" class="receptionist-quick-item">
+
+                            <span>PR</span>
+
+                            <div>
+                                <h4>Register Patient</h4>
+                                <p>Create patient profile</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="receptionist-quick-item">
+
+                            <span>A</span>
+
+                            <div>
+                                <h4>Book Appointment</h4>
+                                <p>Schedule consultation</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="receptionist-quick-item">
+
+                            <span>DA</span>
+
+                            <div>
+                                <h4>Doctor Availability</h4>
+                                <p>Check available doctors</p>
+                            </div>
+
+                        </a>
+
+
+                        <a href="#" class="receptionist-quick-item">
+
+                            <span>B</span>
+
+                            <div>
+                                <h4>Billing Status</h4>
+                                <p>Review patient billing</p>
+                            </div>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= FRONT DESK NOTICE ================= -->
+            <section class="receptionist-notice-card">
+
+                <div class="receptionist-notice-icon">
+                    i
+                </div>
+
+                <div class="receptionist-notice-content">
+
+                    <h3>
+                        Front Desk Reminder
+                    </h3>
+
+                    <p>
+                        Verify patient information before creating or modifying
+                        appointments and ensure that billing and payment status
+                        information is updated accurately.
+                    </p>
+
+                </div>
+
+                <a href="#" class="receptionist-notice-btn">
+                    View Schedule
+                </a>
+
+            </section>
+
+
+            <!-- ================= RECENT ACTIVITY ================= -->
+            <section class="receptionist-dashboard-card receptionist-activity-card">
+
+                <div class="receptionist-card-heading">
+
+                    <div>
+                        <h3>Recent Activity</h3>
+                        <p>Latest front desk activities</p>
+                    </div>
+
+                </div>
+
+
+                <div class="receptionist-activity-row">
+
+                    <div class="receptionist-activity-dot"></div>
+
+                    <div>
+
+                        <h4>Patient Registered</h4>
+
+                        <p>
+                            A new patient profile was created successfully.
+                        </p>
+
+                    </div>
+
+                    <span>10 min ago</span>
+
+                </div>
+
+
+                <div class="receptionist-activity-row">
+
+                    <div class="receptionist-activity-dot"></div>
+
+                    <div>
+
+                        <h4>Appointment Confirmed</h4>
+
+                        <p>
+                            An appointment was confirmed for Patient #P1072.
+                        </p>
+
+                    </div>
+
+                    <span>35 min ago</span>
+
+                </div>
+
+
+                <div class="receptionist-activity-row">
+
+                    <div class="receptionist-activity-dot"></div>
+
+                    <div>
+
+                        <h4>Appointment Rescheduled</h4>
+
+                        <p>
+                            A patient consultation was moved to a new time slot.
+                        </p>
+
+                    </div>
+
+                    <span>1 hour ago</span>
+
+                </div>
+
+
+                <div class="receptionist-activity-row">
+
+                    <div class="receptionist-activity-dot"></div>
+
+                    <div>
+
+                        <h4>Payment Status Updated</h4>
+
+                        <p>
+                            A patient's healthcare payment status was verified.
+                        </p>
+
+                    </div>
+
+                    <span>2 hours ago</span>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= FOOTER ================= -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================= LOGOUT MODAL ================= -->
+    <div class="logout-modal" id="receptionistLogoutModal">
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Receptionist Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="receptionistCancelLogout"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="receptionistConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/receptionist-dashboard.js"></script>
+
+</body>
+
+</html>
