@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Feedback & Complaint | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="feedbackSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Patient Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="patient-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="patient-profile.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">P</span>
+                    My Profile
+
+                </a>
+
+
+                <a href="doctor-availability.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">DA</span>
+                    Doctor Availability
+
+                </a>
+
+
+                <a href="appointment-booking.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">BA</span>
+                    Book Appointment
+
+                </a>
+
+
+                <a href="appointment-management.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">A</span>
+                    My Appointments
+
+                </a>
+
+
+                <a href="ai-symptom-assessment.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">AI</span>
+                    AI Symptom Assessment
+
+                </a>
+
+
+                <a href="medical-records.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">MR</span>
+                    Medical Records
+
+                </a>
+
+
+                <a href="billing-payment.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">BP</span>
+                    Billing & Payment
+
+                </a>
+
+
+                <a href="feedback-complaint.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">FC</span>
+                    Feedback & Complaint
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="feedbackLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="feedbackMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Patient Portal</p>
+
+                        <h2>Feedback & Complaint</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="dashboard-user-avatar">
+                            P
+                        </div>
+
+                        <div>
+
+                            <strong>Patient</strong>
+
+                            <span>Patient Account</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="feedback-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Patient Support
+                    </p>
+
+                    <h1>
+                        Share Feedback or Submit a Complaint
+                    </h1>
+
+                    <p>
+                        Help improve healthcare services by providing
+                        feedback or submitting a complaint for
+                        administrative review.
+                    </p>
+
+                </div>
+
+
+                <div class="feedback-header-icon">
+                    FC
+                </div>
+
+            </section>
+
+
+            <!-- SUMMARY -->
+            <section class="feedback-summary-grid">
+
+                <div class="feedback-summary-card">
+
+                    <div class="feedback-summary-icon">
+                        T
+                    </div>
+
+                    <div>
+
+                        <p>Total Submissions</p>
+
+                        <h3>
+                            4
+                        </h3>
+
+                        <span>Previous records</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feedback-summary-card">
+
+                    <div class="feedback-summary-icon">
+                        F
+                    </div>
+
+                    <div>
+
+                        <p>Feedback</p>
+
+                        <h3>
+                            2
+                        </h3>
+
+                        <span>Feedback records</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feedback-summary-card">
+
+                    <div class="feedback-summary-icon">
+                        C
+                    </div>
+
+                    <div>
+
+                        <p>Complaints</p>
+
+                        <h3>
+                            2
+                        </h3>
+
+                        <span>Complaint records</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feedback-summary-card">
+
+                    <div class="feedback-summary-icon">
+                        R
+                    </div>
+
+                    <div>
+
+                        <p>Resolved</p>
+
+                        <h3>
+                            3
+                        </h3>
+
+                        <span>Reviewed submissions</span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FORM LAYOUT -->
+            <section class="feedback-layout">
+
+                <!-- SUBMISSION FORM -->
+                <div class="feedback-form-card">
+
+                    <div class="feedback-section-heading">
+
+                        <div>
+
+                            <h3>
+                                New Submission
+                            </h3>
+
+                            <p>
+                                Complete the information below
+                            </p>
+
+                        </div>
+
+
+                        <span>
+                            01
+                        </span>
+
+                    </div>
+
+
+                    <form id="feedbackForm">
+
+                        <div
+                            class="feedback-error"
+                            id="feedbackError"
+                        ></div>
+
+
+                        <div class="feedback-form-grid">
+
+                            <!-- TYPE -->
+                            <div class="feedback-form-group">
+
+                                <label for="submissionType">
+                                    Submission Type
+                                </label>
+
+                                <select id="submissionType">
+
+                                    <option value="">
+                                        Select Type
+                                    </option>
+
+                                    <option value="feedback">
+                                        Feedback
+                                    </option>
+
+                                    <option value="complaint">
+                                        Complaint
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- CATEGORY -->
+                            <div class="feedback-form-group">
+
+                                <label for="submissionCategory">
+                                    Service Category
+                                </label>
+
+                                <select id="submissionCategory">
+
+                                    <option value="">
+                                        Select Category
+                                    </option>
+
+                                    <option value="appointment">
+                                        Appointment Service
+                                    </option>
+
+                                    <option value="doctor">
+                                        Doctor Consultation
+                                    </option>
+
+                                    <option value="laboratory">
+                                        Laboratory Service
+                                    </option>
+
+                                    <option value="pharmacy">
+                                        Pharmacy Service
+                                    </option>
+
+                                    <option value="billing">
+                                        Billing & Payment
+                                    </option>
+
+                                    <option value="technical">
+                                        Technical Support
+                                    </option>
+
+                                    <option value="other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- FEEDBACK RATING -->
+                        <div
+                            class="feedback-form-group feedback-dynamic-group"
+                            id="feedbackRatingGroup"
+                        >
+
+                            <label for="feedbackRating">
+                                Service Rating
+                            </label>
+
+                            <select id="feedbackRating">
+
+                                <option value="">
+                                    Select Rating
+                                </option>
+
+                                <option value="5">
+                                    5 - Excellent
+                                </option>
+
+                                <option value="4">
+                                    4 - Very Good
+                                </option>
+
+                                <option value="3">
+                                    3 - Good
+                                </option>
+
+                                <option value="2">
+                                    2 - Fair
+                                </option>
+
+                                <option value="1">
+                                    1 - Needs Improvement
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- COMPLAINT PRIORITY -->
+                        <div
+                            class="feedback-form-group feedback-dynamic-group"
+                            id="complaintPriorityGroup"
+                        >
+
+                            <label for="complaintPriority">
+                                Complaint Priority
+                            </label>
+
+                            <select id="complaintPriority">
+
+                                <option value="">
+                                    Select Priority
+                                </option>
+
+                                <option value="normal">
+                                    Normal
+                                </option>
+
+                                <option value="important">
+                                    Important
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- SUBJECT -->
+                        <div class="feedback-form-group">
+
+                            <label for="submissionSubject">
+                                Subject
+                            </label>
+
+                            <input
+                                type="text"
+                                id="submissionSubject"
+                                placeholder="Enter a short subject"
+                            >
+
+                        </div>
+
+
+                        <!-- MESSAGE -->
+                        <div class="feedback-form-group">
+
+                            <label for="submissionMessage">
+                                Description
+                            </label>
+
+                            <textarea
+                                id="submissionMessage"
+                                rows="6"
+                                placeholder="Describe your feedback or complaint clearly..."
+                            ></textarea>
+
+                            <small>
+                                Please provide enough information for review.
+                            </small>
+
+                        </div>
+
+
+                        <!-- REFERENCE -->
+                        <div class="feedback-form-group">
+
+                            <label for="submissionReference">
+                                Related Reference ID
+                            </label>
+
+                            <input
+                                type="text"
+                                id="submissionReference"
+                                placeholder="Optional: Appointment, Bill or Report ID"
+                            >
+
+                        </div>
+
+
+                        <!-- CONFIRMATION -->
+                        <label class="feedback-confirmation">
+
+                            <input
+                                type="checkbox"
+                                id="feedbackConfirmation"
+                            >
+
+                            <span>
+                                I confirm that the information provided
+                                in this submission is accurate.
+                            </span>
+
+                        </label>
+
+
+                        <!-- ACTIONS -->
+                        <div class="feedback-form-actions">
+
+                            <button
+                                type="reset"
+                                class="feedback-reset-btn"
+                                id="feedbackResetBtn"
+                            >
+                                Clear Form
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                class="feedback-submit-btn"
+                            >
+                                Submit
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- INFORMATION -->
+                <aside class="feedback-info-card">
+
+                    <div class="feedback-info-heading">
+
+                        <h3>
+                            Submission Process
+                        </h3>
+
+                        <p>
+                            What happens after submission
+                        </p>
+
+                    </div>
+
+
+                    <div class="feedback-process-item">
+
+                        <span>
+                            1
+                        </span>
+
+                        <div>
+
+                            <h4>
+                                Submit Information
+                            </h4>
+
+                            <p>
+                                Provide feedback or complaint details.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feedback-process-line"></div>
+
+
+                    <div class="feedback-process-item">
+
+                        <span>
+                            2
+                        </span>
+
+                        <div>
+
+                            <h4>
+                                Administrative Review
+                            </h4>
+
+                            <p>
+                                The submission is sent for review.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feedback-process-line"></div>
+
+
+                    <div class="feedback-process-item">
+
+                        <span>
+                            3
+                        </span>
+
+                        <div>
+
+                            <h4>
+                                Status Update
+                            </h4>
+
+                            <p>
+                                Complaint status can be updated after review.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feedback-info-note">
+
+                        <strong>
+                            Administrative Monitoring
+                        </strong>
+
+                        <p>
+                            Complaints are intended to be reviewed and
+                            resolved by authorized administrative staff.
+                        </p>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- HISTORY -->
+            <section class="feedback-history-card">
+
+                <div class="feedback-history-heading">
+
+                    <div>
+
+                        <h3>
+                            Previous Submissions
+                        </h3>
+
+                        <p>
+                            Recent feedback and complaint records
+                        </p>
+
+                    </div>
+
+
+                    <div class="feedback-history-filters">
+
+                        <button
+                            type="button"
+                            class="feedback-history-filter active"
+                            data-filter="all"
+                        >
+                            All
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="feedback-history-filter"
+                            data-filter="feedback"
+                        >
+                            Feedback
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="feedback-history-filter"
+                            data-filter="complaint"
+                        >
+                            Complaint
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="feedback-history-list"
+                    id="feedbackHistoryList"
+                >
+
+                    <!-- RECORD 1 -->
+                    <div
+                        class="feedback-history-row"
+                        data-type="complaint"
+                    >
+
+                        <div class="feedback-history-icon complaint">
+                            C
+                        </div>
+
+
+                        <div class="feedback-history-main">
+
+                            <h4>
+                                Appointment Waiting Time
+                            </h4>
+
+                            <p>
+                                Complaint ID: #CMP1042
+                            </p>
+
+                        </div>
+
+
+                        <span class="feedback-history-date">
+                            07 Aug 2026
+                        </span>
+
+
+                        <span class="feedback-history-status review">
+                            Under Review
+                        </span>
+
+                    </div>
+
+
+                    <!-- RECORD 2 -->
+                    <div
+                        class="feedback-history-row"
+                        data-type="feedback"
+                    >
+
+                        <div class="feedback-history-icon">
+                            F
+                        </div>
+
+
+                        <div class="feedback-history-main">
+
+                            <h4>
+                                Laboratory Service Feedback
+                            </h4>
+
+                            <p>
+                                Feedback ID: #FDB1034
+                            </p>
+
+                        </div>
+
+
+                        <span class="feedback-history-date">
+                            28 Jul 2026
+                        </span>
+
+
+                        <span class="feedback-history-status resolved">
+                            Reviewed
+                        </span>
+
+                    </div>
+
+
+                    <!-- RECORD 3 -->
+                    <div
+                        class="feedback-history-row"
+                        data-type="complaint"
+                    >
+
+                        <div class="feedback-history-icon complaint">
+                            C
+                        </div>
+
+
+                        <div class="feedback-history-main">
+
+                            <h4>
+                                Billing Information Issue
+                            </h4>
+
+                            <p>
+                                Complaint ID: #CMP1018
+                            </p>
+
+                        </div>
+
+
+                        <span class="feedback-history-date">
+                            16 Jul 2026
+                        </span>
+
+
+                        <span class="feedback-history-status resolved">
+                            Resolved
+                        </span>
+
+                    </div>
+
+
+                    <!-- RECORD 4 -->
+                    <div
+                        class="feedback-history-row"
+                        data-type="feedback"
+                    >
+
+                        <div class="feedback-history-icon">
+                            F
+                        </div>
+
+
+                        <div class="feedback-history-main">
+
+                            <h4>
+                                Consultation Service Feedback
+                            </h4>
+
+                            <p>
+                                Feedback ID: #FDB1009
+                            </p>
+
+                        </div>
+
+
+                        <span class="feedback-history-date">
+                            30 Jun 2026
+                        </span>
+
+
+                        <span class="feedback-history-status resolved">
+                            Reviewed
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NO HISTORY RESULTS -->
+                <div
+                    class="feedback-no-history"
+                    id="feedbackNoHistory"
+                >
+
+                    <p>
+                        No submissions found for this category.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- NOTE -->
+            <section class="feedback-note-card">
+
+                <div class="feedback-note-icon">
+                    i
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Prototype Feedback & Complaint Module
+                    </h3>
+
+                    <p>
+                        Submissions on this page are demonstration records.
+                        Permanent complaint tracking, administrator responses
+                        and notification updates will be handled during
+                        backend and database integration.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- SUCCESS MODAL -->
+    <div
+        class="feedback-success-modal"
+        id="feedbackSuccessModal"
+    >
+
+        <div class="feedback-success-card">
+
+            <div class="feedback-success-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                Submission Received
+            </h2>
+
+
+            <p id="feedbackSuccessMessage">
+                Your submission has been recorded successfully
+                in this prototype session.
+            </p>
+
+
+            <div class="feedback-success-reference">
+
+                <span>
+                    Reference ID
+                </span>
+
+                <strong id="feedbackReferenceId">
+                    -
+                </strong>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="feedback-success-btn"
+                id="feedbackSuccessBtn"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="feedbackLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+
+            <p>
+                Are you sure you want to leave the Patient Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="feedbackCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="feedbackConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/feedback-complaint.js"></script>
+
+</body>
+
+</html>
