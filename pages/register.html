@@ -31,13 +31,13 @@
     </header>
 
 
-    <!-- ================= REGISTRATION SECTION ================= -->
-    <section class="register-section">
+    <!-- ================= REGISTRATION PAGE ================= -->
+    <main class="register-page">
 
         <div class="register-container">
 
             <!-- LEFT SIDE -->
-            <div class="register-info">
+            <section class="register-information">
 
                 <p class="small-title">
                     Patient Registration
@@ -47,50 +47,99 @@
                     Create Your Smart Healthcare Account
                 </h1>
 
-                <p>
+                <p class="register-description">
                     Register as a patient to access appointments,
                     medical records, AI-assisted symptom assessment,
-                    prescriptions, laboratory reports and other
-                    healthcare services.
+                    digital prescriptions, laboratory reports,
+                    billing information and other healthcare services.
                 </p>
 
 
-                <div class="register-benefits">
+                <div class="register-feature-list">
 
-                    <div class="register-benefit">
+                    <div class="register-feature-item">
+
                         <span>✓</span>
-                        <p>Manage medical appointments</p>
+
+                        <div>
+                            <h3>Manage Appointments</h3>
+
+                            <p>
+                                View doctor availability and manage
+                                healthcare appointments.
+                            </p>
+                        </div>
+
                     </div>
 
-                    <div class="register-benefit">
+
+                    <div class="register-feature-item">
+
                         <span>✓</span>
-                        <p>Access digital healthcare records</p>
+
+                        <div>
+                            <h3>Access Medical Information</h3>
+
+                            <p>
+                                View authorized medical records,
+                                prescriptions and laboratory reports.
+                            </p>
+                        </div>
+
                     </div>
 
-                    <div class="register-benefit">
+
+                    <div class="register-feature-item">
+
                         <span>✓</span>
-                        <p>Receive AI-assisted preliminary guidance</p>
+
+                        <div>
+                            <h3>AI-Assisted Support</h3>
+
+                            <p>
+                                Receive preliminary AI-assisted
+                                symptom assessment and guidance.
+                            </p>
+                        </div>
+
                     </div>
 
-                    <div class="register-benefit">
+
+                    <div class="register-feature-item">
+
                         <span>✓</span>
-                        <p>View prescriptions and laboratory reports</p>
+
+                        <div>
+                            <h3>Centralized Healthcare Access</h3>
+
+                            <p>
+                                Use healthcare services through
+                                one integrated patient portal.
+                            </p>
+                        </div>
+
                     </div>
 
                 </div>
 
-            </div>
+            </section>
 
 
             <!-- RIGHT SIDE -->
-            <div class="register-card">
+            <section class="register-card">
 
-                <div class="auth-card-header">
+                <div class="register-card-header">
 
-                    <h2>Create Account</h2>
+                    <div class="register-icon">
+                        +
+                    </div>
+
+                    <h2>
+                        Create Patient Account
+                    </h2>
 
                     <p>
-                        Enter your personal information
+                        Enter your information to register
                     </p>
 
                 </div>
@@ -117,7 +166,7 @@
 
 
                     <!-- EMAIL + PHONE -->
-                    <div class="form-row">
+                    <div class="register-form-row">
 
                         <div class="form-group">
 
@@ -129,7 +178,7 @@
                                 type="email"
                                 id="regEmail"
                                 name="email"
-                                placeholder="Enter email"
+                                placeholder="Enter your email"
                                 required
                             >
 
@@ -156,7 +205,7 @@
 
 
                     <!-- DATE OF BIRTH + GENDER -->
-                    <div class="form-row">
+                    <div class="register-form-row">
 
                         <div class="form-group">
 
@@ -187,7 +236,7 @@
                             >
 
                                 <option value="">
-                                    Select Gender
+                                    Select gender
                                 </option>
 
                                 <option value="male">
@@ -228,7 +277,7 @@
 
 
                     <!-- PASSWORD + CONFIRM PASSWORD -->
-                    <div class="form-row">
+                    <div class="register-form-row">
 
                         <div class="form-group">
 
@@ -268,8 +317,15 @@
                     </div>
 
 
+                    <!-- ERROR MESSAGE -->
+                    <p
+                        class="register-error-message"
+                        id="registerError"
+                    ></p>
+
+
                     <!-- AGREEMENT -->
-                    <label class="terms-box">
+                    <label class="register-terms">
 
                         <input
                             type="checkbox"
@@ -284,10 +340,10 @@
                     </label>
 
 
-                    <!-- REGISTER BUTTON -->
+                    <!-- BUTTON -->
                     <button
                         type="submit"
-                        class="auth-btn"
+                        class="register-submit-btn"
                     >
                         Create Account
                     </button>
@@ -295,7 +351,7 @@
                 </form>
 
 
-                <div class="auth-footer">
+                <div class="register-login-link">
 
                     <p>
                         Already have an account?
@@ -307,34 +363,42 @@
 
                 </div>
 
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= SUCCESS MODAL ================= -->
+    <div class="registration-modal" id="registrationModal">
+
+        <div class="registration-modal-card">
+
+            <div class="registration-success-icon">
+                ✓
             </div>
 
+            <h2>
+                Registration Successful
+            </h2>
+
+            <p>
+                Your patient account has been created successfully.
+                You can now continue to the login page.
+            </p>
+
+            <button
+                type="button"
+                id="continueLoginBtn"
+                class="modal-login-btn"
+            >
+                Continue to Login
+            </button>
+
         </div>
-
-    </section>
-    <!-- ================= SUCCESS MODAL ================= -->
-<div class="success-modal" id="successModal">
-
-    <div class="success-modal-card">
-
-        <div class="success-icon">
-            ✓
-        </div>
-
-        <h2>Registration Successful!</h2>
-
-        <p>
-            Your Smart Healthcare account has been created successfully.
-            Please login to continue.
-        </p>
-
-        <button id="continueLoginBtn" class="success-btn">
-            Continue to Login
-        </button>
 
     </div>
-
-</div>
 
 
     <!-- ================= FOOTER ================= -->
@@ -348,40 +412,7 @@
     </footer>
 
 
-    <!-- ================= TEMPORARY REGISTRATION SCRIPT ================= -->
-    <script>
-
-        document
-            .getElementById("registerForm")
-            .addEventListener("submit", function(event) {
-
-                event.preventDefault();
-
-                const password =
-                    document.getElementById("regPassword").value;
-
-                const confirmPassword =
-                    document.getElementById("confirmPassword").value;
-
-
-                if (password !== confirmPassword) {
-
-                    alert("Passwords do not match.");
-
-                    return;
-                }
-
-
-                alert(
-                    "Registration successful! Please login to continue."
-                );
-
-
-                window.location.href = "login.html";
-
-            });
-
-    </script>
+    <script src="../js/register.js"></script>
 
 </body>
 
