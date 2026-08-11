@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laboratory Test Request | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="labRequestSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Doctor Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="doctor-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">A</span>
+                    Appointments
+
+                </a>
+
+
+                <a href="medical-records.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">PR</span>
+                    Patient Records
+
+                </a>
+
+
+                <a href="consultation.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">C</span>
+                    Consultations
+
+                </a>
+
+
+                <a href="digital-prescription.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">Rx</span>
+                    Prescriptions
+
+                </a>
+
+
+                <a href="lab-test-request.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">LT</span>
+                    Laboratory Requests
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">LR</span>
+                    Laboratory Reports
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="labRequestLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="labRequestMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Doctor Portal</p>
+
+                        <h2>Laboratory Test Request</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="doctor-avatar">
+                            DR
+                        </div>
+
+                        <div>
+
+                            <strong>Doctor</strong>
+
+                            <span>Medical Professional</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="lab-request-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Laboratory Management
+                    </p>
+
+                    <h1>
+                        Request Laboratory Tests
+                    </h1>
+
+                    <p>
+                        Create laboratory test requests for the selected
+                        patient as part of the professional consultation
+                        workflow.
+                    </p>
+
+                </div>
+
+
+                <div class="lab-request-header-icon">
+                    LT
+                </div>
+
+            </section>
+
+
+            <!-- PATIENT INFORMATION -->
+            <section class="lab-request-patient-card">
+
+                <div class="lab-request-patient-main">
+
+                    <div class="lab-request-patient-avatar">
+                        P
+                    </div>
+
+
+                    <div>
+
+                        <p class="small-title">
+                            Selected Patient
+                        </p>
+
+                        <h2>
+                            Patient #P1024
+                        </h2>
+
+                        <p>
+                            Appointment ID: #APT2041
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="lab-request-patient-details">
+
+                    <div>
+
+                        <span>Consultation</span>
+
+                        <strong>
+                            General Consultation
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Request Date</span>
+
+                        <strong id="labRequestDate">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Status</span>
+
+                        <strong class="lab-request-draft-status">
+                            Draft
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- REQUEST LAYOUT -->
+            <section class="lab-request-layout">
+
+                <!-- FORM -->
+                <div class="lab-request-form-card">
+
+                    <div class="lab-request-section-heading">
+
+                        <div>
+
+                            <h3>
+                                Test Request Information
+                            </h3>
+
+                            <p>
+                                Select laboratory tests and provide request details
+                            </p>
+
+                        </div>
+
+
+                        <span>
+                            01
+                        </span>
+
+                    </div>
+
+
+                    <form id="labRequestForm">
+
+                        <div
+                            class="lab-request-error"
+                            id="labRequestError"
+                        ></div>
+
+
+                        <!-- TEST LIST HEADER -->
+                        <div class="lab-request-test-heading">
+
+                            <div>
+
+                                <h4>
+                                    Requested Tests
+                                </h4>
+
+                                <p>
+                                    Add one or more laboratory tests
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="lab-request-add-btn"
+                                id="addLabTestBtn"
+                            >
+                                + Add Test
+                            </button>
+
+                        </div>
+
+
+                        <!-- TEST LIST -->
+                        <div
+                            class="lab-request-test-list"
+                            id="labTestList"
+                        >
+
+                            <div class="lab-request-test-item">
+
+                                <div class="lab-request-test-number">
+                                    1
+                                </div>
+
+
+                                <div class="lab-request-test-fields">
+
+                                    <div class="lab-request-form-grid">
+
+                                        <div class="lab-request-form-group">
+
+                                            <label>
+                                                Test Name
+                                            </label>
+
+                                            <select class="lab-test-name">
+
+                                                <option value="">
+                                                    Select Test
+                                                </option>
+
+                                                <option value="cbc">
+                                                    Complete Blood Count
+                                                </option>
+
+                                                <option value="glucose">
+                                                    Blood Glucose Test
+                                                </option>
+
+                                                <option value="lipid">
+                                                    Lipid Profile
+                                                </option>
+
+                                                <option value="urine">
+                                                    Urine Analysis
+                                                </option>
+
+                                                <option value="liver">
+                                                    Liver Function Test
+                                                </option>
+
+                                                <option value="kidney">
+                                                    Kidney Function Test
+                                                </option>
+
+                                                <option value="other">
+                                                    Other Laboratory Test
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+
+                                        <div class="lab-request-form-group">
+
+                                            <label>
+                                                Priority
+                                            </label>
+
+                                            <select class="lab-test-priority">
+
+                                                <option value="">
+                                                    Select Priority
+                                                </option>
+
+                                                <option value="routine">
+                                                    Routine
+                                                </option>
+
+                                                <option value="priority">
+                                                    Priority
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="lab-request-form-group">
+
+                                        <label>
+                                            Test Instruction
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="lab-test-instruction"
+                                            placeholder="Optional professional instruction for the laboratory"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <button
+                                    type="button"
+                                    class="lab-request-remove-btn"
+                                    disabled
+                                >
+                                    ×
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CLINICAL REASON -->
+                        <div class="lab-request-form-group">
+
+                            <label for="labClinicalReason">
+                                Clinical Reason for Test Request
+                            </label>
+
+                            <textarea
+                                id="labClinicalReason"
+                                rows="4"
+                                placeholder="Enter the professional reason for requesting the laboratory test..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- ADDITIONAL NOTE -->
+                        <div class="lab-request-form-group">
+
+                            <label for="labAdditionalNote">
+                                Additional Laboratory Note
+                            </label>
+
+                            <textarea
+                                id="labAdditionalNote"
+                                rows="3"
+                                placeholder="Optional additional information for laboratory staff..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+                        <div class="lab-request-form-actions">
+
+                            <a
+                                href="consultation.html"
+                                class="lab-request-cancel-btn"
+                            >
+                                Cancel
+                            </a>
+
+
+                            <button
+                                type="submit"
+                                class="lab-request-submit-btn"
+                            >
+                                Submit Test Request
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- SUMMARY -->
+                <aside class="lab-request-summary-card">
+
+                    <div class="lab-request-summary-heading">
+
+                        <h3>
+                            Request Summary
+                        </h3>
+
+                        <p>
+                            Current laboratory request
+                        </p>
+
+                    </div>
+
+
+                    <div class="lab-request-summary-id">
+
+                        <span>
+                            Request ID
+                        </span>
+
+                        <strong>
+                            #LTR2056
+                        </strong>
+
+                    </div>
+
+
+                    <div class="lab-request-summary-list">
+
+                        <div>
+
+                            <span>Patient</span>
+
+                            <strong>
+                                #P1024
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>Doctor</span>
+
+                            <strong>
+                                Current Doctor
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>Tests Requested</span>
+
+                            <strong id="labTestCount">
+                                1
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>Status</span>
+
+                            <strong>
+                                Draft
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="lab-request-summary-note">
+
+                        <div>
+                            i
+                        </div>
+
+                        <p>
+                            Laboratory requests should be created by an
+                            authorized doctor and linked to the correct patient.
+                        </p>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- RECENT REQUESTS -->
+            <section class="lab-request-history-card">
+
+                <div class="lab-request-history-heading">
+
+                    <div>
+
+                        <h3>
+                            Recent Laboratory Requests
+                        </h3>
+
+                        <p>
+                            Recently submitted test requests
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="lab-request-history-row">
+
+                    <div class="lab-request-history-icon">
+                        CBC
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            Request #LTR2048
+                        </h4>
+
+                        <p>
+                            Patient #P1078 — Complete Blood Count
+                        </p>
+
+                    </div>
+
+
+                    <span class="lab-request-history-date">
+                        09 Aug 2026
+                    </span>
+
+
+                    <span class="lab-request-history-status">
+                        Pending
+                    </span>
+
+                </div>
+
+
+                <div class="lab-request-history-row">
+
+                    <div class="lab-request-history-icon">
+                        BG
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            Request #LTR2042
+                        </h4>
+
+                        <p>
+                            Patient #P1092 — Blood Glucose Test
+                        </p>
+
+                    </div>
+
+
+                    <span class="lab-request-history-date">
+                        07 Aug 2026
+                    </span>
+
+
+                    <span class="lab-request-history-status progress">
+                        In Progress
+                    </span>
+
+                </div>
+
+
+                <div class="lab-request-history-row">
+
+                    <div class="lab-request-history-icon">
+                        LP
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            Request #LTR2035
+                        </h4>
+
+                        <p>
+                            Patient #P1116 — Lipid Profile
+                        </p>
+
+                    </div>
+
+
+                    <span class="lab-request-history-date">
+                        04 Aug 2026
+                    </span>
+
+
+                    <span class="lab-request-history-status completed">
+                        Completed
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- NOTE -->
+            <section class="lab-request-note-card">
+
+                <div class="lab-request-note-icon">
+                    i
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Prototype Laboratory Request Module
+                    </h3>
+
+                    <p>
+                        Requests created here are demonstration records.
+                        Backend integration will later send authorized
+                        requests to the laboratory technician workflow
+                        and store them securely in the database.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- SUCCESS MODAL -->
+    <div
+        class="lab-request-success-modal"
+        id="labRequestSuccessModal"
+    >
+
+        <div class="lab-request-success-card">
+
+            <div class="lab-request-success-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                Test Request Submitted
+            </h2>
+
+
+            <p>
+                Laboratory request #LTR2056 has been submitted
+                successfully in this prototype session.
+            </p>
+
+
+            <div class="lab-request-success-info">
+
+                <span>
+                    Tests Requested
+                </span>
+
+                <strong id="successLabTestCount">
+                    1
+                </strong>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="lab-request-success-btn"
+                id="labRequestSuccessBtn"
+            >
+                Back to Doctor Dashboard
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="labRequestLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Doctor Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="labRequestCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="labRequestConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/lab-test-request.js"></script>
+
+</body>
+
+</html>

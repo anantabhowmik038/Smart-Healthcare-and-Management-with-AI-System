@@ -11425,3 +11425,978 @@ a {
     }
 
 }
+
+/* PAGE 18 - LABORATORY TEST REQUEST */
+
+
+/* HEADER */
+
+.lab-request-header-card {
+    background-color: #eaf7fa;
+
+    border: 1px solid #d5eaef;
+
+    border-radius: 17px;
+
+    padding: 30px 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 20px;
+}
+
+.lab-request-header-card > div:first-child {
+    max-width: 750px;
+}
+
+.lab-request-header-card h1 {
+    color: #16324f;
+
+    font-size: 30px;
+
+    margin-bottom: 8px;
+}
+
+.lab-request-header-card p:not(.small-title) {
+    color: #677986;
+
+    font-size: 13px;
+}
+
+.lab-request-header-icon {
+    width: 90px;
+    height: 90px;
+
+    min-width: 90px;
+
+    border-radius: 50%;
+
+    background-color: #168aad;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+
+/* PATIENT INFORMATION */
+
+.lab-request-patient-card {
+    background-color: white;
+
+    border: 1px solid #dfe8ed;
+
+    border-radius: 14px;
+
+    padding: 21px 24px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 22px;
+}
+
+.lab-request-patient-main {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+.lab-request-patient-avatar {
+    width: 55px;
+    height: 55px;
+
+    min-width: 55px;
+
+    border-radius: 50%;
+
+    background-color: #e8f7fa;
+
+    color: #168aad;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+.lab-request-patient-main h2 {
+    color: #16324f;
+
+    font-size: 18px;
+}
+
+.lab-request-patient-main p:not(.small-title) {
+    color: #8796a1;
+
+    font-size: 10px;
+}
+
+.lab-request-patient-details {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 25px;
+}
+
+.lab-request-patient-details span {
+    display: block;
+
+    color: #8a99a3;
+
+    font-size: 9px;
+
+    margin-bottom: 3px;
+}
+
+.lab-request-patient-details strong {
+    color: #526875;
+
+    font-size: 10px;
+}
+
+.lab-request-draft-status {
+    color: #9a7118 !important;
+}
+
+
+/* LAYOUT */
+
+.lab-request-layout {
+    display: grid;
+
+    grid-template-columns: 1fr 310px;
+
+    gap: 22px;
+
+    align-items: start;
+
+    margin-bottom: 22px;
+}
+
+
+/* FORM */
+
+.lab-request-form-card {
+    background-color: white;
+
+    border: 1px solid #dfe8ed;
+
+    border-radius: 14px;
+
+    padding: 26px;
+}
+
+.lab-request-section-heading {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-bottom: 17px;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid #edf2f5;
+}
+
+.lab-request-section-heading h3 {
+    color: #16324f;
+
+    font-size: 18px;
+}
+
+.lab-request-section-heading p {
+    color: #8796a1;
+
+    font-size: 10px;
+}
+
+.lab-request-section-heading > span {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 8px;
+
+    background-color: #e8f7fa;
+
+    color: #168aad;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.lab-request-error {
+    min-height: 20px;
+
+    color: #b44747;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+
+/* TEST HEADING */
+
+.lab-request-test-heading {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 14px;
+}
+
+.lab-request-test-heading h4 {
+    color: #29445b;
+
+    font-size: 14px;
+}
+
+.lab-request-test-heading p {
+    color: #8796a1;
+
+    font-size: 9px;
+}
+
+.lab-request-add-btn {
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 9px 12px;
+
+    background-color: #168aad;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* TEST ITEM */
+
+.lab-request-test-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    margin-bottom: 22px;
+}
+
+.lab-request-test-item {
+    border: 1px solid #dfe8ed;
+
+    border-radius: 10px;
+
+    padding: 16px;
+
+    display: grid;
+
+    grid-template-columns: 32px 1fr 32px;
+
+    gap: 12px;
+
+    background-color: #fafdfe;
+}
+
+.lab-request-test-number {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    background-color: #e8f7fa;
+
+    color: #168aad;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.lab-request-test-fields {
+    min-width: 0;
+}
+
+.lab-request-remove-btn {
+    width: 30px;
+    height: 30px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background-color: #f8eaea;
+
+    color: #a75252;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+.lab-request-remove-btn:disabled {
+    opacity: 0.35;
+
+    cursor: not-allowed;
+}
+
+
+/* FORM FIELDS */
+
+.lab-request-form-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+.lab-request-form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-bottom: 16px;
+}
+
+.lab-request-form-group label {
+    color: #536b7a;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.lab-request-form-group input,
+.lab-request-form-group select,
+.lab-request-form-group textarea {
+    width: 100%;
+
+    border: 1px solid #d5e0e6;
+
+    border-radius: 8px;
+
+    padding: 11px;
+
+    background-color: white;
+
+    color: #405968;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    outline: none;
+}
+
+.lab-request-form-group textarea {
+    resize: vertical;
+}
+
+.lab-request-form-group input:focus,
+.lab-request-form-group select:focus,
+.lab-request-form-group textarea:focus {
+    border-color: #168aad;
+
+    box-shadow:
+        0 0 0 3px rgba(22, 138, 173, 0.07);
+}
+
+
+/* ACTIONS */
+
+.lab-request-form-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 5px;
+}
+
+.lab-request-cancel-btn,
+.lab-request-submit-btn {
+    padding: 11px 18px;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.lab-request-cancel-btn {
+    border: 1px solid #ccd9df;
+
+    color: #536875;
+
+    background-color: white;
+}
+
+.lab-request-submit-btn {
+    border: none;
+
+    background-color: #168aad;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+
+/* SUMMARY */
+
+.lab-request-summary-card {
+    background-color: white;
+
+    border: 1px solid #dfe8ed;
+
+    border-radius: 14px;
+
+    padding: 22px;
+
+    position: sticky;
+
+    top: 20px;
+}
+
+.lab-request-summary-heading {
+    padding-bottom: 15px;
+
+    margin-bottom: 15px;
+
+    border-bottom: 1px solid #edf2f5;
+}
+
+.lab-request-summary-heading h3 {
+    color: #16324f;
+
+    font-size: 17px;
+}
+
+.lab-request-summary-heading p {
+    color: #8796a1;
+
+    font-size: 9px;
+}
+
+.lab-request-summary-id {
+    background-color: #eef8fb;
+
+    border-radius: 8px;
+
+    padding: 12px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.lab-request-summary-id span {
+    color: #71838f;
+
+    font-size: 9px;
+}
+
+.lab-request-summary-id strong {
+    color: #168aad;
+
+    font-size: 11px;
+}
+
+.lab-request-summary-list > div {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #edf2f5;
+}
+
+.lab-request-summary-list span {
+    color: #8796a1;
+
+    font-size: 9px;
+}
+
+.lab-request-summary-list strong {
+    color: #405968;
+
+    font-size: 10px;
+}
+
+.lab-request-summary-note {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 9px;
+
+    margin-top: 17px;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    background-color: #fff8e8;
+}
+
+.lab-request-summary-note > div {
+    width: 25px;
+    height: 25px;
+
+    min-width: 25px;
+
+    border-radius: 50%;
+
+    background-color: #e7b957;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+.lab-request-summary-note p {
+    color: #806f48;
+
+    font-size: 9px;
+}
+
+
+/* HISTORY */
+
+.lab-request-history-card {
+    background-color: white;
+
+    border: 1px solid #dfe8ed;
+
+    border-radius: 14px;
+
+    padding: 23px;
+
+    margin-bottom: 22px;
+}
+
+.lab-request-history-heading {
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid #edf2f5;
+}
+
+.lab-request-history-heading h3 {
+    color: #16324f;
+
+    font-size: 17px;
+}
+
+.lab-request-history-heading p {
+    color: #8796a1;
+
+    font-size: 9px;
+}
+
+.lab-request-history-row {
+    display: grid;
+
+    grid-template-columns: 42px 1fr auto auto;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #edf2f5;
+}
+
+.lab-request-history-row:last-child {
+    border-bottom: none;
+}
+
+.lab-request-history-icon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 8px;
+
+    background-color: #e8f7fa;
+
+    color: #168aad;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 8px;
+
+    font-weight: bold;
+}
+
+.lab-request-history-row h4 {
+    color: #405968;
+
+    font-size: 11px;
+}
+
+.lab-request-history-row p,
+.lab-request-history-date {
+    color: #8796a1;
+
+    font-size: 9px;
+}
+
+.lab-request-history-status {
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background-color: #fff4d9;
+
+    color: #9a7118;
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+.lab-request-history-status.progress {
+    background-color: #e8f1fa;
+
+    color: #4676a2;
+}
+
+.lab-request-history-status.completed {
+    background-color: #e1f5ed;
+
+    color: #16856d;
+}
+
+
+/* NOTE */
+
+.lab-request-note-card {
+    background-color: #16324f;
+
+    color: white;
+
+    border-radius: 14px;
+
+    padding: 22px 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.lab-request-note-icon {
+    width: 46px;
+    height: 46px;
+
+    min-width: 46px;
+
+    border-radius: 9px;
+
+    background-color: #168aad;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+.lab-request-note-card h3 {
+    font-size: 14px;
+
+    margin-bottom: 3px;
+}
+
+.lab-request-note-card p {
+    color: #c4d1da;
+
+    font-size: 10px;
+}
+
+
+/* SUCCESS MODAL */
+
+.lab-request-success-modal {
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background-color: rgba(19, 44, 67, 0.58);
+
+    z-index: 5000;
+}
+
+.lab-request-success-modal.show {
+    display: flex;
+}
+
+.lab-request-success-card {
+    width: 100%;
+
+    max-width: 420px;
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    padding: 35px 30px;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+.lab-request-success-icon {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    background-color: #e1f5ed;
+
+    color: #16856d;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 32px;
+
+    font-weight: bold;
+}
+
+.lab-request-success-card h2 {
+    color: #16324f;
+
+    font-size: 23px;
+
+    margin-bottom: 8px;
+}
+
+.lab-request-success-card > p {
+    color: #70818d;
+
+    font-size: 12px;
+
+    margin-bottom: 18px;
+}
+
+.lab-request-success-info {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 12px;
+
+    margin-bottom: 18px;
+
+    border-radius: 8px;
+
+    background-color: #f7fafb;
+}
+
+.lab-request-success-info span {
+    color: #8796a1;
+
+    font-size: 10px;
+}
+
+.lab-request-success-info strong {
+    color: #405968;
+
+    font-size: 11px;
+}
+
+.lab-request-success-btn {
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background-color: #168aad;
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+    .lab-request-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .lab-request-summary-card {
+        position: static;
+    }
+
+    .lab-request-patient-card {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+}
+
+
+@media (max-width: 750px) {
+
+    .lab-request-header-icon {
+        display: none;
+    }
+
+    .lab-request-patient-details {
+        grid-template-columns: 1fr;
+    }
+
+    .lab-request-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .lab-request-form-card {
+        padding: 20px;
+    }
+
+    .lab-request-test-heading {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .lab-request-add-btn {
+        width: 100%;
+    }
+
+    .lab-request-test-item {
+        grid-template-columns: 1fr;
+    }
+
+    .lab-request-remove-btn {
+        width: 100%;
+
+        border-radius: 7px;
+    }
+
+    .lab-request-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .lab-request-cancel-btn,
+    .lab-request-submit-btn {
+        width: 100%;
+
+        text-align: center;
+    }
+
+    .lab-request-history-row {
+        grid-template-columns: 42px 1fr;
+    }
+
+    .lab-request-history-date,
+    .lab-request-history-status {
+        grid-column: 2;
+    }
+
+}
