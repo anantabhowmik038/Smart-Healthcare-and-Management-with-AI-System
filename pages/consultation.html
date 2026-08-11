@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Consultation | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="consultationSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Doctor Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="doctor-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">A</span>
+                    Appointments
+
+                </a>
+
+
+                <a href="medical-records.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">PR</span>
+                    Patient Records
+
+                </a>
+
+
+                <a href="consultation.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">C</span>
+                    Consultations
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">Rx</span>
+                    Prescriptions
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">LT</span>
+                    Laboratory Requests
+
+                </a>
+
+
+                <a href="#"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">LR</span>
+                    Laboratory Reports
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="consultationLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="consultationMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Doctor Portal</p>
+
+                        <h2>Patient Consultation</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="doctor-avatar">
+                            DR
+                        </div>
+
+                        <div>
+
+                            <strong>Doctor</strong>
+
+                            <span>Medical Professional</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="consultation-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Consultation Management
+                    </p>
+
+                    <h1>
+                        Conduct Patient Consultation
+                    </h1>
+
+                    <p>
+                        Review the selected appointment, access relevant
+                        patient information and record professional
+                        consultation notes.
+                    </p>
+
+                </div>
+
+
+                <div class="consultation-header-icon">
+                    C
+                </div>
+
+            </section>
+
+
+            <!-- PATIENT OVERVIEW -->
+            <section class="consultation-patient-card">
+
+                <div class="consultation-patient-main">
+
+                    <div class="consultation-patient-avatar">
+                        P
+                    </div>
+
+
+                    <div>
+
+                        <p class="small-title">
+                            Current Patient
+                        </p>
+
+                        <h2>
+                            Patient #P1024
+                        </h2>
+
+                        <p>
+                            Appointment ID: #APT2041
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="consultation-patient-details">
+
+                    <div>
+
+                        <span>Appointment Type</span>
+
+                        <strong>
+                            General Consultation
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Appointment Time</span>
+
+                        <strong>
+                            10:30 AM
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Status</span>
+
+                        <strong class="consultation-active-status">
+                            In Consultation
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- CONSULTATION LAYOUT -->
+            <section class="consultation-layout">
+
+                <!-- CONSULTATION FORM -->
+                <div class="consultation-form-card">
+
+                    <div class="consultation-section-heading">
+
+                        <div>
+
+                            <h3>
+                                Consultation Record
+                            </h3>
+
+                            <p>
+                                Enter professional consultation information
+                            </p>
+
+                        </div>
+
+
+                        <span>
+                            01
+                        </span>
+
+                    </div>
+
+
+                    <form id="consultationForm">
+
+                        <div
+                            class="consultation-error"
+                            id="consultationError"
+                        ></div>
+
+
+                        <!-- PATIENT CONCERN -->
+                        <div class="consultation-form-group">
+
+                            <label for="patientConcern">
+                                Patient Concern / Reason for Visit
+                            </label>
+
+                            <textarea
+                                id="patientConcern"
+                                rows="4"
+                                placeholder="Record the patient's reported concern or reason for consultation..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- OBSERVATION -->
+                        <div class="consultation-form-group">
+
+                            <label for="doctorObservation">
+                                Doctor's Observation
+                            </label>
+
+                            <textarea
+                                id="doctorObservation"
+                                rows="5"
+                                placeholder="Enter professional observations from the consultation..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <div class="consultation-form-grid">
+
+                            <!-- FOLLOW UP -->
+                            <div class="consultation-form-group">
+
+                                <label for="followUpRequired">
+                                    Follow-up Required
+                                </label>
+
+                                <select id="followUpRequired">
+
+                                    <option value="">
+                                        Select Option
+                                    </option>
+
+                                    <option value="yes">
+                                        Yes
+                                    </option>
+
+                                    <option value="no">
+                                        No
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- FOLLOW UP PERIOD -->
+                            <div class="consultation-form-group">
+
+                                <label for="followUpPeriod">
+                                    Follow-up Period
+                                </label>
+
+                                <select
+                                    id="followUpPeriod"
+                                    disabled
+                                >
+
+                                    <option value="">
+                                        Select Period
+                                    </option>
+
+                                    <option value="3-days">
+                                        Within 3 Days
+                                    </option>
+
+                                    <option value="1-week">
+                                        Within 1 Week
+                                    </option>
+
+                                    <option value="2-weeks">
+                                        Within 2 Weeks
+                                    </option>
+
+                                    <option value="1-month">
+                                        Within 1 Month
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- RECOMMENDATION -->
+                        <div class="consultation-form-group">
+
+                            <label for="consultationRecommendation">
+                                Professional Recommendation
+                            </label>
+
+                            <textarea
+                                id="consultationRecommendation"
+                                rows="4"
+                                placeholder="Record professional recommendations for the patient..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- ADDITIONAL NOTES -->
+                        <div class="consultation-form-group">
+
+                            <label for="consultationNotes">
+                                Additional Notes
+                            </label>
+
+                            <textarea
+                                id="consultationNotes"
+                                rows="3"
+                                placeholder="Optional additional consultation notes..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- FORM ACTIONS -->
+                        <div class="consultation-form-actions">
+
+                            <a
+                                href="doctor-dashboard.html"
+                                class="consultation-cancel-btn"
+                            >
+                                Cancel
+                            </a>
+
+
+                            <button
+                                type="submit"
+                                class="consultation-complete-btn"
+                            >
+                                Complete Consultation
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- CLINICAL ACTIONS -->
+                <aside class="consultation-actions-card">
+
+                    <div class="consultation-actions-heading">
+
+                        <h3>
+                            Clinical Actions
+                        </h3>
+
+                        <p>
+                            Related consultation tasks
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="#"
+                        class="consultation-action-item"
+                    >
+
+                        <span>
+                            Rx
+                        </span>
+
+                        <div>
+
+                            <h4>
+                                Create Prescription
+                            </h4>
+
+                            <p>
+                                Prepare a digital prescription
+                            </p>
+
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        href="#"
+                        class="consultation-action-item"
+                    >
+
+                        <span>
+                            LT
+                        </span>
+
+                        <div>
+
+                            <h4>
+                                Request Lab Test
+                            </h4>
+
+                            <p>
+                                Submit a laboratory test request
+                            </p>
+
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        href="medical-records.html"
+                        class="consultation-action-item"
+                    >
+
+                        <span>
+                            MR
+                        </span>
+
+                        <div>
+
+                            <h4>
+                                Patient Records
+                            </h4>
+
+                            <p>
+                                Review previous medical records
+                            </p>
+
+                        </div>
+
+                    </a>
+
+
+                    <div class="consultation-action-note">
+
+                        <strong>
+                            Professional Record
+                        </strong>
+
+                        <p>
+                            Consultation information should be recorded
+                            accurately before completing the session.
+                        </p>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- CONSULTATION HISTORY -->
+            <section class="consultation-history-card">
+
+                <div class="consultation-history-heading">
+
+                    <div>
+
+                        <h3>
+                            Recent Patient Consultation History
+                        </h3>
+
+                        <p>
+                            Previous consultation records for reference
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="consultation-history-row">
+
+                    <div class="consultation-history-date">
+
+                        <strong>
+                            21
+                        </strong>
+
+                        <span>
+                            JUL
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            Follow-up Consultation
+                        </h4>
+
+                        <p>
+                            Previous consultation record available
+                            in the patient's medical history.
+                        </p>
+
+                    </div>
+
+
+                    <span class="consultation-history-status">
+                        Completed
+                    </span>
+
+                </div>
+
+
+                <div class="consultation-history-row">
+
+                    <div class="consultation-history-date">
+
+                        <strong>
+                            18
+                        </strong>
+
+                        <span>
+                            JUN
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            General Consultation
+                        </h4>
+
+                        <p>
+                            Professional consultation information
+                            was previously recorded.
+                        </p>
+
+                    </div>
+
+
+                    <span class="consultation-history-status">
+                        Completed
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- PROTOTYPE NOTE -->
+            <section class="consultation-note-card">
+
+                <div class="consultation-note-icon">
+                    i
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Prototype Consultation Module
+                    </h3>
+
+                    <p>
+                        Consultation records entered here are currently
+                        stored only in the prototype interface. Secure
+                        database storage and authenticated patient-record
+                        updates will be added during backend integration.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- SUCCESS MODAL -->
+    <div
+        class="consultation-success-modal"
+        id="consultationSuccessModal"
+    >
+
+        <div class="consultation-success-card">
+
+            <div class="consultation-success-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                Consultation Completed
+            </h2>
+
+
+            <p>
+                The consultation record has been completed successfully
+                in this prototype session.
+            </p>
+
+
+            <button
+                type="button"
+                class="consultation-success-btn"
+                id="consultationSuccessBtn"
+            >
+                Back to Doctor Dashboard
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="consultationLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Doctor Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="consultationCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="consultationConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/consultation.js"></script>
+
+</body>
+
+</html>
