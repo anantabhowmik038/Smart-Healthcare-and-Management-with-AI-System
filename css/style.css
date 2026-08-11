@@ -8019,3 +8019,835 @@ a {
     }
 
 }
+
+/* PAGE 14 - PATIENT MEDICAL RECORDS */
+
+
+/* HEADER */
+
+.medical-header-card {
+    background-color: #eaf7fa;
+
+    border: 1px solid #d5eaef;
+
+    border-radius: 17px;
+
+    padding: 30px 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 22px;
+}
+
+.medical-header-card > div:first-child {
+    max-width: 720px;
+}
+
+.medical-header-card h1 {
+    color: #16324f;
+
+    font-size: 30px;
+
+    margin-bottom: 8px;
+}
+
+.medical-header-card p:not(.small-title) {
+    color: #677986;
+
+    font-size: 13px;
+}
+
+.medical-header-icon {
+    width: 90px;
+    height: 90px;
+
+    min-width: 90px;
+
+    border-radius: 50%;
+
+    background-color: #168aad;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+
+/* SUMMARY */
+
+.medical-summary-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 17px;
+
+    margin-bottom: 22px;
+}
+
+.medical-summary-card {
+    background-color: white;
+
+    border: 1px solid #dfe8ed;
+
+    border-radius: 13px;
+
+    padding: 19px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+.medical-summary-icon {
+    width: 44px;
+    height: 44px;
+
+    min-width: 44px;
+
+    border-radius: 9px;
+
+    background-color: #e8f7fa;
+
+    color: #168aad;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+.medical-summary-card p {
+    color: #71838f;
+
+    font-size: 10px;
+}
+
+.medical-summary-card h3 {
+    color: #16324f;
+
+    font-size: 23px;
+}
+
+.medical-summary-card span {
+    color: #98a5ae;
+
+    font-size: 9px;
+}
+
+
+/* SEARCH AND FILTER */
+
+.medical-filter-card {
+    background-color: white;
+
+    border: 1px solid #dfe8ed;
+
+    border-radius: 13px;
+
+    padding: 20px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 280px;
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+}
+
+.medical-search-group,
+.medical-filter-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.medical-search-group label,
+.medical-filter-group label {
+    color: #526a7b;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.medical-search-group input,
+.medical-filter-group select {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #d5e0e6;
+
+    border-radius: 8px;
+
+    background-color: white;
+
+    color: #405968;
+
+    outline: none;
+}
+
+.medical-search-group input:focus,
+.medical-filter-group select:focus {
+    border-color: #168aad;
+}
+
+
+/* RECORD HEADING */
+
+.medical-record-heading {
+    margin-bottom: 14px;
+}
+
+.medical-record-heading h3 {
+    color: #16324f;
+
+    font-size: 18px;
+}
+
+.medical-record-heading p {
+    color: #8796a1;
+
+    font-size: 10px;
+}
+
+
+/* RECORD LIST */
+
+.medical-record-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+    margin-bottom: 22px;
+}
+
+.medical-record-card {
+    background-color: white;
+
+    border: 1px solid #dfe8ed;
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    display: grid;
+
+    grid-template-columns: 75px 1fr;
+
+    gap: 20px;
+
+    transition: 0.25s;
+}
+
+.medical-record-card:hover {
+    border-color: #c5dfe6;
+
+    box-shadow:
+        0 7px 22px rgba(22, 50, 79, 0.05);
+}
+
+
+/* DATE */
+
+.medical-record-date {
+    width: 75px;
+    height: 82px;
+
+    border-radius: 11px;
+
+    background-color: #e8f7fa;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.medical-record-date span {
+    color: #168aad;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.medical-record-date strong {
+    color: #16324f;
+
+    font-size: 25px;
+
+    line-height: 1.1;
+}
+
+.medical-record-date small {
+    color: #81939e;
+
+    font-size: 9px;
+}
+
+
+/* RECORD MAIN */
+
+.medical-record-main {
+    min-width: 0;
+}
+
+.medical-record-top {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding-bottom: 13px;
+
+    border-bottom: 1px solid #edf2f5;
+}
+
+.medical-record-top h3 {
+    color: #29445b;
+
+    font-size: 15px;
+}
+
+.medical-record-top p {
+    color: #8a99a3;
+
+    font-size: 9px;
+
+    margin-top: 2px;
+}
+
+
+/* BADGES */
+
+.medical-record-badge {
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.medical-record-badge.consultation {
+    background-color: #e8f1fa;
+
+    color: #4676a2;
+}
+
+.medical-record-badge.follow-up {
+    background-color: #fff4d9;
+
+    color: #9a7118;
+}
+
+.medical-record-badge.routine {
+    background-color: #e1f5ed;
+
+    color: #16856d;
+}
+
+
+/* RECORD DETAILS */
+
+.medical-record-details {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+
+    padding: 15px 0;
+}
+
+.medical-record-details span {
+    display: block;
+
+    color: #8a99a3;
+
+    font-size: 9px;
+
+    margin-bottom: 3px;
+}
+
+.medical-record-details strong {
+    display: block;
+
+    color: #526875;
+
+    font-size: 10px;
+}
+
+
+/* RECORD BOTTOM */
+
+.medical-record-bottom {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid #edf2f5;
+}
+
+.medical-record-bottom p {
+    color: #81919d;
+
+    font-size: 10px;
+
+    max-width: 650px;
+}
+
+.medical-view-btn {
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 9px 13px;
+
+    background-color: #168aad;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: 0.25s;
+}
+
+.medical-view-btn:hover {
+    background-color: #126f8a;
+}
+
+
+/* NO RESULTS */
+
+.medical-no-results {
+    display: none;
+
+    background-color: white;
+
+    border: 1px solid #dfe8ed;
+
+    border-radius: 14px;
+
+    padding: 40px 20px;
+
+    text-align: center;
+
+    margin-bottom: 22px;
+}
+
+.medical-no-results.show {
+    display: block;
+}
+
+.medical-no-results > div {
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 11px;
+
+    border-radius: 50%;
+
+    background-color: #e8f7fa;
+
+    color: #168aad;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+.medical-no-results h3 {
+    color: #16324f;
+
+    margin-bottom: 4px;
+}
+
+.medical-no-results p {
+    color: #8796a1;
+
+    font-size: 10px;
+}
+
+
+/* NOTE */
+
+.medical-note-card {
+    background-color: #16324f;
+
+    color: white;
+
+    border-radius: 14px;
+
+    padding: 22px 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.medical-note-icon {
+    width: 46px;
+    height: 46px;
+
+    min-width: 46px;
+
+    border-radius: 9px;
+
+    background-color: #168aad;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+.medical-note-card h3 {
+    font-size: 14px;
+
+    margin-bottom: 3px;
+}
+
+.medical-note-card p {
+    color: #c4d1da;
+
+    font-size: 10px;
+}
+
+
+/* DETAILS MODAL */
+
+.medical-details-modal {
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background-color: rgba(19, 44, 67, 0.58);
+
+    z-index: 5000;
+}
+
+.medical-details-modal.show {
+    display: flex;
+}
+
+.medical-details-modal-card {
+    width: 100%;
+
+    max-width: 520px;
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+.medical-details-modal-header {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-bottom: 16px;
+
+    border-bottom: 1px solid #edf2f5;
+}
+
+.medical-details-modal-header p {
+    color: #168aad;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.medical-details-modal-header h2 {
+    color: #16324f;
+
+    font-size: 22px;
+}
+
+.medical-modal-close {
+    width: 34px;
+    height: 34px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background-color: #f0f5f7;
+
+    color: #536875;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+.medical-modal-record-id {
+    background-color: #eef8fb;
+
+    border-radius: 9px;
+
+    padding: 12px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin: 18px 0;
+}
+
+.medical-modal-record-id span {
+    color: #71838f;
+
+    font-size: 10px;
+}
+
+.medical-modal-record-id strong {
+    color: #168aad;
+
+    font-size: 11px;
+}
+
+.medical-modal-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+.medical-modal-grid > div {
+    background-color: #f7fafb;
+
+    border-radius: 8px;
+
+    padding: 12px;
+}
+
+.medical-modal-grid span {
+    display: block;
+
+    color: #8796a1;
+
+    font-size: 9px;
+
+    margin-bottom: 4px;
+}
+
+.medical-modal-grid strong {
+    display: block;
+
+    color: #405968;
+
+    font-size: 10px;
+}
+
+.medical-modal-note {
+    border: 1px solid #e1e9ed;
+
+    border-radius: 9px;
+
+    padding: 14px;
+
+    margin-bottom: 20px;
+}
+
+.medical-modal-note span {
+    display: block;
+
+    color: #526a7b;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+.medical-modal-note p {
+    color: #7c8d98;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+}
+
+.medical-modal-done {
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background-color: #168aad;
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.medical-modal-done:hover {
+    background-color: #126f8a;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1050px) {
+
+    .medical-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 750px) {
+
+    .medical-header-icon {
+        display: none;
+    }
+
+    .medical-filter-card {
+        grid-template-columns: 1fr;
+    }
+
+    .medical-record-details {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .medical-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .medical-record-card {
+        grid-template-columns: 1fr;
+    }
+
+    .medical-record-date {
+        width: 100%;
+
+        height: auto;
+
+        padding: 10px;
+
+        flex-direction: row;
+
+        gap: 6px;
+    }
+
+    .medical-record-date strong {
+        font-size: 18px;
+    }
+
+    .medical-record-top {
+        flex-direction: column;
+    }
+
+    .medical-record-details {
+        grid-template-columns: 1fr;
+    }
+
+    .medical-record-bottom {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .medical-view-btn {
+        width: 100%;
+    }
+
+    .medical-modal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .medical-note-card {
+        align-items: flex-start;
+    }
+
+}

@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Medical Records | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="medicalSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Patient Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="patient-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="patient-profile.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">P</span>
+                    My Profile
+
+                </a>
+
+
+                <a href="doctor-availability.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">DA</span>
+                    Doctor Availability
+
+                </a>
+
+
+                <a href="appointment-booking.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">BA</span>
+                    Book Appointment
+
+                </a>
+
+
+                <a href="appointment-management.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">A</span>
+                    My Appointments
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">AI</span>
+                    AI Symptom Assessment
+
+                </a>
+
+
+                <a href="medical-records.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">MR</span>
+                    Medical Records
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">Rx</span>
+                    Prescriptions
+
+                </a>
+
+
+                <a href="#" class="dashboard-menu-link">
+
+                    <span class="menu-icon">LR</span>
+                    Laboratory Reports
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="medicalLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="medicalMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Patient Portal</p>
+
+                        <h2>Medical Records</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="dashboard-user-avatar">
+                            P
+                        </div>
+
+                        <div>
+
+                            <strong>Patient</strong>
+
+                            <span>Patient Account</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="medical-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        Health Record Management
+                    </p>
+
+                    <h1>
+                        Your Medical Record History
+                    </h1>
+
+                    <p>
+                        Review previous consultations and healthcare
+                        records stored under your patient profile.
+                    </p>
+
+                </div>
+
+
+                <div class="medical-header-icon">
+                    MR
+                </div>
+
+            </section>
+
+
+            <!-- SUMMARY -->
+            <section class="medical-summary-grid">
+
+                <div class="medical-summary-card">
+
+                    <div class="medical-summary-icon">
+                        R
+                    </div>
+
+                    <div>
+
+                        <p>Total Records</p>
+
+                        <h3 id="medicalTotalCount">
+                            5
+                        </h3>
+
+                        <span>Available medical records</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="medical-summary-card">
+
+                    <div class="medical-summary-icon">
+                        C
+                    </div>
+
+                    <div>
+
+                        <p>Consultations</p>
+
+                        <h3>
+                            3
+                        </h3>
+
+                        <span>Consultation records</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="medical-summary-card">
+
+                    <div class="medical-summary-icon">
+                        F
+                    </div>
+
+                    <div>
+
+                        <p>Follow-ups</p>
+
+                        <h3>
+                            1
+                        </h3>
+
+                        <span>Follow-up record</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="medical-summary-card">
+
+                    <div class="medical-summary-icon">
+                        RC
+                    </div>
+
+                    <div>
+
+                        <p>Routine Check-ups</p>
+
+                        <h3>
+                            1
+                        </h3>
+
+                        <span>Routine health record</span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SEARCH AND FILTER -->
+            <section class="medical-filter-card">
+
+                <div class="medical-search-group">
+
+                    <label for="medicalSearch">
+                        Search Records
+                    </label>
+
+                    <input
+                        type="text"
+                        id="medicalSearch"
+                        placeholder="Search by record ID or doctor..."
+                    >
+
+                </div>
+
+
+                <div class="medical-filter-group">
+
+                    <label for="medicalTypeFilter">
+                        Record Type
+                    </label>
+
+                    <select id="medicalTypeFilter">
+
+                        <option value="all">
+                            All Records
+                        </option>
+
+                        <option value="consultation">
+                            Consultation
+                        </option>
+
+                        <option value="follow-up">
+                            Follow-up
+                        </option>
+
+                        <option value="routine">
+                            Routine Check-up
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </section>
+
+
+            <!-- RECORD HEADING -->
+            <section class="medical-record-heading">
+
+                <div>
+
+                    <h3>
+                        Medical Record Timeline
+                    </h3>
+
+                    <p id="medicalResultCount">
+                        Showing 5 records
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- RECORD LIST -->
+            <section
+                class="medical-record-list"
+                id="medicalRecordList"
+            >
+
+                <!-- RECORD 1 -->
+                <article
+                    class="medical-record-card"
+                    data-search="mr1051 sarah ahmed"
+                    data-type="consultation"
+                >
+
+                    <div class="medical-record-date">
+
+                        <span>AUG</span>
+
+                        <strong>05</strong>
+
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="medical-record-main">
+
+                        <div class="medical-record-top">
+
+                            <div>
+
+                                <h3>
+                                    General Consultation
+                                </h3>
+
+                                <p>
+                                    Record ID: #MR1051
+                                </p>
+
+                            </div>
+
+
+                            <span class="medical-record-badge consultation">
+                                Consultation
+                            </span>
+
+                        </div>
+
+
+                        <div class="medical-record-details">
+
+                            <div>
+
+                                <span>Doctor</span>
+
+                                <strong>
+                                    Dr. Sarah Ahmed
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Specialty</span>
+
+                                <strong>
+                                    General Medicine
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Appointment</span>
+
+                                <strong>
+                                    #APT2018
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="medical-record-bottom">
+
+                            <p>
+                                Consultation information and professional
+                                recommendations were added to the patient record.
+                            </p>
+
+
+                            <button
+                                type="button"
+                                class="medical-view-btn"
+                                data-id="#MR1051"
+                                data-title="General Consultation"
+                                data-doctor="Dr. Sarah Ahmed"
+                                data-specialty="General Medicine"
+                                data-date="05 August 2026"
+                                data-appointment="#APT2018"
+                                data-note="Consultation completed and healthcare recommendations were recorded for future reference."
+                            >
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- RECORD 2 -->
+                <article
+                    class="medical-record-card"
+                    data-search="mr1038 mahmud hasan"
+                    data-type="follow-up"
+                >
+
+                    <div class="medical-record-date">
+
+                        <span>JUL</span>
+
+                        <strong>21</strong>
+
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="medical-record-main">
+
+                        <div class="medical-record-top">
+
+                            <div>
+
+                                <h3>
+                                    Follow-up Consultation
+                                </h3>
+
+                                <p>
+                                    Record ID: #MR1038
+                                </p>
+
+                            </div>
+
+
+                            <span class="medical-record-badge follow-up">
+                                Follow-up
+                            </span>
+
+                        </div>
+
+
+                        <div class="medical-record-details">
+
+                            <div>
+
+                                <span>Doctor</span>
+
+                                <strong>
+                                    Dr. Mahmud Hasan
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Specialty</span>
+
+                                <strong>
+                                    Cardiology
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Appointment</span>
+
+                                <strong>
+                                    #APT1987
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="medical-record-bottom">
+
+                            <p>
+                                A scheduled follow-up consultation was completed
+                                and the record was updated.
+                            </p>
+
+
+                            <button
+                                type="button"
+                                class="medical-view-btn"
+                                data-id="#MR1038"
+                                data-title="Follow-up Consultation"
+                                data-doctor="Dr. Mahmud Hasan"
+                                data-specialty="Cardiology"
+                                data-date="21 July 2026"
+                                data-appointment="#APT1987"
+                                data-note="Follow-up consultation completed and relevant consultation information was added to the medical record."
+                            >
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- RECORD 3 -->
+                <article
+                    class="medical-record-card"
+                    data-search="mr1025 nabila rahman"
+                    data-type="routine"
+                >
+
+                    <div class="medical-record-date">
+
+                        <span>JUL</span>
+
+                        <strong>08</strong>
+
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="medical-record-main">
+
+                        <div class="medical-record-top">
+
+                            <div>
+
+                                <h3>
+                                    Routine Check-up
+                                </h3>
+
+                                <p>
+                                    Record ID: #MR1025
+                                </p>
+
+                            </div>
+
+
+                            <span class="medical-record-badge routine">
+                                Routine
+                            </span>
+
+                        </div>
+
+
+                        <div class="medical-record-details">
+
+                            <div>
+
+                                <span>Doctor</span>
+
+                                <strong>
+                                    Dr. Nabila Rahman
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Specialty</span>
+
+                                <strong>
+                                    Dermatology
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Appointment</span>
+
+                                <strong>
+                                    #APT1954
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="medical-record-bottom">
+
+                            <p>
+                                Routine consultation information was recorded
+                                for future reference.
+                            </p>
+
+
+                            <button
+                                type="button"
+                                class="medical-view-btn"
+                                data-id="#MR1025"
+                                data-title="Routine Check-up"
+                                data-doctor="Dr. Nabila Rahman"
+                                data-specialty="Dermatology"
+                                data-date="08 July 2026"
+                                data-appointment="#APT1954"
+                                data-note="Routine check-up completed and the consultation information was stored in the patient record."
+                            >
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- RECORD 4 -->
+                <article
+                    class="medical-record-card"
+                    data-search="mr1016 sarah ahmed"
+                    data-type="consultation"
+                >
+
+                    <div class="medical-record-date">
+
+                        <span>JUN</span>
+
+                        <strong>18</strong>
+
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="medical-record-main">
+
+                        <div class="medical-record-top">
+
+                            <div>
+
+                                <h3>
+                                    General Consultation
+                                </h3>
+
+                                <p>
+                                    Record ID: #MR1016
+                                </p>
+
+                            </div>
+
+
+                            <span class="medical-record-badge consultation">
+                                Consultation
+                            </span>
+
+                        </div>
+
+
+                        <div class="medical-record-details">
+
+                            <div>
+
+                                <span>Doctor</span>
+
+                                <strong>
+                                    Dr. Sarah Ahmed
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Specialty</span>
+
+                                <strong>
+                                    General Medicine
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Appointment</span>
+
+                                <strong>
+                                    #APT1901
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="medical-record-bottom">
+
+                            <p>
+                                General consultation record completed and
+                                stored under the patient profile.
+                            </p>
+
+
+                            <button
+                                type="button"
+                                class="medical-view-btn"
+                                data-id="#MR1016"
+                                data-title="General Consultation"
+                                data-doctor="Dr. Sarah Ahmed"
+                                data-specialty="General Medicine"
+                                data-date="18 June 2026"
+                                data-appointment="#APT1901"
+                                data-note="General consultation completed and the record was added to the patient's medical history."
+                            >
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- RECORD 5 -->
+                <article
+                    class="medical-record-card"
+                    data-search="mr1009 farhana islam"
+                    data-type="consultation"
+                >
+
+                    <div class="medical-record-date">
+
+                        <span>MAY</span>
+
+                        <strong>27</strong>
+
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="medical-record-main">
+
+                        <div class="medical-record-top">
+
+                            <div>
+
+                                <h3>
+                                    General Consultation
+                                </h3>
+
+                                <p>
+                                    Record ID: #MR1009
+                                </p>
+
+                            </div>
+
+
+                            <span class="medical-record-badge consultation">
+                                Consultation
+                            </span>
+
+                        </div>
+
+
+                        <div class="medical-record-details">
+
+                            <div>
+
+                                <span>Doctor</span>
+
+                                <strong>
+                                    Dr. Farhana Islam
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Specialty</span>
+
+                                <strong>
+                                    Pediatrics
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Appointment</span>
+
+                                <strong>
+                                    #APT1855
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="medical-record-bottom">
+
+                            <p>
+                                Consultation details were added to the
+                                patient's historical medical records.
+                            </p>
+
+
+                            <button
+                                type="button"
+                                class="medical-view-btn"
+                                data-id="#MR1009"
+                                data-title="General Consultation"
+                                data-doctor="Dr. Farhana Islam"
+                                data-specialty="Pediatrics"
+                                data-date="27 May 2026"
+                                data-appointment="#APT1855"
+                                data-note="Consultation completed and relevant record information was stored for future healthcare reference."
+                            >
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- NO RESULTS -->
+            <div
+                class="medical-no-results"
+                id="medicalNoResults"
+            >
+
+                <div>
+                    !
+                </div>
+
+                <h3>
+                    No Medical Records Found
+                </h3>
+
+                <p>
+                    Try changing your search or record type filter.
+                </p>
+
+            </div>
+
+
+            <!-- RECORD NOTICE -->
+            <section class="medical-note-card">
+
+                <div class="medical-note-icon">
+                    i
+                </div>
+
+                <div>
+
+                    <h3>
+                        Medical Record Information
+                    </h3>
+
+                    <p>
+                        The records displayed here are sample prototype
+                        information. Secure storage, access control and
+                        database synchronization will be implemented
+                        during backend integration.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- RECORD DETAILS MODAL -->
+    <div
+        class="medical-details-modal"
+        id="medicalDetailsModal"
+    >
+
+        <div class="medical-details-modal-card">
+
+            <div class="medical-details-modal-header">
+
+                <div>
+
+                    <p>
+                        Medical Record
+                    </p>
+
+                    <h2 id="modalRecordTitle">
+                        Consultation
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="medical-modal-close"
+                    id="medicalModalClose"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="medical-modal-record-id">
+
+                <span>Record ID</span>
+
+                <strong id="modalRecordId">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="medical-modal-grid">
+
+                <div>
+
+                    <span>Doctor</span>
+
+                    <strong id="modalRecordDoctor">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Specialty</span>
+
+                    <strong id="modalRecordSpecialty">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Date</span>
+
+                    <strong id="modalRecordDate">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Appointment ID</span>
+
+                    <strong id="modalAppointmentId">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="medical-modal-note">
+
+                <span>
+                    Record Summary
+                </span>
+
+                <p id="modalRecordNote">
+                    -
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="medical-modal-done"
+                id="medicalModalDone"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="medicalLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+            <p>
+                Are you sure you want to leave the Patient Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="medicalCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="medicalConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/medical-records.js"></script>
+
+</body>
+
+</html>
