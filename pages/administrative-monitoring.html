@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Administrative Monitoring | Smart Healthcare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="monitoringSidebar">
+
+            <div class="dashboard-sidebar-header">
+
+                <a href="../index.html" class="dashboard-logo">
+                    Smart<span>Healthcare</span>
+                </a>
+
+                <p>Administrator Portal</p>
+
+            </div>
+
+
+            <nav class="dashboard-menu">
+
+                <a href="admin-dashboard.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">D</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="user-role-management.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">UM</span>
+                    User Management
+
+                </a>
+
+
+                <a href="user-role-management.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">RP</span>
+                    Roles & Permissions
+
+                </a>
+
+
+                <a href="administrative-monitoring.html"
+                   class="dashboard-menu-link active">
+
+                    <span class="menu-icon">C</span>
+                    Complaints
+
+                </a>
+
+
+                <a href="administrative-monitoring.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">F</span>
+                    Feedback
+
+                </a>
+
+
+                <a href="administrative-monitoring.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">SA</span>
+                    System Activities
+
+                </a>
+
+
+                <a href="administrative-monitoring.html"
+                   class="dashboard-menu-link">
+
+                    <span class="menu-icon">AL</span>
+                    Audit Logs
+
+                </a>
+
+            </nav>
+
+
+            <div class="dashboard-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="dashboard-logout-btn"
+                    id="monitoringLogoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="dashboard-topbar-left">
+
+                    <button
+                        type="button"
+                        class="dashboard-menu-toggle"
+                        id="monitoringMenuToggle"
+                        aria-label="Toggle navigation menu"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div>
+
+                        <p>Administrator Portal</p>
+
+                        <h2>Administrative Monitoring</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-user">
+
+                    <div class="dashboard-user-info">
+
+                        <div class="admin-avatar">
+                            AD
+                        </div>
+
+                        <div>
+
+                            <strong>Administrator</strong>
+
+                            <span>System Administrator</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE HEADER -->
+            <section class="monitoring-header-card">
+
+                <div>
+
+                    <p class="small-title">
+                        System Administration
+                    </p>
+
+                    <h1>
+                        Monitor Administrative Activities
+                    </h1>
+
+                    <p>
+                        Review complaints, monitor recent system activities
+                        and inspect administrative audit records from a
+                        centralized monitoring interface.
+                    </p>
+
+                </div>
+
+
+                <div class="monitoring-header-icon">
+                    AM
+                </div>
+
+            </section>
+
+
+            <!-- SUMMARY -->
+            <section class="monitoring-summary-grid">
+
+                <div class="monitoring-summary-card">
+
+                    <div class="monitoring-summary-icon">
+                        C
+                    </div>
+
+                    <div>
+
+                        <p>Open Complaints</p>
+
+                        <h3 id="openComplaintCount">
+                            2
+                        </h3>
+
+                        <span>Need review</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="monitoring-summary-card">
+
+                    <div class="monitoring-summary-icon">
+                        R
+                    </div>
+
+                    <div>
+
+                        <p>Resolved Complaints</p>
+
+                        <h3 id="resolvedComplaintCount">
+                            2
+                        </h3>
+
+                        <span>Completed records</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="monitoring-summary-card">
+
+                    <div class="monitoring-summary-icon">
+                        A
+                    </div>
+
+                    <div>
+
+                        <p>Recent Activities</p>
+
+                        <h3>
+                            6
+                        </h3>
+
+                        <span>System events</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="monitoring-summary-card">
+
+                    <div class="monitoring-summary-icon">
+                        L
+                    </div>
+
+                    <div>
+
+                        <p>Audit Records</p>
+
+                        <h3>
+                            6
+                        </h3>
+
+                        <span>Tracked actions</span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- COMPLAINT MANAGEMENT -->
+            <section class="monitoring-complaint-card">
+
+                <div class="monitoring-section-heading">
+
+                    <div>
+
+                        <h3>
+                            Complaint Monitoring
+                        </h3>
+
+                        <p>
+                            Review and update patient complaint status
+                        </p>
+
+                    </div>
+
+
+                    <div class="monitoring-complaint-filters">
+
+                        <button
+                            type="button"
+                            class="monitoring-filter-btn active"
+                            data-filter="all"
+                        >
+                            All
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="monitoring-filter-btn"
+                            data-filter="open"
+                        >
+                            Open
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="monitoring-filter-btn"
+                            data-filter="resolved"
+                        >
+                            Resolved
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="monitoring-complaint-list"
+                    id="monitoringComplaintList"
+                >
+
+                    <!-- COMPLAINT 1 -->
+                    <div
+                        class="monitoring-complaint-row"
+                        data-status="open"
+                        data-id="#CMP1042"
+                        data-subject="Appointment Waiting Time"
+                        data-patient="#P1024"
+                        data-category="Appointment Service"
+                        data-priority="Important"
+                    >
+
+                        <div class="monitoring-complaint-icon">
+                            C
+                        </div>
+
+
+                        <div class="monitoring-complaint-main">
+
+                            <h4>
+                                Appointment Waiting Time
+                            </h4>
+
+                            <p>
+                                Complaint ID: #CMP1042
+                            </p>
+
+                        </div>
+
+
+                        <div class="monitoring-complaint-info">
+
+                            <span>
+                                Patient
+                            </span>
+
+                            <strong>
+                                #P1024
+                            </strong>
+
+                        </div>
+
+
+                        <div class="monitoring-complaint-info">
+
+                            <span>
+                                Priority
+                            </span>
+
+                            <strong class="monitoring-priority important">
+                                Important
+                            </strong>
+
+                        </div>
+
+
+                        <span class="monitoring-complaint-status open">
+                            Under Review
+                        </span>
+
+
+                        <button
+                            type="button"
+                            class="monitoring-manage-complaint-btn"
+                        >
+                            Manage
+                        </button>
+
+                    </div>
+
+
+                    <!-- COMPLAINT 2 -->
+                    <div
+                        class="monitoring-complaint-row"
+                        data-status="open"
+                        data-id="#CMP1036"
+                        data-subject="Laboratory Service Delay"
+                        data-patient="#P1087"
+                        data-category="Laboratory Service"
+                        data-priority="Normal"
+                    >
+
+                        <div class="monitoring-complaint-icon">
+                            C
+                        </div>
+
+
+                        <div class="monitoring-complaint-main">
+
+                            <h4>
+                                Laboratory Service Delay
+                            </h4>
+
+                            <p>
+                                Complaint ID: #CMP1036
+                            </p>
+
+                        </div>
+
+
+                        <div class="monitoring-complaint-info">
+
+                            <span>
+                                Patient
+                            </span>
+
+                            <strong>
+                                #P1087
+                            </strong>
+
+                        </div>
+
+
+                        <div class="monitoring-complaint-info">
+
+                            <span>
+                                Priority
+                            </span>
+
+                            <strong class="monitoring-priority normal">
+                                Normal
+                            </strong>
+
+                        </div>
+
+
+                        <span class="monitoring-complaint-status open">
+                            Open
+                        </span>
+
+
+                        <button
+                            type="button"
+                            class="monitoring-manage-complaint-btn"
+                        >
+                            Manage
+                        </button>
+
+                    </div>
+
+
+                    <!-- COMPLAINT 3 -->
+                    <div
+                        class="monitoring-complaint-row"
+                        data-status="resolved"
+                        data-id="#CMP1018"
+                        data-subject="Billing Information Issue"
+                        data-patient="#P1018"
+                        data-category="Billing & Payment"
+                        data-priority="Normal"
+                    >
+
+                        <div class="monitoring-complaint-icon resolved">
+                            C
+                        </div>
+
+
+                        <div class="monitoring-complaint-main">
+
+                            <h4>
+                                Billing Information Issue
+                            </h4>
+
+                            <p>
+                                Complaint ID: #CMP1018
+                            </p>
+
+                        </div>
+
+
+                        <div class="monitoring-complaint-info">
+
+                            <span>
+                                Patient
+                            </span>
+
+                            <strong>
+                                #P1018
+                            </strong>
+
+                        </div>
+
+
+                        <div class="monitoring-complaint-info">
+
+                            <span>
+                                Priority
+                            </span>
+
+                            <strong class="monitoring-priority normal">
+                                Normal
+                            </strong>
+
+                        </div>
+
+
+                        <span class="monitoring-complaint-status resolved">
+                            Resolved
+                        </span>
+
+
+                        <button
+                            type="button"
+                            class="monitoring-manage-complaint-btn"
+                        >
+                            Manage
+                        </button>
+
+                    </div>
+
+
+                    <!-- COMPLAINT 4 -->
+                    <div
+                        class="monitoring-complaint-row"
+                        data-status="resolved"
+                        data-id="#CMP1007"
+                        data-subject="Appointment Rescheduling Issue"
+                        data-patient="#P1055"
+                        data-category="Appointment Service"
+                        data-priority="Normal"
+                    >
+
+                        <div class="monitoring-complaint-icon resolved">
+                            C
+                        </div>
+
+
+                        <div class="monitoring-complaint-main">
+
+                            <h4>
+                                Appointment Rescheduling Issue
+                            </h4>
+
+                            <p>
+                                Complaint ID: #CMP1007
+                            </p>
+
+                        </div>
+
+
+                        <div class="monitoring-complaint-info">
+
+                            <span>
+                                Patient
+                            </span>
+
+                            <strong>
+                                #P1055
+                            </strong>
+
+                        </div>
+
+
+                        <div class="monitoring-complaint-info">
+
+                            <span>
+                                Priority
+                            </span>
+
+                            <strong class="monitoring-priority normal">
+                                Normal
+                            </strong>
+
+                        </div>
+
+
+                        <span class="monitoring-complaint-status resolved">
+                            Resolved
+                        </span>
+
+
+                        <button
+                            type="button"
+                            class="monitoring-manage-complaint-btn"
+                        >
+                            Manage
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="monitoring-no-complaints"
+                    id="monitoringNoComplaints"
+                >
+                    No complaints found for this status.
+                </div>
+
+            </section>
+
+
+            <!-- MONITORING GRID -->
+            <section class="monitoring-content-grid">
+
+                <!-- SYSTEM ACTIVITIES -->
+                <div class="monitoring-activity-card">
+
+                    <div class="monitoring-card-heading">
+
+                        <div>
+
+                            <h3>
+                                Recent System Activities
+                            </h3>
+
+                            <p>
+                                Latest system events
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="monitoring-activity-list">
+
+                        <div class="monitoring-activity-item">
+
+                            <div class="monitoring-activity-icon">
+                                U
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    User Account Updated
+                                </h4>
+
+                                <p>
+                                    Administrator modified a user account.
+                                </p>
+
+                                <span>
+                                    11 Aug 2026 · 8:45 PM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="monitoring-activity-item">
+
+                            <div class="monitoring-activity-icon">
+                                C
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    New Complaint Submitted
+                                </h4>
+
+                                <p>
+                                    Complaint #CMP1042 entered administrative review.
+                                </p>
+
+                                <span>
+                                    11 Aug 2026 · 6:30 PM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="monitoring-activity-item">
+
+                            <div class="monitoring-activity-icon">
+                                LR
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    Laboratory Report Recorded
+                                </h4>
+
+                                <p>
+                                    Laboratory report was marked ready for review.
+                                </p>
+
+                                <span>
+                                    11 Aug 2026 · 4:20 PM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="monitoring-activity-item">
+
+                            <div class="monitoring-activity-icon">
+                                BP
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    Billing Status Updated
+                                </h4>
+
+                                <p>
+                                    A prototype billing record was marked paid.
+                                </p>
+
+                                <span>
+                                    11 Aug 2026 · 2:10 PM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="monitoring-activity-item">
+
+                            <div class="monitoring-activity-icon">
+                                Rx
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    Prescription Created
+                                </h4>
+
+                                <p>
+                                    A doctor created a digital prescription record.
+                                </p>
+
+                                <span>
+                                    10 Aug 2026 · 7:50 PM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="monitoring-activity-item">
+
+                            <div class="monitoring-activity-icon">
+                                A
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    Appointment Created
+                                </h4>
+
+                                <p>
+                                    A patient submitted a new appointment booking.
+                                </p>
+
+                                <span>
+                                    10 Aug 2026 · 3:15 PM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SYSTEM STATUS -->
+                <aside class="monitoring-status-card">
+
+                    <div class="monitoring-card-heading">
+
+                        <div>
+
+                            <h3>
+                                System Monitoring
+                            </h3>
+
+                            <p>
+                                Prototype module status
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="monitoring-status-item">
+
+                        <div>
+
+                            <span class="monitoring-status-dot"></span>
+
+                            <div>
+
+                                <h4>
+                                    User Management
+                                </h4>
+
+                                <p>
+                                    Operational
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <strong>
+                            Active
+                        </strong>
+
+                    </div>
+
+
+                    <div class="monitoring-status-item">
+
+                        <div>
+
+                            <span class="monitoring-status-dot"></span>
+
+                            <div>
+
+                                <h4>
+                                    Appointment Module
+                                </h4>
+
+                                <p>
+                                    Operational
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <strong>
+                            Active
+                        </strong>
+
+                    </div>
+
+
+                    <div class="monitoring-status-item">
+
+                        <div>
+
+                            <span class="monitoring-status-dot"></span>
+
+                            <div>
+
+                                <h4>
+                                    Laboratory Module
+                                </h4>
+
+                                <p>
+                                    Operational
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <strong>
+                            Active
+                        </strong>
+
+                    </div>
+
+
+                    <div class="monitoring-status-item">
+
+                        <div>
+
+                            <span class="monitoring-status-dot"></span>
+
+                            <div>
+
+                                <h4>
+                                    Pharmacy Module
+                                </h4>
+
+                                <p>
+                                    Operational
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <strong>
+                            Active
+                        </strong>
+
+                    </div>
+
+
+                    <div class="monitoring-status-item">
+
+                        <div>
+
+                            <span class="monitoring-status-dot"></span>
+
+                            <div>
+
+                                <h4>
+                                    AI Support Module
+                                </h4>
+
+                                <p>
+                                    Prototype workflow
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <strong>
+                            Demo
+                        </strong>
+
+                    </div>
+
+
+                    <div class="monitoring-status-note">
+
+                        <strong>
+                            Prototype Status
+                        </strong>
+
+                        <p>
+                            These indicators represent interface-level
+                            demonstration status, not live server monitoring.
+                        </p>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- AUDIT LOG -->
+            <section class="monitoring-audit-card">
+
+                <div class="monitoring-audit-heading">
+
+                    <div>
+
+                        <h3>
+                            Administrative Audit Log
+                        </h3>
+
+                        <p>
+                            Review tracked administrative actions
+                        </p>
+
+                    </div>
+
+
+                    <div class="monitoring-audit-tools">
+
+                        <input
+                            type="text"
+                            id="auditSearch"
+                            placeholder="Search activity..."
+                        >
+
+
+                        <select id="auditTypeFilter">
+
+                            <option value="all">
+                                All Actions
+                            </option>
+
+                            <option value="user">
+                                User Management
+                            </option>
+
+                            <option value="complaint">
+                                Complaint
+                            </option>
+
+                            <option value="system">
+                                System
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="monitoring-audit-table-wrapper">
+
+                    <table class="monitoring-audit-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Log ID</th>
+
+                                <th>Administrator</th>
+
+                                <th>Action</th>
+
+                                <th>Category</th>
+
+                                <th>Date & Time</th>
+
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                class="monitoring-audit-row"
+                                data-search="log1006 user account updated ad001"
+                                data-type="user"
+                            >
+
+                                <td>#LOG1006</td>
+
+                                <td>#AD001</td>
+
+                                <td>User account updated</td>
+
+                                <td>User Management</td>
+
+                                <td>11 Aug 2026 · 8:45 PM</td>
+
+                                <td>
+
+                                    <span class="monitoring-audit-status">
+                                        Recorded
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="monitoring-audit-row"
+                                data-search="log1005 complaint cmp1042 reviewed ad001"
+                                data-type="complaint"
+                            >
+
+                                <td>#LOG1005</td>
+
+                                <td>#AD001</td>
+
+                                <td>Complaint #CMP1042 reviewed</td>
+
+                                <td>Complaint</td>
+
+                                <td>11 Aug 2026 · 6:40 PM</td>
+
+                                <td>
+
+                                    <span class="monitoring-audit-status">
+                                        Recorded
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="monitoring-audit-row"
+                                data-search="log1004 user role updated d202 ad001"
+                                data-type="user"
+                            >
+
+                                <td>#LOG1004</td>
+
+                                <td>#AD001</td>
+
+                                <td>User role information reviewed</td>
+
+                                <td>User Management</td>
+
+                                <td>11 Aug 2026 · 5:10 PM</td>
+
+                                <td>
+
+                                    <span class="monitoring-audit-status">
+                                        Recorded
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="monitoring-audit-row"
+                                data-search="log1003 system activity monitoring ad001"
+                                data-type="system"
+                            >
+
+                                <td>#LOG1003</td>
+
+                                <td>#AD001</td>
+
+                                <td>System activity monitoring accessed</td>
+
+                                <td>System</td>
+
+                                <td>11 Aug 2026 · 3:25 PM</td>
+
+                                <td>
+
+                                    <span class="monitoring-audit-status">
+                                        Recorded
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="monitoring-audit-row"
+                                data-search="log1002 complaint cmp1018 resolved ad001"
+                                data-type="complaint"
+                            >
+
+                                <td>#LOG1002</td>
+
+                                <td>#AD001</td>
+
+                                <td>Complaint #CMP1018 resolved</td>
+
+                                <td>Complaint</td>
+
+                                <td>10 Aug 2026 · 8:05 PM</td>
+
+                                <td>
+
+                                    <span class="monitoring-audit-status">
+                                        Recorded
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                class="monitoring-audit-row"
+                                data-search="log1001 administrator login system"
+                                data-type="system"
+                            >
+
+                                <td>#LOG1001</td>
+
+                                <td>#AD001</td>
+
+                                <td>Administrator session started</td>
+
+                                <td>System</td>
+
+                                <td>10 Aug 2026 · 7:30 PM</td>
+
+                                <td>
+
+                                    <span class="monitoring-audit-status">
+                                        Recorded
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div
+                    class="monitoring-audit-no-results"
+                    id="auditNoResults"
+                >
+                    No audit records match the selected filters.
+                </div>
+
+            </section>
+
+
+            <!-- NOTE -->
+            <section class="monitoring-note-card">
+
+                <div class="monitoring-note-icon">
+                    i
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Prototype Administrative Monitoring
+                    </h3>
+
+                    <p>
+                        Current monitoring data is static demonstration
+                        information. Backend integration will later provide
+                        authenticated audit logging, persistent complaint
+                        resolution history and real system event monitoring.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="patient-dashboard-footer">
+
+                <p>
+                    © 2026 Smart Healthcare and Management with AI System
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- COMPLAINT MODAL -->
+    <div
+        class="monitoring-complaint-modal"
+        id="complaintManageModal"
+    >
+
+        <div class="monitoring-complaint-modal-card">
+
+            <div class="monitoring-modal-header">
+
+                <div>
+
+                    <p>
+                        Complaint Management
+                    </p>
+
+                    <h2 id="complaintModalSubject">
+                        Complaint
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="monitoring-modal-close"
+                    id="complaintModalClose"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="monitoring-modal-id">
+
+                <span>
+                    Complaint ID
+                </span>
+
+                <strong id="complaintModalId">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="monitoring-modal-grid">
+
+                <div>
+
+                    <span>Patient</span>
+
+                    <strong id="complaintModalPatient">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Category</span>
+
+                    <strong id="complaintModalCategory">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Priority</span>
+
+                    <strong id="complaintModalPriority">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Current Status</span>
+
+                    <strong id="complaintModalCurrentStatus">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="monitoring-modal-form-group">
+
+                <label for="complaintNewStatus">
+                    Update Status
+                </label>
+
+                <select id="complaintNewStatus">
+
+                    <option value="open">
+                        Under Review
+                    </option>
+
+                    <option value="resolved">
+                        Resolved
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="monitoring-modal-form-group">
+
+                <label for="complaintResolutionNote">
+                    Administrative Note
+                </label>
+
+                <textarea
+                    id="complaintResolutionNote"
+                    rows="4"
+                    placeholder="Enter a short administrative review note..."
+                ></textarea>
+
+            </div>
+
+
+            <div
+                class="monitoring-modal-error"
+                id="complaintModalError"
+            ></div>
+
+
+            <div class="monitoring-modal-actions">
+
+                <button
+                    type="button"
+                    class="monitoring-modal-cancel"
+                    id="complaintModalCancel"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="monitoring-modal-save"
+                    id="complaintModalSave"
+                >
+                    Save Update
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUCCESS MODAL -->
+    <div
+        class="monitoring-success-modal"
+        id="monitoringSuccessModal"
+    >
+
+        <div class="monitoring-success-card">
+
+            <div class="monitoring-success-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                Complaint Updated
+            </h2>
+
+
+            <p>
+                The complaint status has been updated successfully
+                in this prototype session.
+            </p>
+
+
+            <button
+                type="button"
+                class="monitoring-success-btn"
+                id="monitoringSuccessBtn"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT MODAL -->
+    <div
+        class="logout-modal"
+        id="monitoringLogoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-modal-icon">
+                ?
+            </div>
+
+
+            <h2>
+                Logout from Account?
+            </h2>
+
+
+            <p>
+                Are you sure you want to leave the Administrator Portal?
+            </p>
+
+
+            <div class="logout-modal-actions">
+
+                <button
+                    type="button"
+                    class="logout-cancel-btn"
+                    id="monitoringCancelLogout"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="monitoringConfirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/administrative-monitoring.js"></script>
+
+</body>
+
+</html>

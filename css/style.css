@@ -17116,3 +17116,1124 @@ a {
     }
 
 }
+
+
+/* PAGE 24 - ADMINISTRATIVE MONITORING */
+
+
+/* HEADER */
+
+.monitoring-header-card {
+    background-color: #eaf7fa;
+
+    border: 1px solid #d5eaef;
+
+    border-radius: 17px;
+
+    padding: 30px 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 22px;
+}
+
+.monitoring-header-card > div:first-child {
+    max-width: 750px;
+}
+
+.monitoring-header-card h1 {
+    color: #16324f;
+
+    font-size: 30px;
+
+    margin-bottom: 8px;
+}
+
+.monitoring-header-card p:not(.small-title) {
+    color: #677986;
+
+    font-size: 13px;
+}
+
+.monitoring-header-icon {
+    width: 90px;
+    height: 90px;
+
+    min-width: 90px;
+
+    border-radius: 50%;
+
+    background-color: #168aad;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+
+    font-weight: bold;
+}
+
+
+/* SUMMARY */
+
+.monitoring-summary-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 17px;
+
+    margin-bottom: 22px;
+}
+
+.monitoring-summary-card {
+    background-color: white;
+
+    border: 1px solid #dfe8ed;
+
+    border-radius: 13px;
+
+    padding: 19px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+.monitoring-summary-icon {
+    width: 44px;
+    height: 44px;
+
+    min-width: 44px;
+
+    border-radius: 9px;
+
+    background-color: #e8f7fa;
+
+    color: #168aad;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.monitoring-summary-card p {
+    color: #71838f;
+
+    font-size: 10px;
+}
+
+.monitoring-summary-card h3 {
+    color: #16324f;
+
+    font-size: 23px;
+}
+
+.monitoring-summary-card span {
+    color: #98a5ae;
+
+    font-size: 9px;
+}
+
+
+/* SECTION */
+
+.monitoring-complaint-card,
+.monitoring-activity-card,
+.monitoring-status-card,
+.monitoring-audit-card {
+    background-color: white;
+
+    border: 1px solid #dfe8ed;
+
+    border-radius: 14px;
+}
+
+.monitoring-complaint-card {
+    padding: 23px;
+
+    margin-bottom: 22px;
+}
+
+.monitoring-section-heading {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid #edf2f5;
+
+    margin-bottom: 5px;
+}
+
+.monitoring-section-heading h3 {
+    color: #16324f;
+
+    font-size: 17px;
+}
+
+.monitoring-section-heading p {
+    color: #8796a1;
+
+    font-size: 9px;
+}
+
+
+/* COMPLAINT FILTER */
+
+.monitoring-complaint-filters {
+    display: flex;
+
+    gap: 7px;
+}
+
+.monitoring-filter-btn {
+    border: 1px solid #d5e0e6;
+
+    background-color: white;
+
+    color: #657986;
+
+    padding: 7px 11px;
+
+    border-radius: 7px;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.monitoring-filter-btn.active {
+    background-color: #168aad;
+
+    border-color: #168aad;
+
+    color: white;
+}
+
+
+/* COMPLAINT ROW */
+
+.monitoring-complaint-row {
+    display: grid;
+
+    grid-template-columns: 42px 1fr 90px 90px auto auto;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #edf2f5;
+}
+
+.monitoring-complaint-row:last-child {
+    border-bottom: none;
+}
+
+.monitoring-complaint-icon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 8px;
+
+    background-color: #fff4d9;
+
+    color: #9a7118;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+.monitoring-complaint-icon.resolved {
+    background-color: #e1f5ed;
+
+    color: #16856d;
+}
+
+.monitoring-complaint-main h4 {
+    color: #405968;
+
+    font-size: 11px;
+}
+
+.monitoring-complaint-main p {
+    color: #8796a1;
+
+    font-size: 9px;
+}
+
+.monitoring-complaint-info span {
+    display: block;
+
+    color: #8a99a3;
+
+    font-size: 8px;
+
+    margin-bottom: 2px;
+}
+
+.monitoring-complaint-info strong {
+    color: #526875;
+
+    font-size: 9px;
+}
+
+.monitoring-priority.important {
+    color: #a36d1f;
+}
+
+.monitoring-priority.normal {
+    color: #526875;
+}
+
+.monitoring-complaint-status {
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    font-size: 8px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.monitoring-complaint-status.open {
+    background-color: #fff4d9;
+
+    color: #9a7118;
+}
+
+.monitoring-complaint-status.resolved {
+    background-color: #e1f5ed;
+
+    color: #16856d;
+}
+
+.monitoring-manage-complaint-btn {
+    border: 1px solid #168aad;
+
+    border-radius: 7px;
+
+    padding: 7px 10px;
+
+    background-color: white;
+
+    color: #168aad;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.monitoring-manage-complaint-btn:hover {
+    background-color: #168aad;
+
+    color: white;
+}
+
+.monitoring-no-complaints {
+    display: none;
+
+    text-align: center;
+
+    padding: 28px;
+
+    color: #8796a1;
+
+    font-size: 10px;
+}
+
+.monitoring-no-complaints.show {
+    display: block;
+}
+
+
+/* CONTENT GRID */
+
+.monitoring-content-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 320px;
+
+    gap: 22px;
+
+    margin-bottom: 22px;
+}
+
+.monitoring-activity-card,
+.monitoring-status-card {
+    padding: 22px;
+}
+
+.monitoring-card-heading {
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid #edf2f5;
+
+    margin-bottom: 5px;
+}
+
+.monitoring-card-heading h3 {
+    color: #16324f;
+
+    font-size: 17px;
+}
+
+.monitoring-card-heading p {
+    color: #8796a1;
+
+    font-size: 9px;
+}
+
+
+/* ACTIVITY */
+
+.monitoring-activity-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 13px 0;
+
+    border-bottom: 1px solid #edf2f5;
+}
+
+.monitoring-activity-item:last-child {
+    border-bottom: none;
+}
+
+.monitoring-activity-icon {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+
+    border-radius: 8px;
+
+    background-color: #e8f7fa;
+
+    color: #168aad;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 8px;
+
+    font-weight: bold;
+}
+
+.monitoring-activity-item h4 {
+    color: #405968;
+
+    font-size: 11px;
+}
+
+.monitoring-activity-item p {
+    color: #7f909a;
+
+    font-size: 9px;
+
+    margin: 2px 0;
+}
+
+.monitoring-activity-item span {
+    color: #a1adb4;
+
+    font-size: 8px;
+}
+
+
+/* SYSTEM STATUS */
+
+.monitoring-status-item {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 13px 0;
+
+    border-bottom: 1px solid #edf2f5;
+}
+
+.monitoring-status-item > div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.monitoring-status-dot {
+    width: 9px;
+    height: 9px;
+
+    min-width: 9px;
+
+    border-radius: 50%;
+
+    background-color: #3ca37f;
+}
+
+.monitoring-status-item h4 {
+    color: #405968;
+
+    font-size: 10px;
+}
+
+.monitoring-status-item p {
+    color: #8a99a3;
+
+    font-size: 8px;
+}
+
+.monitoring-status-item > strong {
+    color: #16856d;
+
+    font-size: 9px;
+}
+
+.monitoring-status-note {
+    margin-top: 17px;
+
+    background-color: #16324f;
+
+    border-radius: 9px;
+
+    padding: 14px;
+}
+
+.monitoring-status-note strong {
+    color: white;
+
+    font-size: 10px;
+}
+
+.monitoring-status-note p {
+    color: #c5d2dc;
+
+    font-size: 9px;
+
+    margin-top: 3px;
+}
+
+
+/* AUDIT */
+
+.monitoring-audit-card {
+    padding: 23px;
+
+    margin-bottom: 22px;
+}
+
+.monitoring-audit-heading {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid #edf2f5;
+
+    margin-bottom: 8px;
+}
+
+.monitoring-audit-heading h3 {
+    color: #16324f;
+
+    font-size: 17px;
+}
+
+.monitoring-audit-heading p {
+    color: #8796a1;
+
+    font-size: 9px;
+}
+
+.monitoring-audit-tools {
+    display: flex;
+
+    gap: 8px;
+}
+
+.monitoring-audit-tools input,
+.monitoring-audit-tools select {
+    border: 1px solid #d5e0e6;
+
+    border-radius: 7px;
+
+    padding: 8px 10px;
+
+    color: #405968;
+
+    background-color: white;
+
+    font-size: 9px;
+
+    outline: none;
+}
+
+.monitoring-audit-tools input:focus,
+.monitoring-audit-tools select:focus {
+    border-color: #168aad;
+}
+
+.monitoring-audit-table-wrapper {
+    overflow-x: auto;
+}
+
+.monitoring-audit-table {
+    width: 100%;
+
+    min-width: 800px;
+
+    border-collapse: collapse;
+}
+
+.monitoring-audit-table th {
+    text-align: left;
+
+    padding: 12px 10px;
+
+    background-color: #f7fafb;
+
+    color: #71838f;
+
+    font-size: 9px;
+}
+
+.monitoring-audit-table td {
+    padding: 13px 10px;
+
+    border-bottom: 1px solid #edf2f5;
+
+    color: #526875;
+
+    font-size: 9px;
+}
+
+.monitoring-audit-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.monitoring-audit-status {
+    display: inline-block;
+
+    padding: 5px 8px;
+
+    border-radius: 20px;
+
+    background-color: #e1f5ed;
+
+    color: #16856d;
+
+    font-size: 8px;
+
+    font-weight: bold;
+}
+
+.monitoring-audit-no-results {
+    display: none;
+
+    padding: 25px;
+
+    text-align: center;
+
+    color: #8796a1;
+
+    font-size: 10px;
+}
+
+.monitoring-audit-no-results.show {
+    display: block;
+}
+
+
+/* NOTE */
+
+.monitoring-note-card {
+    background-color: #16324f;
+
+    color: white;
+
+    border-radius: 14px;
+
+    padding: 22px 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.monitoring-note-icon {
+    width: 46px;
+    height: 46px;
+
+    min-width: 46px;
+
+    border-radius: 9px;
+
+    background-color: #168aad;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+.monitoring-note-card h3 {
+    font-size: 14px;
+
+    margin-bottom: 3px;
+}
+
+.monitoring-note-card p {
+    color: #c4d1da;
+
+    font-size: 10px;
+}
+
+
+/* MODALS */
+
+.monitoring-complaint-modal,
+.monitoring-success-modal {
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background-color: rgba(19, 44, 67, 0.58);
+
+    z-index: 5000;
+}
+
+.monitoring-complaint-modal.show,
+.monitoring-success-modal.show {
+    display: flex;
+}
+
+.monitoring-complaint-modal-card {
+    width: 100%;
+
+    max-width: 480px;
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+.monitoring-modal-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid #edf2f5;
+}
+
+.monitoring-modal-header p {
+    color: #168aad;
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+.monitoring-modal-header h2 {
+    color: #16324f;
+
+    font-size: 20px;
+}
+
+.monitoring-modal-close {
+    width: 34px;
+    height: 34px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background-color: #f0f5f7;
+
+    color: #536875;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+.monitoring-modal-id {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 12px;
+
+    margin: 18px 0;
+
+    background-color: #eef8fb;
+
+    border-radius: 8px;
+}
+
+.monitoring-modal-id span {
+    color: #71838f;
+
+    font-size: 9px;
+}
+
+.monitoring-modal-id strong {
+    color: #168aad;
+
+    font-size: 10px;
+}
+
+.monitoring-modal-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+}
+
+.monitoring-modal-grid > div {
+    background-color: #f7fafb;
+
+    border-radius: 8px;
+
+    padding: 11px;
+}
+
+.monitoring-modal-grid span {
+    display: block;
+
+    color: #8796a1;
+
+    font-size: 8px;
+
+    margin-bottom: 3px;
+}
+
+.monitoring-modal-grid strong {
+    color: #405968;
+
+    font-size: 9px;
+}
+
+.monitoring-modal-form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-bottom: 14px;
+}
+
+.monitoring-modal-form-group label {
+    color: #526a7b;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.monitoring-modal-form-group select,
+.monitoring-modal-form-group textarea {
+    width: 100%;
+
+    padding: 11px;
+
+    border: 1px solid #d5e0e6;
+
+    border-radius: 8px;
+
+    color: #405968;
+
+    font-family: inherit;
+
+    outline: none;
+}
+
+.monitoring-modal-form-group textarea {
+    resize: vertical;
+}
+
+.monitoring-modal-form-group select:focus,
+.monitoring-modal-form-group textarea:focus {
+    border-color: #168aad;
+}
+
+.monitoring-modal-error {
+    min-height: 24px;
+
+    color: #b44747;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.monitoring-modal-actions {
+    display: flex;
+
+    gap: 9px;
+}
+
+.monitoring-modal-cancel,
+.monitoring-modal-save {
+    flex: 1;
+
+    padding: 11px;
+
+    border-radius: 8px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.monitoring-modal-cancel {
+    border: 1px solid #ccd9df;
+
+    background-color: white;
+
+    color: #536875;
+}
+
+.monitoring-modal-save {
+    border: none;
+
+    background-color: #168aad;
+
+    color: white;
+}
+
+
+/* SUCCESS */
+
+.monitoring-success-card {
+    width: 100%;
+
+    max-width: 410px;
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    padding: 35px 30px;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+.monitoring-success-icon {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    background-color: #e1f5ed;
+
+    color: #16856d;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 32px;
+
+    font-weight: bold;
+}
+
+.monitoring-success-card h2 {
+    color: #16324f;
+
+    font-size: 23px;
+
+    margin-bottom: 8px;
+}
+
+.monitoring-success-card p {
+    color: #70818d;
+
+    font-size: 12px;
+
+    margin-bottom: 20px;
+}
+
+.monitoring-success-btn {
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background-color: #168aad;
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+
+    .monitoring-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .monitoring-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .monitoring-complaint-row {
+        grid-template-columns: 42px 1fr auto;
+    }
+
+    .monitoring-complaint-info {
+        grid-column: 2;
+    }
+
+}
+
+
+@media (max-width: 750px) {
+
+    .monitoring-header-icon {
+        display: none;
+    }
+
+    .monitoring-section-heading,
+    .monitoring-audit-heading {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .monitoring-audit-tools {
+        width: 100%;
+    }
+
+    .monitoring-audit-tools input,
+    .monitoring-audit-tools select {
+        flex: 1;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .monitoring-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .monitoring-complaint-row {
+        grid-template-columns: 42px 1fr;
+    }
+
+    .monitoring-complaint-status,
+    .monitoring-manage-complaint-btn {
+        grid-column: 2;
+    }
+
+    .monitoring-audit-tools {
+        flex-direction: column;
+    }
+
+    .monitoring-modal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .monitoring-modal-actions {
+        flex-direction: column;
+    }
+
+    .monitoring-note-card {
+        align-items: flex-start;
+    }
+
+}
