@@ -8,6 +8,436 @@
     <title>AI Symptom Assessment | Smart Healthcare</title>
 
     <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* COLLAPSIBLE SIDEBAR */
+
+        .dashboard-menu-group {
+            width: 100%;
+        }
+
+        .dashboard-menu-parent {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #dbe7ec;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-menu-parent:hover,
+        .dashboard-menu-parent.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        .menu-parent-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submenu-arrow {
+            font-size: 9px;
+            transition: transform 0.25s ease;
+        }
+
+        .dashboard-menu-group.open .submenu-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dashboard-submenu {
+            display: none;
+            margin: 5px 0 7px 30px;
+            padding-left: 13px;
+            border-left: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .dashboard-menu-group.open .dashboard-submenu {
+            display: block;
+        }
+
+        .dashboard-submenu-link {
+            display: block;
+            padding: 9px 11px;
+            margin: 3px 0;
+            border-radius: 7px;
+            color: #b9cbd3;
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-submenu-link:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            color: #ffffff;
+        }
+
+        .dashboard-submenu-link.active {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* PAGE */
+
+        .ai-page-header {
+            margin: 28px 0 22px;
+        }
+
+        .ai-page-header h1 {
+            margin: 5px 0 8px;
+            color: #16324f;
+        }
+
+        .ai-page-header p {
+            max-width: 800px;
+            margin: 0;
+            color: #64748b;
+            line-height: 1.65;
+        }
+
+        .ai-warning-card,
+        .ai-form-card,
+        .ai-result-card,
+        .ai-how-card {
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+        }
+
+        .ai-warning-card {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #d98b15;
+        }
+
+        .ai-warning-icon {
+            min-width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff6db;
+            color: #9a6b00;
+            font-weight: 700;
+        }
+
+        .ai-warning-card h3 {
+            margin: 0 0 5px;
+            color: #16324f;
+            font-size: 15px;
+        }
+
+        .ai-warning-card p {
+            margin: 0;
+            color: #64748b;
+            line-height: 1.6;
+            font-size: 13px;
+        }
+
+        .ai-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+            gap: 20px;
+            align-items: start;
+        }
+
+        .ai-form-card {
+            padding: 22px;
+        }
+
+        .ai-card-heading {
+            margin-bottom: 18px;
+        }
+
+        .ai-card-heading h2,
+        .ai-result-card h3,
+        .ai-how-card h3 {
+            margin: 0 0 5px;
+            color: #16324f;
+        }
+
+        .ai-card-heading p,
+        .ai-result-card > p,
+        .ai-how-card > p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ai-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .ai-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .ai-form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .ai-form-group label {
+            color: #334155;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .ai-form-group input,
+        .ai-form-group select,
+        .ai-form-group textarea {
+            width: 100%;
+            border: 1px solid #d8e0e8;
+            border-radius: 8px;
+            padding: 10px 11px;
+            background: #ffffff;
+            color: #334155;
+            outline: none;
+            font: inherit;
+        }
+
+        .ai-form-group input,
+        .ai-form-group select {
+            min-height: 42px;
+        }
+
+        .ai-form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .ai-form-group input:focus,
+        .ai-form-group select:focus,
+        .ai-form-group textarea:focus {
+            border-color: #176cc8;
+        }
+
+        .ai-checkbox-section {
+            grid-column: 1 / -1;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1px solid #edf1f5;
+        }
+
+        .ai-checkbox-section h4 {
+            margin: 0 0 10px;
+            color: #334155;
+            font-size: 13px;
+        }
+
+        .ai-checkbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px 14px;
+        }
+
+        .ai-check {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            color: #475569;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .ai-check input {
+            margin-top: 2px;
+        }
+
+        .ai-form-error {
+            min-height: 18px;
+            margin: 12px 0 0;
+            color: #b42318;
+            font-size: 12px;
+        }
+
+        .ai-form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .ai-reset-btn,
+        .ai-submit-btn {
+            min-height: 42px;
+            padding: 0 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .ai-reset-btn {
+            border: 1px solid #d8e0e8;
+            background: #ffffff;
+            color: #475569;
+        }
+
+        .ai-submit-btn {
+            border: none;
+            background: #176cc8;
+            color: #ffffff;
+        }
+
+        .ai-side-column {
+            display: grid;
+            gap: 18px;
+        }
+
+        .ai-result-card,
+        .ai-how-card {
+            padding: 20px;
+        }
+
+        .ai-result-card {
+            display: none;
+        }
+
+        .ai-result-card.show {
+            display: block;
+        }
+
+        .ai-result-badge {
+            display: inline-flex;
+            align-items: center;
+            margin: 14px 0 12px;
+            padding: 7px 11px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .ai-result-badge.routine {
+            background: #eaf3ff;
+            color: #176cc8;
+        }
+
+        .ai-result-badge.priority {
+            background: #fff6db;
+            color: #9a6b00;
+        }
+
+        .ai-result-badge.urgent {
+            background: #fdecec;
+            color: #b42318;
+        }
+
+        .ai-result-text {
+            color: #475569;
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .ai-result-actions {
+            display: grid;
+            gap: 9px;
+            margin-top: 16px;
+        }
+
+        .ai-result-actions a {
+            text-align: center;
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .ai-book-btn {
+            background: #176cc8;
+            color: #ffffff;
+        }
+
+        .ai-record-btn {
+            border: 1px solid #d8e0e8;
+            color: #475569;
+            background: #ffffff;
+        }
+
+        .ai-step-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .ai-step {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .ai-step-number {
+            min-width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #eaf3ff;
+            color: #176cc8;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .ai-step strong {
+            display: block;
+            margin-bottom: 3px;
+            color: #334155;
+            font-size: 13px;
+        }
+
+        .ai-step span {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 980px) {
+            .ai-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .ai-form-grid,
+            .ai-checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-form-group.full,
+            .ai-checkbox-section {
+                grid-column: auto;
+            }
+
+            .ai-form-actions {
+                flex-direction: column;
+            }
+
+            .ai-reset-btn,
+            .ai-submit-btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body class="dashboard-body">
@@ -30,94 +460,154 @@
 
             <nav class="dashboard-menu">
 
-                <a href="patient-dashboard.html"
-                   class="dashboard-menu-link">
-
+                <a href="patient-dashboard.html" class="dashboard-menu-link">
                     <span class="menu-icon">D</span>
                     Dashboard
-
                 </a>
 
-
-                <a href="patient-profile.html"
-                   class="dashboard-menu-link">
-
+                <a href="patient-profile.html" class="dashboard-menu-link">
                     <span class="menu-icon">P</span>
                     My Profile
-
                 </a>
 
 
-                <a href="doctor-availability.html"
-                   class="dashboard-menu-link">
+                <!-- APPOINTMENTS -->
+                <div class="dashboard-menu-group">
 
-                    <span class="menu-icon">DA</span>
-                    Doctor Availability
+                    <button type="button" class="dashboard-menu-parent">
 
-                </a>
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">A</span>
+                            Appointments
+                        </span>
 
+                        <span class="submenu-arrow">▼</span>
 
-                <a href="appointment-booking.html"
-                   class="dashboard-menu-link">
+                    </button>
 
-                    <span class="menu-icon">BA</span>
-                    Book Appointment
+                    <div class="dashboard-submenu">
 
-                </a>
+                        <a href="doctor-availability.html"
+                           class="dashboard-submenu-link">
+                            Doctor Availability
+                        </a>
 
+                        <a href="appointment-booking.html"
+                           class="dashboard-submenu-link">
+                            Book Appointment
+                        </a>
 
-                <a href="appointment-management.html"
-                   class="dashboard-menu-link">
+                        <a href="appointment-management.html"
+                           class="dashboard-submenu-link">
+                            My Appointments
+                        </a>
 
-                    <span class="menu-icon">A</span>
-                    My Appointments
+                    </div>
 
-                </a>
-
-
-                <a href="ai-symptom-assessment.html"
-                   class="dashboard-menu-link active">
-
-                    <span class="menu-icon">AI</span>
-                    AI Symptom Assessment
-
-                </a>
-
-
-                <a href="medical-records.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">MR</span>
-                    Medical Records
-
-                </a>
+                </div>
 
 
-                <a href="digital-prescription.html" class="dashboard-menu-link">
+                <!-- HEALTH SERVICES -->
+                <div class="dashboard-menu-group open">
 
-                    <span class="menu-icon">Rx</span>
-                    Prescriptions
+                    <button type="button"
+                            class="dashboard-menu-parent active">
 
-                </a>
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">H</span>
+                            Health Services
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="ai-symptom-assessment.html"
+                           class="dashboard-submenu-link active">
+                            AI Symptom Assessment
+                        </a>
+
+                        <a href="medical-records.html"
+                           class="dashboard-submenu-link">
+                            Medical Records
+                        </a>
+
+                    </div>
+
+                </div>
 
 
-                <a href="laboratory-results.html" class="dashboard-menu-link">
+                <!-- REPORTS -->
+                <div class="dashboard-menu-group">
 
-                    <span class="menu-icon">LR</span>
-                    Laboratory Reports
+                    <button type="button" class="dashboard-menu-parent">
 
-                </a>
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">R</span>
+                            Reports & Treatment
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="digital-prescription.html"
+                           class="dashboard-submenu-link">
+                            Prescriptions
+                        </a>
+
+                        <a href="laboratory-results.html"
+                           class="dashboard-submenu-link">
+                            Laboratory Reports
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BILLING -->
+                <div class="dashboard-menu-group">
+
+                    <button type="button" class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">S</span>
+                            Billing & Support
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="billing-payment.html"
+                           class="dashboard-submenu-link">
+                            Billing & Payment
+                        </a>
+
+                        <a href="feedback-complaint.html"
+                           class="dashboard-submenu-link">
+                            Feedback & Complaint
+                        </a>
+
+                    </div>
+
+                </div>
 
             </nav>
 
 
             <div class="dashboard-sidebar-footer">
 
-                <button
-                    type="button"
-                    class="dashboard-logout-btn"
-                    id="aiLogoutBtn"
-                >
+                <button type="button"
+                        class="dashboard-logout-btn"
+                        id="aiLogoutBtn">
                     Logout
                 </button>
 
@@ -143,13 +633,9 @@
                         ☰
                     </button>
 
-
                     <div>
-
                         <p>Patient Portal</p>
-
                         <h2>AI Symptom Assessment</h2>
-
                     </div>
 
                 </div>
@@ -157,21 +643,23 @@
 
                 <div class="dashboard-user">
 
-                    <div class="dashboard-user-info">
+                    <div class="dashboard-notification">
+                        1
+                    </div>
+
+                    <a href="patient-profile.html"
+                       class="dashboard-user-info">
 
                         <div class="dashboard-user-avatar">
                             P
                         </div>
 
                         <div>
-
                             <strong>Patient</strong>
-
-                            <span>Patient Account</span>
-
+                            <span>View Profile</span>
                         </div>
 
-                    </div>
+                    </a>
 
                 </div>
 
@@ -179,54 +667,42 @@
 
 
             <!-- PAGE HEADER -->
-            <section class="ai-assessment-header">
+            <section class="ai-page-header">
 
-                <div>
+                <p class="small-title">
+                    AI-Assisted Patient Support
+                </p>
 
-                    <p class="small-title">
-                        AI-Assisted Healthcare Support
-                    </p>
+                <h1>
+                    Preliminary Symptom Assessment
+                </h1>
 
-                    <h1>
-                        Preliminary Symptom Assessment
-                    </h1>
-
-                    <p>
-                        Describe your symptoms and provide basic information
-                        to receive preliminary AI-assisted guidance and
-                        determine whether professional medical review
-                        may be appropriate.
-                    </p>
-
-                </div>
-
-
-                <div class="ai-assessment-header-icon">
-                    AI
-                </div>
+                <p>
+                    Describe your symptoms to receive preliminary routing guidance.
+                    This prototype does not diagnose disease and does not replace a
+                    qualified healthcare professional.
+                </p>
 
             </section>
 
 
-            <!-- SAFETY NOTICE -->
-            <section class="ai-safety-notice">
+            <!-- WARNING -->
+            <section class="ai-warning-card">
 
-                <div class="ai-safety-icon">
-                    i
+                <div class="ai-warning-icon">
+                    !
                 </div>
-
 
                 <div>
 
                     <h3>
-                        Important Information
+                        Important Safety Information
                     </h3>
 
                     <p>
-                        This AI assessment is designed only for preliminary
-                        support and does not provide a medical diagnosis or
-                        replace consultation with a qualified healthcare
-                        professional.
+                        If symptoms are severe, rapidly worsening, or potentially
+                        life-threatening, seek urgent professional medical care instead
+                        of relying on this AI-assisted prototype.
                     </p>
 
                 </div>
@@ -234,91 +710,73 @@
             </section>
 
 
-            <!-- ASSESSMENT LAYOUT -->
-            <section class="ai-assessment-layout">
+            <div class="ai-layout">
 
                 <!-- FORM -->
-                <div class="ai-assessment-form-card">
+                <section class="ai-form-card">
 
-                    <div class="ai-section-heading">
+                    <div class="ai-card-heading">
 
-                        <div>
+                        <h2>
+                            Tell Us About Your Symptoms
+                        </h2>
 
-                            <h3>
-                                Symptom Information
-                            </h3>
-
-                            <p>
-                                Tell the system what you are experiencing
-                            </p>
-
-                        </div>
-
-
-                        <span>
-                            01
-                        </span>
+                        <p>
+                            Provide basic information so the system can suggest an
+                            appropriate next step.
+                        </p>
 
                     </div>
 
 
-                    <form id="aiAssessmentForm">
-
-                        <div
-                            class="ai-assessment-error"
-                            id="aiAssessmentError"
-                        ></div>
-
-
-                        <!-- SYMPTOMS -->
-                        <div class="ai-form-group">
-
-                            <label for="symptomDescription">
-                                Describe Your Symptoms
-                            </label>
-
-                            <textarea
-                                id="symptomDescription"
-                                rows="6"
-                                placeholder="Example: I have been feeling unwell and experiencing some symptoms for the last few days..."
-                            ></textarea>
-
-                            <small>
-                                Provide a short and clear description.
-                            </small>
-
-                        </div>
-
+                    <form id="aiAssessmentForm" novalidate>
 
                         <div class="ai-form-grid">
 
-                            <!-- DURATION -->
                             <div class="ai-form-group">
 
-                                <label for="symptomDuration">
-                                    Symptom Duration
+                                <label for="aiAge">
+                                    Age *
                                 </label>
 
-                                <select id="symptomDuration">
+                                <input
+                                    type="number"
+                                    id="aiAge"
+                                    min="1"
+                                    max="120"
+                                    placeholder="Enter age"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="ai-form-group">
+
+                                <label for="aiDuration">
+                                    Symptom Duration *
+                                </label>
+
+                                <select id="aiDuration" required>
 
                                     <option value="">
                                         Select Duration
                                     </option>
 
-                                    <option value="today">
-                                        Started Today
+                                    <option value="Today">
+                                        Today
                                     </option>
 
-                                    <option value="few-days">
-                                        A Few Days
+                                    <option value="1-3 days">
+                                        1–3 Days
                                     </option>
 
-                                    <option value="week">
-                                        About One Week
+                                    <option value="4-7 days">
+                                        4–7 Days
                                     </option>
 
-                                    <option value="longer">
-                                        More Than One Week
+                                    <option value="More than 1 week">
+                                        More Than 1 Week
                                     </option>
 
                                 </select>
@@ -326,28 +784,27 @@
                             </div>
 
 
-                            <!-- SEVERITY -->
                             <div class="ai-form-group">
 
-                                <label for="symptomSeverity">
-                                    Current Severity
+                                <label for="aiSeverity">
+                                    Current Severity *
                                 </label>
 
-                                <select id="symptomSeverity">
+                                <select id="aiSeverity" required>
 
                                     <option value="">
                                         Select Severity
                                     </option>
 
-                                    <option value="mild">
+                                    <option value="Mild">
                                         Mild
                                     </option>
 
-                                    <option value="moderate">
+                                    <option value="Moderate">
                                         Moderate
                                     </option>
 
-                                    <option value="severe">
+                                    <option value="Severe">
                                         Severe
                                     </option>
 
@@ -356,401 +813,222 @@
                             </div>
 
 
-                            <!-- AGE GROUP -->
                             <div class="ai-form-group">
 
-                                <label for="patientAgeGroup">
-                                    Age Group
+                                <label for="aiTemperature">
+                                    Temperature (Optional)
                                 </label>
 
-                                <select id="patientAgeGroup">
-
-                                    <option value="">
-                                        Select Age Group
-                                    </option>
-
-                                    <option value="child">
-                                        Child
-                                    </option>
-
-                                    <option value="teen">
-                                        Teenager
-                                    </option>
-
-                                    <option value="adult">
-                                        Adult
-                                    </option>
-
-                                    <option value="older">
-                                        Older Adult
-                                    </option>
-
-                                </select>
+                                <input
+                                    type="number"
+                                    id="aiTemperature"
+                                    step="0.1"
+                                    min="30"
+                                    max="45"
+                                    placeholder="Example: 38.0 °C"
+                                >
 
                             </div>
 
 
-                            <!-- EXISTING CONDITION -->
-                            <div class="ai-form-group">
+                            <div class="ai-form-group full">
 
-                                <label for="existingCondition">
-                                    Existing Medical Condition
+                                <label for="aiSymptoms">
+                                    Describe Your Symptoms *
                                 </label>
 
-                                <select id="existingCondition">
+                                <textarea
+                                    id="aiSymptoms"
+                                    placeholder="Example: fever, headache, cough, body ache..."
+                                    required
+                                ></textarea>
 
-                                    <option value="">
-                                        Select Option
-                                    </option>
+                            </div>
 
-                                    <option value="no">
-                                        None Known
-                                    </option>
 
-                                    <option value="yes">
-                                        Yes
-                                    </option>
+                            <div class="ai-checkbox-section">
 
-                                    <option value="unsure">
-                                        Not Sure
-                                    </option>
+                                <h4>
+                                    Urgent Warning Signs
+                                </h4>
 
-                                </select>
+                                <div class="ai-checkbox-grid">
+
+                                    <label class="ai-check">
+                                        <input type="checkbox"
+                                               class="ai-red-flag"
+                                               value="Breathing difficulty">
+                                        Severe breathing difficulty
+                                    </label>
+
+                                    <label class="ai-check">
+                                        <input type="checkbox"
+                                               class="ai-red-flag"
+                                               value="Chest pain">
+                                        Severe or persistent chest pain
+                                    </label>
+
+                                    <label class="ai-check">
+                                        <input type="checkbox"
+                                               class="ai-red-flag"
+                                               value="Loss of consciousness">
+                                        Loss of consciousness or fainting
+                                    </label>
+
+                                    <label class="ai-check">
+                                        <input type="checkbox"
+                                               class="ai-red-flag"
+                                               value="Severe bleeding">
+                                        Severe or uncontrolled bleeding
+                                    </label>
+
+                                </div>
 
                             </div>
 
                         </div>
 
 
-                        <!-- ADDITIONAL INFORMATION -->
-                        <div class="ai-form-group">
-
-                            <label for="additionalSymptoms">
-                                Additional Information
-                            </label>
-
-                            <textarea
-                                id="additionalSymptoms"
-                                rows="4"
-                                placeholder="Add any other information you think may be useful..."
-                            ></textarea>
-
-                        </div>
+                        <p class="ai-form-error"
+                           id="aiFormError"></p>
 
 
-                        <!-- AGREEMENT -->
-                        <label class="ai-assessment-agreement">
+                        <div class="ai-form-actions">
 
-                            <input
-                                type="checkbox"
-                                id="aiAgreement"
+                            <button
+                                type="reset"
+                                class="ai-reset-btn"
+                                id="aiResetBtn"
                             >
+                                Clear
+                            </button>
 
-                            <span>
-                                I understand that this is a preliminary
-                                AI-assisted assessment and not a medical diagnosis.
-                            </span>
+                            <button
+                                type="submit"
+                                class="ai-submit-btn"
+                            >
+                                Assess Symptoms
+                            </button>
 
-                        </label>
-
-
-                        <!-- BUTTON -->
-                        <button
-                            type="submit"
-                            class="ai-assessment-submit-btn"
-                        >
-                            Analyze Symptoms
-                        </button>
+                        </div>
 
                     </form>
 
-                </div>
+                </section>
 
 
-                <!-- HOW IT WORKS -->
-                <aside class="ai-process-card">
+                <!-- RIGHT SIDE -->
+                <aside class="ai-side-column">
 
-                    <div class="ai-process-heading">
+                    <!-- RESULT -->
+                    <section class="ai-result-card"
+                             id="aiResultCard">
+
+                        <h3>
+                            Preliminary Guidance
+                        </h3>
+
+                        <p>
+                            AI-assisted routing result based on the information entered.
+                        </p>
+
+
+                        <span class="ai-result-badge routine"
+                              id="aiResultBadge">
+                            Routine Review
+                        </span>
+
+
+                        <div class="ai-result-text"
+                             id="aiResultText">
+                        </div>
+
+
+                        <div class="ai-result-actions">
+
+                            <a href="doctor-availability.html"
+                               class="ai-book-btn">
+                                Find a Doctor
+                            </a>
+
+                            <a href="medical-records.html"
+                               class="ai-record-btn">
+                                View Medical Records
+                            </a>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- HOW IT WORKS -->
+                    <section class="ai-how-card">
 
                         <h3>
                             How It Works
                         </h3>
 
                         <p>
-                            Preliminary assessment workflow
+                            The prototype uses simple routing logic for demonstration.
                         </p>
 
-                    </div>
+
+                        <div class="ai-step-list">
+
+                            <div class="ai-step">
+
+                                <div class="ai-step-number">
+                                    1
+                                </div>
+
+                                <div>
+                                    <strong>Enter Symptoms</strong>
+                                    <span>
+                                        Provide symptom details and duration.
+                                    </span>
+                                </div>
+
+                            </div>
 
 
-                    <div class="ai-process-step">
+                            <div class="ai-step">
 
-                        <span>
-                            1
-                        </span>
+                                <div class="ai-step-number">
+                                    2
+                                </div>
 
-                        <div>
+                                <div>
+                                    <strong>Preliminary Routing</strong>
+                                    <span>
+                                        The prototype categorizes the next-step priority.
+                                    </span>
+                                </div>
 
-                            <h4>
-                                Describe Symptoms
-                            </h4>
-
-                            <p>
-                                Enter basic symptom information.
-                            </p>
-
-                        </div>
-
-                    </div>
+                            </div>
 
 
-                    <div class="ai-process-line"></div>
+                            <div class="ai-step">
 
+                                <div class="ai-step-number">
+                                    3
+                                </div>
 
-                    <div class="ai-process-step">
+                                <div>
+                                    <strong>Professional Follow-up</strong>
+                                    <span>
+                                        Appropriate cases are directed to a qualified doctor.
+                                    </span>
+                                </div>
 
-                        <span>
-                            2
-                        </span>
-
-                        <div>
-
-                            <h4>
-                                AI Assessment
-                            </h4>
-
-                            <p>
-                                The system reviews the supplied information.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="ai-process-line"></div>
-
-
-                    <div class="ai-process-step">
-
-                        <span>
-                            3
-                        </span>
-
-                        <div>
-
-                            <h4>
-                                Preliminary Guidance
-                            </h4>
-
-                            <p>
-                                A support recommendation is displayed.
-                            </p>
+                            </div>
 
                         </div>
 
-                    </div>
-
-
-                    <div class="ai-process-line"></div>
-
-
-                    <div class="ai-process-step">
-
-                        <span>
-                            4
-                        </span>
-
-                        <div>
-
-                            <h4>
-                                Doctor Referral
-                            </h4>
-
-                            <p>
-                                Cases requiring additional review can be
-                                referred for professional consultation.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="ai-process-note">
-
-                        <strong>
-                            AI Support Only
-                        </strong>
-
-                        <p>
-                            Professional healthcare decisions remain
-                            with qualified medical professionals.
-                        </p>
-
-                    </div>
+                    </section>
 
                 </aside>
 
-            </section>
-
-
-            <!-- RESULT SECTION -->
-            <section
-                class="ai-result-card"
-                id="aiResultCard"
-            >
-
-                <div class="ai-result-top">
-
-                    <div
-                        class="ai-result-icon"
-                        id="aiResultIcon"
-                    >
-                        AI
-                    </div>
-
-
-                    <div>
-
-                        <p>
-                            AI Assessment Result
-                        </p>
-
-                        <h2 id="aiResultTitle">
-                            Preliminary Guidance
-                        </h2>
-
-                    </div>
-
-
-                    <span
-                        class="ai-result-status"
-                        id="aiResultStatus"
-                    >
-                        Assessment Complete
-                    </span>
-
-                </div>
-
-
-                <div class="ai-result-grid">
-
-                    <div>
-
-                        <span>
-                            Assessment Level
-                        </span>
-
-                        <strong id="aiAssessmentLevel">
-                            -
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            Recommended Action
-                        </span>
-
-                        <strong id="aiRecommendedAction">
-                            -
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            Professional Review
-                        </span>
-
-                        <strong id="aiDoctorReview">
-                            -
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <div class="ai-result-message">
-
-                    <h4>
-                        Preliminary Assessment
-                    </h4>
-
-                    <p id="aiResultMessage">
-                        -
-                    </p>
-
-                </div>
-
-
-                <div class="ai-result-warning">
-
-                    <strong>
-                        Important:
-                    </strong>
-
-                    <p>
-                        This result is generated for prototype demonstration
-                        and should not be interpreted as a medical diagnosis.
-                    </p>
-
-                </div>
-
-
-                <div class="ai-result-actions">
-
-                    <button
-                        type="button"
-                        class="ai-new-assessment-btn"
-                        id="newAssessmentBtn"
-                    >
-                        New Assessment
-                    </button>
-
-
-                    <a
-                        href="doctor-availability.html"
-                        class="ai-doctor-btn"
-                    >
-                        Find a Doctor
-                    </a>
-
-                </div>
-
-            </section>
-
-
-            <!-- PROTOTYPE NOTE -->
-            <section class="ai-prototype-note">
-
-                <div class="ai-prototype-note-icon">
-                    AI
-                </div>
-
-
-                <div>
-
-                    <h3>
-                        Prototype AI Module
-                    </h3>
-
-                    <p>
-                        The current prototype demonstrates the assessment
-                        workflow and referral logic. A trained AI model and
-                        secure backend integration can be connected during
-                        the implementation phase.
-                    </p>
-
-                </div>
-
-            </section>
+            </div>
 
 
             <!-- FOOTER -->
@@ -768,10 +1046,8 @@
 
 
     <!-- LOGOUT MODAL -->
-    <div
-        class="logout-modal"
-        id="aiLogoutModal"
-    >
+    <div class="logout-modal"
+         id="aiLogoutModal">
 
         <div class="logout-modal-card">
 
@@ -798,7 +1074,6 @@
                     Cancel
                 </button>
 
-
                 <button
                     type="button"
                     class="logout-confirm-btn"
@@ -814,7 +1089,505 @@
     </div>
 
 
-    <script src="../js/ai-symptom-assessment.js"></script>
+    <script>
+        /* SIDEBAR ACCORDION */
+
+        const menuGroups =
+            document.querySelectorAll(
+                ".dashboard-menu-group"
+            );
+
+        menuGroups.forEach(function (group) {
+
+            const parentButton =
+                group.querySelector(
+                    ".dashboard-menu-parent"
+                );
+
+            parentButton.addEventListener(
+                "click",
+                function () {
+
+                    menuGroups.forEach(
+                        function (otherGroup) {
+
+                            if (otherGroup !== group) {
+
+                                otherGroup.classList.remove(
+                                    "open"
+                                );
+
+                                const otherButton =
+                                    otherGroup.querySelector(
+                                        ".dashboard-menu-parent"
+                                    );
+
+                                if (otherButton) {
+                                    otherButton.classList.remove(
+                                        "active"
+                                    );
+                                }
+
+                            }
+
+                        }
+                    );
+
+                    group.classList.toggle("open");
+
+                    parentButton.classList.toggle(
+                        "active",
+                        group.classList.contains(
+                            "open"
+                        )
+                    );
+
+                }
+            );
+
+        });
+
+
+        /* ACTIVE PAGE */
+
+        const currentPage =
+            window.location.pathname.split("/").pop();
+
+        const sidebarLinks =
+            document.querySelectorAll(
+                ".dashboard-menu-link, .dashboard-submenu-link"
+            );
+
+        sidebarLinks.forEach(function (link) {
+
+            link.classList.remove("active");
+
+            if (
+                link.getAttribute("href") ===
+                currentPage
+            ) {
+
+                link.classList.add("active");
+
+                const parentGroup =
+                    link.closest(
+                        ".dashboard-menu-group"
+                    );
+
+                if (parentGroup) {
+
+                    parentGroup.classList.add(
+                        "open"
+                    );
+
+                    const parentButton =
+                        parentGroup.querySelector(
+                            ".dashboard-menu-parent"
+                        );
+
+                    if (parentButton) {
+                        parentButton.classList.add(
+                            "active"
+                        );
+                    }
+
+                }
+
+            }
+
+        });
+
+
+        /* MOBILE SIDEBAR */
+
+        const aiMenuToggle =
+            document.getElementById(
+                "aiMenuToggle"
+            );
+
+        const aiSidebar =
+            document.getElementById(
+                "aiSidebar"
+            );
+
+        aiMenuToggle.addEventListener(
+            "click",
+            function () {
+
+                aiSidebar.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+
+        /* ASSESSMENT */
+
+        const aiAssessmentForm =
+            document.getElementById(
+                "aiAssessmentForm"
+            );
+
+        const aiAge =
+            document.getElementById(
+                "aiAge"
+            );
+
+        const aiDuration =
+            document.getElementById(
+                "aiDuration"
+            );
+
+        const aiSeverity =
+            document.getElementById(
+                "aiSeverity"
+            );
+
+        const aiTemperature =
+            document.getElementById(
+                "aiTemperature"
+            );
+
+        const aiSymptoms =
+            document.getElementById(
+                "aiSymptoms"
+            );
+
+        const aiFormError =
+            document.getElementById(
+                "aiFormError"
+            );
+
+        const aiResultCard =
+            document.getElementById(
+                "aiResultCard"
+            );
+
+        const aiResultBadge =
+            document.getElementById(
+                "aiResultBadge"
+            );
+
+        const aiResultText =
+            document.getElementById(
+                "aiResultText"
+            );
+
+
+        function getRedFlags() {
+
+            return Array.from(
+                document.querySelectorAll(
+                    ".ai-red-flag:checked"
+                )
+            ).map(
+                function (checkbox) {
+                    return checkbox.value;
+                }
+            );
+
+        }
+
+
+        aiAssessmentForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                aiFormError.textContent = "";
+
+
+                if (
+                    !aiAge.value ||
+                    Number(aiAge.value) < 1 ||
+                    Number(aiAge.value) > 120
+                ) {
+
+                    aiFormError.textContent =
+                        "Please enter a valid age.";
+
+                    aiAge.focus();
+                    return;
+
+                }
+
+
+                if (!aiDuration.value) {
+
+                    aiFormError.textContent =
+                        "Please select symptom duration.";
+
+                    aiDuration.focus();
+                    return;
+
+                }
+
+
+                if (!aiSeverity.value) {
+
+                    aiFormError.textContent =
+                        "Please select current symptom severity.";
+
+                    aiSeverity.focus();
+                    return;
+
+                }
+
+
+                if (
+                    aiSymptoms.value.trim().length <
+                    5
+                ) {
+
+                    aiFormError.textContent =
+                        "Please describe your symptoms in a little more detail.";
+
+                    aiSymptoms.focus();
+                    return;
+
+                }
+
+
+                const redFlags =
+                    getRedFlags();
+
+                const temperature =
+                    Number(
+                        aiTemperature.value
+                    );
+
+                let level =
+                    "routine";
+
+                let badgeText =
+                    "Routine Review";
+
+                let resultMessage =
+                    "Based on the information entered, this prototype suggests arranging a routine medical review if your symptoms continue or concern you. The result is preliminary guidance only, not a diagnosis.";
+
+
+                if (
+                    aiSeverity.value === "Moderate" ||
+                    (
+                        aiTemperature.value &&
+                        temperature >= 39
+                    ) ||
+                    aiDuration.value ===
+                    "More than 1 week"
+                ) {
+
+                    level =
+                        "priority";
+
+                    badgeText =
+                        "Priority Doctor Review";
+
+                    resultMessage =
+                        "The information entered suggests that a qualified healthcare professional should review your symptoms soon. Please use the doctor availability or appointment service for professional evaluation.";
+
+                }
+
+
+                if (
+                    aiSeverity.value === "Severe" ||
+                    redFlags.length > 0
+                ) {
+
+                    level =
+                        "urgent";
+
+                    badgeText =
+                        "Urgent Professional Care";
+
+                    resultMessage =
+                        "One or more serious warning signs were selected or symptoms were marked severe. Do not rely on this prototype for diagnosis. Seek urgent professional medical care.";
+
+                }
+
+
+                aiResultBadge.className =
+                    "ai-result-badge " +
+                    level;
+
+                aiResultBadge.textContent =
+                    badgeText;
+
+                aiResultText.textContent =
+                    resultMessage;
+
+                aiResultCard.classList.add(
+                    "show"
+                );
+
+
+                const assessmentRecord = {
+
+                    age:
+                        Number(aiAge.value),
+
+                    duration:
+                        aiDuration.value,
+
+                    severity:
+                        aiSeverity.value,
+
+                    temperature:
+                        aiTemperature.value || "",
+
+                    symptoms:
+                        aiSymptoms.value.trim(),
+
+                    redFlags:
+                        redFlags,
+
+                    routing:
+                        badgeText,
+
+                    createdAt:
+                        new Date().toISOString()
+
+                };
+
+
+                localStorage.setItem(
+                    "latestAISymptomAssessment",
+                    JSON.stringify(
+                        assessmentRecord
+                    )
+                );
+
+            }
+        );
+
+
+        /* RESET */
+
+        document.getElementById(
+            "aiResetBtn"
+        ).addEventListener(
+            "click",
+            function () {
+
+                setTimeout(
+                    function () {
+
+                        aiFormError.textContent =
+                            "";
+
+                        aiResultCard.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    0
+                );
+
+            }
+        );
+
+
+        /* LOGOUT */
+
+        const aiLogoutBtn =
+            document.getElementById(
+                "aiLogoutBtn"
+            );
+
+        const aiLogoutModal =
+            document.getElementById(
+                "aiLogoutModal"
+            );
+
+        const aiCancelLogout =
+            document.getElementById(
+                "aiCancelLogout"
+            );
+
+        const aiConfirmLogout =
+            document.getElementById(
+                "aiConfirmLogout"
+            );
+
+
+        aiLogoutBtn.addEventListener(
+            "click",
+            function () {
+
+                aiLogoutModal.classList.add(
+                    "show"
+                );
+
+            }
+        );
+
+
+        aiCancelLogout.addEventListener(
+            "click",
+            function () {
+
+                aiLogoutModal.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+
+        aiConfirmLogout.addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+        aiLogoutModal.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target ===
+                    aiLogoutModal
+                ) {
+
+                    aiLogoutModal.classList.remove(
+                        "show"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* CLOSE MOBILE SIDEBAR */
+
+        sidebarLinks.forEach(function (link) {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    if (
+                        window.innerWidth <= 900
+                    ) {
+
+                        aiSidebar.classList.remove(
+                            "open"
+                        );
+
+                    }
+
+                }
+            );
+
+        });
+    </script>
 
 </body>
 
