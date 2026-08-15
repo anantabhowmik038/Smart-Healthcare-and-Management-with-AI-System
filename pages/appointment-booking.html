@@ -734,7 +734,9 @@
                                     type="text"
                                     id="bookingPatientName"
                                     value="Patient User"
-                                    readonly
+                                    placeholder="Enter patient name"
+                                    autocomplete="name"
+                                    required
                                 >
 
                             </div>
@@ -1269,6 +1271,9 @@
         };
 
 
+        const bookingPatientName =
+            document.getElementById("bookingPatientName");
+
         const bookingDepartment =
             document.getElementById("bookingDepartment");
 
@@ -1395,6 +1400,11 @@
 
         /* SUMMARY */
 
+        const summaryPatient =
+            document.getElementById(
+                "summaryPatient"
+            );
+
         const summaryDepartment =
             document.getElementById(
                 "summaryDepartment"
@@ -1446,6 +1456,10 @@
 
         function updateSummary() {
 
+            summaryPatient.textContent =
+                bookingPatientName.value.trim() ||
+                "Not entered";
+
             summaryDepartment.textContent =
                 bookingDepartment.value ||
                 "Not selected";
@@ -1469,6 +1483,11 @@
 
         }
 
+
+        bookingPatientName.addEventListener(
+            "input",
+            updateSummary
+        );
 
         bookingDepartment.addEventListener(
             "change",
@@ -1512,6 +1531,17 @@
                 event.preventDefault();
 
                 bookingError.textContent = "";
+
+
+                if (!bookingPatientName.value.trim()) {
+
+                    bookingError.textContent =
+                        "Please enter the patient name.";
+
+                    bookingPatientName.focus();
+                    return;
+
+                }
 
 
                 if (!bookingDepartment.value) {
@@ -1593,7 +1623,7 @@
                         ).slice(-6),
 
                     patient:
-                        "Patient User",
+                        bookingPatientName.value.trim(),
 
                     patientId:
                         "#P1024",
