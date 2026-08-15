@@ -8,6 +8,83 @@
     <title>Patient Profile | Smart Healthcare</title>
 
     <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* COLLAPSIBLE SIDEBAR */
+        .dashboard-menu-group {
+            width: 100%;
+        }
+
+        .dashboard-menu-parent {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #dbe7ec;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-menu-parent:hover,
+        .dashboard-menu-parent.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+
+        .menu-parent-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submenu-arrow {
+            font-size: 9px;
+            transition: transform 0.25s ease;
+        }
+
+        .dashboard-menu-group.open .submenu-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dashboard-submenu {
+            display: none;
+            margin: 5px 0 7px 30px;
+            padding-left: 13px;
+            border-left: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .dashboard-menu-group.open .dashboard-submenu {
+            display: block;
+        }
+
+        .dashboard-submenu-link {
+            display: block;
+            padding: 9px 11px;
+            margin: 3px 0;
+            border-radius: 7px;
+            color: #b9cbd3;
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-submenu-link:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            color: white;
+        }
+
+        .dashboard-submenu-link.active {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: white;
+            font-weight: 600;
+        }
+    </style>
 </head>
 
 <body class="dashboard-body">
@@ -35,46 +112,93 @@
                     Dashboard
                 </a>
 
-                <a href="patient-profile.html"
-                   class="dashboard-menu-link active">
+                <a href="patient-profile.html" class="dashboard-menu-link active">
                     <span class="menu-icon">P</span>
                     My Profile
                 </a>
 
-                <a href="appointment-management.html" class="dashboard-menu-link">
-                    <span class="menu-icon">A</span>
-                    Appointments
-                </a>
+                <!-- APPOINTMENTS -->
+                <div class="dashboard-menu-group">
+                    <button type="button" class="dashboard-menu-parent">
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">A</span>
+                            Appointments
+                        </span>
+                        <span class="submenu-arrow">▼</span>
+                    </button>
 
-                <a href="ai-symptom-assessment.html" class="dashboard-menu-link">
-                    <span class="menu-icon">AI</span>
-                    AI Symptom Assessment
-                </a>
+                    <div class="dashboard-submenu">
+                        <a href="doctor-availability.html" class="dashboard-submenu-link">
+                            Doctor Availability
+                        </a>
+                        <a href="appointment-booking.html" class="dashboard-submenu-link">
+                            Book Appointment
+                        </a>
+                        <a href="appointment-management.html" class="dashboard-submenu-link">
+                            My Appointments
+                        </a>
+                    </div>
+                </div>
 
-                <a href="medical-records.html" class="dashboard-menu-link">
-                    <span class="menu-icon">MR</span>
-                    Medical Records
-                </a>
+                <!-- HEALTH SERVICES -->
+                <div class="dashboard-menu-group">
+                    <button type="button" class="dashboard-menu-parent">
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">H</span>
+                            Health Services
+                        </span>
+                        <span class="submenu-arrow">▼</span>
+                    </button>
 
-                <a href="digital-prescription.html" class="dashboard-menu-link">
-                    <span class="menu-icon">Rx</span>
-                    Prescriptions
-                </a>
+                    <div class="dashboard-submenu">
+                        <a href="ai-symptom-assessment.html" class="dashboard-submenu-link">
+                            AI Symptom Assessment
+                        </a>
+                        <a href="medical-records.html" class="dashboard-submenu-link">
+                            Medical Records
+                        </a>
+                    </div>
+                </div>
 
-                <a href="laboratory-results.html" class="dashboard-menu-link">
-                    <span class="menu-icon">LR</span>
-                    Laboratory Reports
-                </a>
+                <!-- REPORTS & TREATMENT -->
+                <div class="dashboard-menu-group">
+                    <button type="button" class="dashboard-menu-parent">
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">R</span>
+                            Reports &amp; Treatment
+                        </span>
+                        <span class="submenu-arrow">▼</span>
+                    </button>
 
-                <a href="billing-payment.html" class="dashboard-menu-link">
-                    <span class="menu-icon">B</span>
-                    Billing & Payment
-                </a>
+                    <div class="dashboard-submenu">
+                        <a href="digital-prescription.html" class="dashboard-submenu-link">
+                            Prescriptions
+                        </a>
+                        <a href="laboratory-results.html" class="dashboard-submenu-link">
+                            Laboratory Reports
+                        </a>
+                    </div>
+                </div>
 
-                <a href="feedback-complaint.html" class="dashboard-menu-link">
-                    <span class="menu-icon">F</span>
-                    Feedback & Complaint
-                </a>
+                <!-- BILLING & SUPPORT -->
+                <div class="dashboard-menu-group">
+                    <button type="button" class="dashboard-menu-parent">
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">S</span>
+                            Billing &amp; Support
+                        </span>
+                        <span class="submenu-arrow">▼</span>
+                    </button>
+
+                    <div class="dashboard-submenu">
+                        <a href="billing-payment.html" class="dashboard-submenu-link">
+                            Billing &amp; Payment
+                        </a>
+                        <a href="feedback-complaint.html" class="dashboard-submenu-link">
+                            Feedback &amp; Complaint
+                        </a>
+                    </div>
+                </div>
 
             </nav>
 
@@ -660,6 +784,26 @@
 
     </div>
 
+
+
+    <script>
+        /* SIDEBAR ACCORDION */
+        const menuGroups = document.querySelectorAll(".dashboard-menu-group");
+
+        menuGroups.forEach(function (group) {
+            const parentButton = group.querySelector(".dashboard-menu-parent");
+
+            parentButton.addEventListener("click", function () {
+                menuGroups.forEach(function (otherGroup) {
+                    if (otherGroup !== group) {
+                        otherGroup.classList.remove("open");
+                    }
+                });
+
+                group.classList.toggle("open");
+            });
+        });
+    </script>
 
     <script src="../js/patient-profile.js"></script>
 
