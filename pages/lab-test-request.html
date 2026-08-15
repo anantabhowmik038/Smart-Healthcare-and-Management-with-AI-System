@@ -1,855 +1,632 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Laboratory Test Request | Smart Healthcare</title>
-
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+
+        /* COLLAPSIBLE SIDEBAR */
+        .dashboard-menu-group { width: 100%; }
+        .dashboard-menu-parent {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #dbe7ec;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+        .dashboard-menu-parent:hover,
+        .dashboard-menu-parent.active {
+            background-color: rgba(255,255,255,0.08);
+            color: #fff;
+        }
+        .menu-parent-left { display:flex; align-items:center; gap:10px; }
+        .submenu-arrow { font-size:9px; transition:transform .25s ease; }
+        .dashboard-menu-group.open .submenu-arrow { transform:rotate(180deg); }
+        .dashboard-submenu {
+            display:none;
+            margin:5px 0 7px 30px;
+            padding-left:13px;
+            border-left:1px solid rgba(255,255,255,.16);
+        }
+        .dashboard-menu-group.open .dashboard-submenu { display:block; }
+        .dashboard-submenu-link {
+            display:block;
+            padding:9px 11px;
+            margin:3px 0;
+            border-radius:7px;
+            color:#b9cbd3;
+            text-decoration:none;
+            font-size:12px;
+            transition:.2s ease;
+        }
+        .dashboard-submenu-link:hover {
+            background-color:rgba(255,255,255,.07);
+            color:#fff;
+        }
+        .dashboard-submenu-link.active {
+            background-color:rgba(255,255,255,.12);
+            color:#fff;
+            font-weight:600;
+        }
+
+        .request-page-header {
+            display:flex; justify-content:space-between; gap:20px; align-items:flex-start;
+            margin:28px 0 22px;
+        }
+        .request-page-header h1 { margin:5px 0 8px; color:#16324f; }
+        .request-page-header p { margin:0; color:#64748b; max-width:780px; line-height:1.6; }
+        .request-new-btn {
+            display:none; border:none; padding:11px 16px; border-radius:9px;
+            background:#176cc8; color:#fff; font-weight:600; cursor:pointer;
+        }
+        .request-summary-grid {
+            display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px;
+        }
+        .request-summary-card,.request-filter-card,.request-card {
+            background:#fff; border-radius:14px; box-shadow:0 8px 22px rgba(15,23,42,.06);
+        }
+        .request-summary-card { padding:18px; }
+        .request-summary-card span { display:block; color:#64748b; font-size:12px; margin-bottom:5px; }
+        .request-summary-card strong { color:#16324f; font-size:25px; }
+        .request-filter-card { padding:18px; margin-bottom:20px; }
+        .request-filter-grid {
+            display:grid; grid-template-columns:1.5fr 1fr auto; gap:12px; align-items:end;
+        }
+        .request-field label {
+            display:block; margin-bottom:7px; color:#334155; font-size:13px; font-weight:600;
+        }
+        .request-field input,.request-field select {
+            width:100%; min-height:42px; border:1px solid #d8e0e8;
+            border-radius:8px; padding:9px 11px; outline:none; background:#fff;
+        }
+        .request-clear-btn {
+            min-height:42px; padding:0 16px; border:1px solid #d8e0e8; border-radius:8px;
+            background:#fff; color:#475569; cursor:pointer; font-weight:600;
+        }
+        .request-list { display:grid; gap:16px; }
+        .request-card { padding:20px; }
+        .request-card-top {
+            display:flex; justify-content:space-between; gap:18px; align-items:flex-start;
+            padding-bottom:14px; border-bottom:1px solid #edf1f5;
+        }
+        .request-card-top h3 { margin:0 0 5px; color:#16324f; }
+        .request-card-top p { margin:0; color:#64748b; font-size:12px; }
+        .request-status {
+            padding:6px 10px; border-radius:999px; font-size:11px; font-weight:700;
+        }
+        .request-status.pending { background:#fff6db; color:#9a6b00; }
+        .request-status.collected { background:#eaf3ff; color:#176cc8; }
+        .request-status.completed { background:#e8f8ef; color:#22844b; }
+        .request-meta {
+            display:grid; grid-template-columns:repeat(4,1fr); gap:12px; padding:14px 0;
+        }
+        .request-meta span { display:block; color:#64748b; font-size:10px; text-transform:uppercase; }
+        .request-meta strong { color:#334155; font-size:12px; }
+        .request-notes {
+            padding:12px 14px; border-radius:9px; background:#f8fafc;
+            color:#475569; font-size:12px; line-height:1.6;
+        }
+        .request-actions {
+            display:flex; justify-content:flex-end; gap:9px; margin-top:16px; flex-wrap:wrap;
+        }
+        .request-action-btn {
+            min-height:38px; padding:0 13px; border-radius:8px; font-size:12px;
+            font-weight:600; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center;
+        }
+        .request-action-btn.secondary { border:1px solid #d8e0e8; background:#fff; color:#475569; }
+        .request-action-btn.primary { border:none; background:#176cc8; color:#fff; }
+        .request-empty {
+            display:none; background:#fff; border-radius:14px; padding:30px; text-align:center; color:#64748b;
+        }
+        .request-modal {
+            position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+            padding:20px; background:rgba(15,23,42,.55); z-index:9999;
+        }
+        .request-modal.show { display:flex; }
+        .request-modal-card {
+            width:min(620px,100%); background:#fff; border-radius:16px; padding:24px;
+            max-height:90vh; overflow-y:auto; box-shadow:0 20px 50px rgba(15,23,42,.2);
+        }
+        .request-modal-card h2 { margin:0 0 8px; color:#16324f; }
+        .request-modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:13px; }
+        .request-modal-field.full { grid-column:1/-1; }
+        .request-modal-field label {
+            display:block; margin-bottom:6px; color:#334155; font-size:12px; font-weight:600;
+        }
+        .request-modal-field input,.request-modal-field select,.request-modal-field textarea {
+            width:100%; border:1px solid #d8e0e8; border-radius:8px; padding:9px 11px; font:inherit;
+        }
+        .request-modal-field textarea { min-height:85px; resize:vertical; }
+        .request-modal-actions { display:flex; justify-content:flex-end; gap:9px; margin-top:18px; }
+        .request-modal-actions button {
+            min-height:40px; padding:0 16px; border-radius:8px; font-weight:600; cursor:pointer;
+        }
+        .request-cancel { border:1px solid #d8e0e8; background:#fff; color:#475569; }
+        .request-save { border:none; background:#176cc8; color:#fff; }
+        @media(max-width:980px){
+            .request-summary-grid{grid-template-columns:repeat(2,1fr);}
+            .request-meta{grid-template-columns:repeat(2,1fr);}
+        }
+        @media(max-width:650px){
+            .request-page-header,.request-card-top{flex-direction:column;}
+            .request-summary-grid,.request-filter-grid,.request-meta,.request-modal-grid{grid-template-columns:1fr;}
+            .request-modal-field.full{grid-column:auto;}
+            .request-new-btn{width:100%;}
+        }
+    </style>
 </head>
-
 <body class="dashboard-body">
+<div class="dashboard-layout">
 
-    <div class="dashboard-layout">
+    <aside class="dashboard-sidebar" id="requestSidebar">
+        <div class="dashboard-sidebar-header">
+            <a href="../index.html" class="dashboard-logo">Smart<span>Healthcare</span></a>
+            <p id="requestPortalName">Doctor Portal</p>
+        </div>
 
-        <!-- SIDEBAR -->
-        <aside class="dashboard-sidebar" id="labRequestSidebar">
+        <nav class="dashboard-menu" id="requestSidebarMenu"></nav>
 
-            <div class="dashboard-sidebar-header">
+        <div class="dashboard-sidebar-footer">
+            <button type="button" class="dashboard-logout-btn" id="requestLogoutBtn">Logout</button>
+        </div>
+    </aside>
 
-                <a href="../index.html" class="dashboard-logo">
-                    Smart<span>Healthcare</span>
-                </a>
-
-                <p>Doctor Portal</p>
-
+    <main class="dashboard-main">
+        <header class="dashboard-topbar">
+            <div class="dashboard-topbar-left">
+                <button type="button" class="dashboard-menu-toggle" id="requestMenuToggle">☰</button>
+                <div>
+                    <p id="requestTopPortalName">Doctor Portal</p>
+                    <h2>Laboratory Test Request</h2>
+                </div>
             </div>
 
-
-            <nav class="dashboard-menu">
-
-                <a href="doctor-dashboard.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">D</span>
-                    Dashboard
-
-                </a>
-
-
-                <a href="appointment-management.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">A</span>
-                    Appointments
-
-                </a>
-
-
-                <a href="medical-records.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">PR</span>
-                    Patient Records
-
-                </a>
-
-
-                <a href="consultation.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">C</span>
-                    Consultations
-
-                </a>
-
-
-                <a href="digital-prescription.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">Rx</span>
-                    Prescriptions
-
-                </a>
-
-
-                <a href="lab-test-request.html"
-                   class="dashboard-menu-link active">
-
-                    <span class="menu-icon">LT</span>
-                    Laboratory Requests
-
-                </a>
-
-
-                <a href="laboratory-results.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">LR</span>
-                    Laboratory Reports
-
-                </a>
-
-            </nav>
-
-
-            <div class="dashboard-sidebar-footer">
-
-                <button
-                    type="button"
-                    class="dashboard-logout-btn"
-                    id="labRequestLogoutBtn"
-                >
-                    Logout
-                </button>
-
+            <div class="dashboard-user">
+                <div class="dashboard-notification">1</div>
+                <div class="dashboard-user-info">
+                    <div class="dashboard-user-avatar" id="requestRoleAvatar">D</div>
+                    <div>
+                        <strong id="requestRoleName">Doctor</strong>
+                        <span>Laboratory Workflow</span>
+                    </div>
+                </div>
             </div>
-
-        </aside>
-
-
-        <!-- MAIN CONTENT -->
-        <main class="dashboard-main">
-
-            <!-- TOPBAR -->
-            <header class="dashboard-topbar">
-
-                <div class="dashboard-topbar-left">
-
-                    <button
-                        type="button"
-                        class="dashboard-menu-toggle"
-                        id="labRequestMenuToggle"
-                        aria-label="Toggle navigation menu"
-                    >
-                        ☰
-                    </button>
-
-
-                    <div>
-
-                        <p>Doctor Portal</p>
-
-                        <h2>Laboratory Test Request</h2>
-
-                    </div>
-
-                </div>
-
-
-                <div class="dashboard-user">
-
-                    <div class="dashboard-user-info">
-
-                        <div class="doctor-avatar">
-                            DR
-                        </div>
-
-                        <div>
-
-                            <strong>Doctor</strong>
-
-                            <span>Medical Professional</span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </header>
-
-
-            <!-- PAGE HEADER -->
-            <section class="lab-request-header-card">
-
-                <div>
-
-                    <p class="small-title">
-                        Laboratory Management
-                    </p>
-
-                    <h1>
-                        Request Laboratory Tests
-                    </h1>
-
-                    <p>
-                        Create laboratory test requests for the selected
-                        patient as part of the professional consultation
-                        workflow.
-                    </p>
-
-                </div>
-
-
-                <div class="lab-request-header-icon">
-                    LT
-                </div>
-
-            </section>
-
-
-            <!-- PATIENT INFORMATION -->
-            <section class="lab-request-patient-card">
-
-                <div class="lab-request-patient-main">
-
-                    <div class="lab-request-patient-avatar">
-                        P
-                    </div>
-
-
-                    <div>
-
-                        <p class="small-title">
-                            Selected Patient
-                        </p>
-
-                        <h2>
-                            Patient #P1024
-                        </h2>
-
-                        <p>
-                            Appointment ID: #APT2041
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="lab-request-patient-details">
-
-                    <div>
-
-                        <span>Consultation</span>
-
-                        <strong>
-                            General Consultation
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>Request Date</span>
-
-                        <strong id="labRequestDate">
-                            -
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>Status</span>
-
-                        <strong class="lab-request-draft-status">
-                            Draft
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- REQUEST LAYOUT -->
-            <section class="lab-request-layout">
-
-                <!-- FORM -->
-                <div class="lab-request-form-card">
-
-                    <div class="lab-request-section-heading">
-
-                        <div>
-
-                            <h3>
-                                Test Request Information
-                            </h3>
-
-                            <p>
-                                Select laboratory tests and provide request details
-                            </p>
-
-                        </div>
-
-
-                        <span>
-                            01
-                        </span>
-
-                    </div>
-
-
-                    <form id="labRequestForm">
-
-                        <div
-                            class="lab-request-error"
-                            id="labRequestError"
-                        ></div>
-
-
-                        <!-- TEST LIST HEADER -->
-                        <div class="lab-request-test-heading">
-
-                            <div>
-
-                                <h4>
-                                    Requested Tests
-                                </h4>
-
-                                <p>
-                                    Add one or more laboratory tests
-                                </p>
-
-                            </div>
-
-
-                            <button
-                                type="button"
-                                class="lab-request-add-btn"
-                                id="addLabTestBtn"
-                            >
-                                + Add Test
-                            </button>
-
-                        </div>
-
-
-                        <!-- TEST LIST -->
-                        <div
-                            class="lab-request-test-list"
-                            id="labTestList"
-                        >
-
-                            <div class="lab-request-test-item">
-
-                                <div class="lab-request-test-number">
-                                    1
-                                </div>
-
-
-                                <div class="lab-request-test-fields">
-
-                                    <div class="lab-request-form-grid">
-
-                                        <div class="lab-request-form-group">
-
-                                            <label>
-                                                Test Name
-                                            </label>
-
-                                            <select class="lab-test-name">
-
-                                                <option value="">
-                                                    Select Test
-                                                </option>
-
-                                                <option value="cbc">
-                                                    Complete Blood Count
-                                                </option>
-
-                                                <option value="glucose">
-                                                    Blood Glucose Test
-                                                </option>
-
-                                                <option value="lipid">
-                                                    Lipid Profile
-                                                </option>
-
-                                                <option value="urine">
-                                                    Urine Analysis
-                                                </option>
-
-                                                <option value="liver">
-                                                    Liver Function Test
-                                                </option>
-
-                                                <option value="kidney">
-                                                    Kidney Function Test
-                                                </option>
-
-                                                <option value="other">
-                                                    Other Laboratory Test
-                                                </option>
-
-                                            </select>
-
-                                        </div>
-
-
-                                        <div class="lab-request-form-group">
-
-                                            <label>
-                                                Priority
-                                            </label>
-
-                                            <select class="lab-test-priority">
-
-                                                <option value="">
-                                                    Select Priority
-                                                </option>
-
-                                                <option value="routine">
-                                                    Routine
-                                                </option>
-
-                                                <option value="priority">
-                                                    Priority
-                                                </option>
-
-                                            </select>
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <div class="lab-request-form-group">
-
-                                        <label>
-                                            Test Instruction
-                                        </label>
-
-                                        <input
-                                            type="text"
-                                            class="lab-test-instruction"
-                                            placeholder="Optional professional instruction for the laboratory"
-                                        >
-
-                                    </div>
-
-                                </div>
-
-
-                                <button
-                                    type="button"
-                                    class="lab-request-remove-btn"
-                                    disabled
-                                >
-                                    ×
-                                </button>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- CLINICAL REASON -->
-                        <div class="lab-request-form-group">
-
-                            <label for="labClinicalReason">
-                                Clinical Reason for Test Request
-                            </label>
-
-                            <textarea
-                                id="labClinicalReason"
-                                rows="4"
-                                placeholder="Enter the professional reason for requesting the laboratory test..."
-                            ></textarea>
-
-                        </div>
-
-
-                        <!-- ADDITIONAL NOTE -->
-                        <div class="lab-request-form-group">
-
-                            <label for="labAdditionalNote">
-                                Additional Laboratory Note
-                            </label>
-
-                            <textarea
-                                id="labAdditionalNote"
-                                rows="3"
-                                placeholder="Optional additional information for laboratory staff..."
-                            ></textarea>
-
-                        </div>
-
-
-                        <!-- ACTIONS -->
-                        <div class="lab-request-form-actions">
-
-                            <a
-                                href="consultation.html"
-                                class="lab-request-cancel-btn"
-                            >
-                                Cancel
-                            </a>
-
-
-                            <button
-                                type="submit"
-                                class="lab-request-submit-btn"
-                            >
-                                Submit Test Request
-                            </button>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-
-                <!-- SUMMARY -->
-                <aside class="lab-request-summary-card">
-
-                    <div class="lab-request-summary-heading">
-
-                        <h3>
-                            Request Summary
-                        </h3>
-
-                        <p>
-                            Current laboratory request
-                        </p>
-
-                    </div>
-
-
-                    <div class="lab-request-summary-id">
-
-                        <span>
-                            Request ID
-                        </span>
-
-                        <strong>
-                            #LTR2056
-                        </strong>
-
-                    </div>
-
-
-                    <div class="lab-request-summary-list">
-
-                        <div>
-
-                            <span>Patient</span>
-
-                            <strong>
-                                #P1024
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>Doctor</span>
-
-                            <strong>
-                                Current Doctor
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>Tests Requested</span>
-
-                            <strong id="labTestCount">
-                                1
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>Status</span>
-
-                            <strong>
-                                Draft
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="lab-request-summary-note">
-
-                        <div>
-                            i
-                        </div>
-
-                        <p>
-                            Laboratory requests should be created by an
-                            authorized doctor and linked to the correct patient.
-                        </p>
-
-                    </div>
-
-                </aside>
-
-            </section>
-
-
-            <!-- RECENT REQUESTS -->
-            <section class="lab-request-history-card">
-
-                <div class="lab-request-history-heading">
-
-                    <div>
-
-                        <h3>
-                            Recent Laboratory Requests
-                        </h3>
-
-                        <p>
-                            Recently submitted test requests
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="lab-request-history-row">
-
-                    <div class="lab-request-history-icon">
-                        CBC
-                    </div>
-
-
-                    <div>
-
-                        <h4>
-                            Request #LTR2048
-                        </h4>
-
-                        <p>
-                            Patient #P1078 — Complete Blood Count
-                        </p>
-
-                    </div>
-
-
-                    <span class="lab-request-history-date">
-                        09 Aug 2026
-                    </span>
-
-
-                    <span class="lab-request-history-status">
-                        Pending
-                    </span>
-
-                </div>
-
-
-                <div class="lab-request-history-row">
-
-                    <div class="lab-request-history-icon">
-                        BG
-                    </div>
-
-
-                    <div>
-
-                        <h4>
-                            Request #LTR2042
-                        </h4>
-
-                        <p>
-                            Patient #P1092 — Blood Glucose Test
-                        </p>
-
-                    </div>
-
-
-                    <span class="lab-request-history-date">
-                        07 Aug 2026
-                    </span>
-
-
-                    <span class="lab-request-history-status progress">
-                        In Progress
-                    </span>
-
-                </div>
-
-
-                <div class="lab-request-history-row">
-
-                    <div class="lab-request-history-icon">
-                        LP
-                    </div>
-
-
-                    <div>
-
-                        <h4>
-                            Request #LTR2035
-                        </h4>
-
-                        <p>
-                            Patient #P1116 — Lipid Profile
-                        </p>
-
-                    </div>
-
-
-                    <span class="lab-request-history-date">
-                        04 Aug 2026
-                    </span>
-
-
-                    <span class="lab-request-history-status completed">
-                        Completed
-                    </span>
-
-                </div>
-
-            </section>
-
-
-            <!-- NOTE -->
-            <section class="lab-request-note-card">
-
-                <div class="lab-request-note-icon">
-                    i
-                </div>
-
-
-                <div>
-
-                    <h3>
-                        Prototype Laboratory Request Module
-                    </h3>
-
-                    <p>
-                        Requests created here are demonstration records.
-                        Backend integration will later send authorized
-                        requests to the laboratory technician workflow
-                        and store them securely in the database.
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- FOOTER -->
-            <footer class="patient-dashboard-footer">
-
-                <p>
-                    © 2026 Smart Healthcare and Management with AI System
+        </header>
+
+        <section class="request-page-header">
+            <div>
+                <p class="small-title">Laboratory Test Management</p>
+                <h1 id="requestPageTitle">Lab Test Requests</h1>
+                <p id="requestPageDescription">
+                    Create and review laboratory test requests for patients.
                 </p>
+            </div>
 
-            </footer>
+            <button type="button" class="request-new-btn" id="requestNewBtn">Create Test Request</button>
+        </section>
 
-        </main>
+        <section class="request-summary-grid">
+            <div class="request-summary-card"><span>Total Requests</span><strong id="requestTotal">0</strong></div>
+            <div class="request-summary-card"><span>Pending</span><strong id="requestPending">0</strong></div>
+            <div class="request-summary-card"><span>Collected</span><strong id="requestCollected">0</strong></div>
+            <div class="request-summary-card"><span>Completed</span><strong id="requestCompleted">0</strong></div>
+        </section>
 
+        <section class="request-filter-card">
+            <div class="request-filter-grid">
+                <div class="request-field">
+                    <label for="requestSearch">Search Request</label>
+                    <input type="text" id="requestSearch" placeholder="Search request ID, patient, test, or doctor">
+                </div>
+
+                <div class="request-field">
+                    <label for="requestStatusFilter">Status</label>
+                    <select id="requestStatusFilter">
+                        <option value="all">All Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Collected">Collected</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+
+                <button type="button" class="request-clear-btn" id="requestClearBtn">Clear</button>
+            </div>
+        </section>
+
+        <section class="request-list" id="requestList"></section>
+        <div class="request-empty" id="requestEmpty">No laboratory request matches the current filter.</div>
+
+        <footer class="patient-dashboard-footer">
+            <p>© 2026 Smart Healthcare and Management with AI System</p>
+        </footer>
+    </main>
+</div>
+
+<div class="request-modal" id="requestModal">
+    <div class="request-modal-card">
+        <h2>Create Laboratory Test Request</h2>
+
+        <div class="request-modal-grid">
+            <div class="request-modal-field">
+                <label for="requestPatient">Patient Name *</label>
+                <input type="text" id="requestPatient" value="Patient User">
+            </div>
+
+            <div class="request-modal-field">
+                <label for="requestTest">Test Name *</label>
+                <input type="text" id="requestTest" placeholder="Example: Complete Blood Count">
+            </div>
+
+            <div class="request-modal-field">
+                <label for="requestPriority">Priority</label>
+                <select id="requestPriority">
+                    <option value="Routine">Routine</option>
+                    <option value="Priority">Priority</option>
+                    <option value="Urgent">Urgent</option>
+                </select>
+            </div>
+
+            <div class="request-modal-field">
+                <label for="requestSample">Sample Type</label>
+                <select id="requestSample">
+                    <option value="Blood">Blood</option>
+                    <option value="Urine">Urine</option>
+                    <option value="Stool">Stool</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="request-modal-field full">
+                <label for="requestNotes">Clinical Notes</label>
+                <textarea id="requestNotes" placeholder="Reason for test or clinical notes"></textarea>
+            </div>
+        </div>
+
+        <div class="request-modal-actions">
+            <button type="button" class="request-cancel" id="requestModalCancel">Cancel</button>
+            <button type="button" class="request-save" id="requestModalSave">Save Request</button>
+        </div>
     </div>
+</div>
 
+<div class="logout-modal" id="requestLogoutModal">
+    <div class="logout-modal-card">
+        <div class="logout-modal-icon">?</div>
+        <h2>Logout from Account?</h2>
+        <p>Are you sure you want to leave the system?</p>
+        <div class="logout-modal-actions">
+            <button type="button" class="logout-cancel-btn" id="requestCancelLogout">Cancel</button>
+            <button type="button" class="logout-confirm-btn" id="requestConfirmLogout">Logout</button>
+        </div>
+    </div>
+</div>
 
-    <!-- SUCCESS MODAL -->
-    <div
-        class="lab-request-success-modal"
-        id="labRequestSuccessModal"
-    >
+<script>
+function detectRequestRole() {
+    const ref = document.referrer.toLowerCase();
 
-        <div class="lab-request-success-card">
+    if (ref.includes("lab-dashboard") || ref.includes("laboratory-results")) {
+        if (localStorage.getItem("healthcareActiveRole") === "lab") return "lab";
+    }
 
-            <div class="lab-request-success-icon">
-                ✓
-            </div>
+    if (ref.includes("doctor-dashboard") || ref.includes("consultation") ||
+        ref.includes("medical-records")) {
+        localStorage.setItem("healthcareActiveRole", "doctor");
+        return "doctor";
+    }
 
+    return localStorage.getItem("healthcareActiveRole") || "doctor";
+}
 
-            <h2>
-                Test Request Submitted
-            </h2>
+const requestRole = detectRequestRole();
 
+function doctorSidebar() {
+    return `
+        <a href="doctor-dashboard.html" class="dashboard-menu-link"><span class="menu-icon">D</span>Dashboard</a>
 
-            <p>
-                Laboratory request #LTR2056 has been submitted
-                successfully in this prototype session.
-            </p>
-
-
-            <div class="lab-request-success-info">
-
-                <span>
-                    Tests Requested
-                </span>
-
-                <strong id="successLabTestCount">
-                    1
-                </strong>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="lab-request-success-btn"
-                id="labRequestSuccessBtn"
-            >
-                Back to Doctor Dashboard
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">A</span>Appointments</span>
+                <span class="submenu-arrow">▼</span>
             </button>
-
+            <div class="dashboard-submenu">
+                <a href="appointment-management.html" class="dashboard-submenu-link">Appointment List</a>
+                <a href="consultation.html" class="dashboard-submenu-link">Consultations</a>
+            </div>
         </div>
 
-    </div>
-
-
-    <!-- LOGOUT MODAL -->
-    <div
-        class="logout-modal"
-        id="labRequestLogoutModal"
-    >
-
-        <div class="logout-modal-card">
-
-            <div class="logout-modal-icon">
-                ?
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">P</span>Patient Care</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="medical-records.html" class="dashboard-submenu-link">Patient Records</a>
+                <a href="digital-prescription.html" class="dashboard-submenu-link">Prescriptions</a>
             </div>
-
-            <h2>
-                Logout from Account?
-            </h2>
-
-            <p>
-                Are you sure you want to leave the Doctor Portal?
-            </p>
-
-
-            <div class="logout-modal-actions">
-
-                <button
-                    type="button"
-                    class="logout-cancel-btn"
-                    id="labRequestCancelLogout"
-                >
-                    Cancel
-                </button>
-
-
-                <button
-                    type="button"
-                    class="logout-confirm-btn"
-                    id="labRequestConfirmLogout"
-                >
-                    Logout
-                </button>
-
-            </div>
-
         </div>
 
-    </div>
+        <div class="dashboard-menu-group open">
+            <button type="button" class="dashboard-menu-parent active">
+                <span class="menu-parent-left"><span class="menu-icon">L</span>Laboratory</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="lab-test-request.html" class="dashboard-submenu-link active">Lab Test Requests</a>
+                <a href="laboratory-results.html" class="dashboard-submenu-link">Laboratory Reports</a>
+            </div>
+        </div>
+    `;
+}
 
+function labSidebar() {
+    return `
+        <a href="lab-dashboard.html" class="dashboard-menu-link"><span class="menu-icon">D</span>Dashboard</a>
 
-    <script src="../js/lab-test-request.js"></script>
+        <div class="dashboard-menu-group open">
+            <button type="button" class="dashboard-menu-parent active">
+                <span class="menu-parent-left"><span class="menu-icon">T</span>Test Management</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="lab-test-request.html" class="dashboard-submenu-link active">Test Requests</a>
+                <a href="lab-test-request.html" class="dashboard-submenu-link">Patient Test Information</a>
+            </div>
+        </div>
 
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">R</span>Reports</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="laboratory-results.html" class="dashboard-submenu-link">Record Test Result</a>
+                <a href="laboratory-results.html" class="dashboard-submenu-link">Laboratory Reports</a>
+                <a href="laboratory-results.html" class="dashboard-submenu-link">Test History</a>
+            </div>
+        </div>
+    `;
+}
+
+const requestSidebarMenu = document.getElementById("requestSidebarMenu");
+
+if (requestRole === "lab") {
+    document.getElementById("requestPortalName").textContent = "Laboratory Portal";
+    document.getElementById("requestTopPortalName").textContent = "Laboratory Portal";
+    document.getElementById("requestRoleAvatar").textContent = "LT";
+    document.getElementById("requestRoleName").textContent = "Lab Technician";
+    document.getElementById("requestPageTitle").textContent = "Incoming Laboratory Test Requests";
+    document.getElementById("requestPageDescription").textContent =
+        "Review patient test requests and update specimen collection or processing status.";
+    requestSidebarMenu.innerHTML = labSidebar();
+} else {
+    localStorage.setItem("healthcareActiveRole", "doctor");
+    document.getElementById("requestNewBtn").style.display = "inline-flex";
+    requestSidebarMenu.innerHTML = doctorSidebar();
+}
+
+const groups = document.querySelectorAll(".dashboard-menu-group");
+
+groups.forEach(group => {
+    const btn = group.querySelector(".dashboard-menu-parent");
+
+    btn.addEventListener("click", () => {
+        groups.forEach(other => {
+            if (other !== group) {
+                other.classList.remove("open");
+                const b = other.querySelector(".dashboard-menu-parent");
+                if (b) b.classList.remove("active");
+            }
+        });
+
+        group.classList.toggle("open");
+        btn.classList.toggle("active", group.classList.contains("open"));
+    });
+});
+
+const requestSidebar = document.getElementById("requestSidebar");
+
+document.getElementById("requestMenuToggle").addEventListener("click", () => {
+    requestSidebar.classList.toggle("open");
+});
+
+const defaultRequests = [
+    {
+        id:"LTR-2011", patient:"Patient User", test:"Complete Blood Count",
+        doctor:"Dr. Sarah Ahmed", date:"2026-08-15", priority:"Routine",
+        sample:"Blood", status:"Pending", notes:"Fever and weakness."
+    },
+    {
+        id:"LTR-2007", patient:"Rahim Ahmed", test:"Blood Glucose",
+        doctor:"Dr. Mahmud Hasan", date:"2026-08-14", priority:"Routine",
+        sample:"Blood", status:"Collected", notes:"Routine follow-up."
+    },
+    {
+        id:"LTR-1998", patient:"Nusrat Karim", test:"Liver Function Test",
+        doctor:"Dr. Sarah Ahmed", date:"2026-08-12", priority:"Priority",
+        sample:"Blood", status:"Completed", notes:"Clinical review requested."
+    }
+];
+
+let requests = JSON.parse(localStorage.getItem("prototypeLabRequests"));
+
+if (!Array.isArray(requests)) {
+    requests = defaultRequests;
+    localStorage.setItem("prototypeLabRequests", JSON.stringify(requests));
+}
+
+const requestList = document.getElementById("requestList");
+const requestSearch = document.getElementById("requestSearch");
+const requestStatusFilter = document.getElementById("requestStatusFilter");
+const requestEmpty = document.getElementById("requestEmpty");
+
+function formatDate(value) {
+    return new Date(value + "T00:00:00").toLocaleDateString("en-GB", {
+        day:"2-digit", month:"short", year:"numeric"
+    });
+}
+
+function renderRequests() {
+    const q = requestSearch.value.trim().toLowerCase();
+    const status = requestStatusFilter.value;
+
+    const visible = requests.filter(item => {
+        const text = (item.id+" "+item.patient+" "+item.test+" "+item.doctor).toLowerCase();
+        return text.includes(q) && (status === "all" || item.status === status);
+    });
+
+    requestList.innerHTML = "";
+
+    visible.forEach(item => {
+        const card = document.createElement("article");
+        card.className = "request-card";
+
+        let action = "";
+
+        if (requestRole === "lab" && item.status === "Pending") {
+            action = `<button type="button" class="request-action-btn primary" data-action="collect" data-id="${item.id}">Mark Collected</button>`;
+        } else if (requestRole === "lab" && item.status === "Collected") {
+            action = `<a href="laboratory-results.html" class="request-action-btn primary">Record Result</a>`;
+        } else if (requestRole === "doctor") {
+            action = `<a href="laboratory-results.html" class="request-action-btn secondary">View Results</a>`;
+        }
+
+        card.innerHTML = `
+            <div class="request-card-top">
+                <div>
+                    <h3>${item.test}</h3>
+                    <p>Request ID: ${item.id}</p>
+                </div>
+                <span class="request-status ${item.status.toLowerCase()}">${item.status}</span>
+            </div>
+
+            <div class="request-meta">
+                <div><span>Patient</span><strong>${item.patient}</strong></div>
+                <div><span>Requested By</span><strong>${item.doctor}</strong></div>
+                <div><span>Date</span><strong>${formatDate(item.date)}</strong></div>
+                <div><span>Priority</span><strong>${item.priority}</strong></div>
+            </div>
+
+            <div class="request-notes">
+                <strong>Sample:</strong> ${item.sample}<br>
+                <strong>Clinical Notes:</strong> ${item.notes}
+            </div>
+
+            <div class="request-actions">
+                ${action}
+            </div>
+        `;
+
+        requestList.appendChild(card);
+    });
+
+    requestEmpty.style.display = visible.length ? "none" : "block";
+
+    document.getElementById("requestTotal").textContent = requests.length;
+    document.getElementById("requestPending").textContent = requests.filter(r => r.status === "Pending").length;
+    document.getElementById("requestCollected").textContent = requests.filter(r => r.status === "Collected").length;
+    document.getElementById("requestCompleted").textContent = requests.filter(r => r.status === "Completed").length;
+}
+
+requestSearch.addEventListener("input", renderRequests);
+requestStatusFilter.addEventListener("change", renderRequests);
+
+document.getElementById("requestClearBtn").addEventListener("click", () => {
+    requestSearch.value = "";
+    requestStatusFilter.value = "all";
+    renderRequests();
+});
+
+requestList.addEventListener("click", event => {
+    const btn = event.target.closest("[data-action]");
+    if (!btn) return;
+
+    const item = requests.find(r => r.id === btn.dataset.id);
+    if (!item) return;
+
+    if (btn.dataset.action === "collect") {
+        item.status = "Collected";
+        localStorage.setItem("prototypeLabRequests", JSON.stringify(requests));
+        renderRequests();
+    }
+});
+
+const requestModal = document.getElementById("requestModal");
+
+document.getElementById("requestNewBtn").addEventListener("click", () => {
+    requestModal.classList.add("show");
+});
+
+document.getElementById("requestModalCancel").addEventListener("click", () => {
+    requestModal.classList.remove("show");
+});
+
+document.getElementById("requestModalSave").addEventListener("click", () => {
+    const patient = document.getElementById("requestPatient").value.trim();
+    const test = document.getElementById("requestTest").value.trim();
+
+    if (!patient || !test) return;
+
+    const now = new Date();
+    const date = now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
+
+    requests.unshift({
+        id:"LTR-"+String(Date.now()).slice(-4),
+        patient,
+        test,
+        doctor:"Doctor User",
+        date,
+        priority:document.getElementById("requestPriority").value,
+        sample:document.getElementById("requestSample").value,
+        status:"Pending",
+        notes:document.getElementById("requestNotes").value.trim() || "No additional clinical notes."
+    });
+
+    localStorage.setItem("prototypeLabRequests", JSON.stringify(requests));
+
+    document.getElementById("requestTest").value = "";
+    document.getElementById("requestNotes").value = "";
+    requestModal.classList.remove("show");
+    renderRequests();
+});
+
+const requestLogoutModal = document.getElementById("requestLogoutModal");
+
+document.getElementById("requestLogoutBtn").addEventListener("click", () => {
+    requestLogoutModal.classList.add("show");
+});
+
+document.getElementById("requestCancelLogout").addEventListener("click", () => {
+    requestLogoutModal.classList.remove("show");
+});
+
+document.getElementById("requestConfirmLogout").addEventListener("click", () => {
+    window.location.href = "login.html";
+});
+
+[requestModal, requestLogoutModal].forEach(modal => {
+    modal.addEventListener("click", event => {
+        if (event.target === modal) modal.classList.remove("show");
+    });
+});
+
+document.querySelectorAll(".dashboard-menu-link,.dashboard-submenu-link").forEach(link => {
+    link.addEventListener("click", () => {
+        if (window.innerWidth <= 900) requestSidebar.classList.remove("open");
+    });
+});
+
+renderRequests();
+</script>
 </body>
-
 </html>
