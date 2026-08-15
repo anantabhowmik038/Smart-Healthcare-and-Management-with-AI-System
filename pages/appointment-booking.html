@@ -5,9 +5,447 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Book Appointment | Smart Healthcare</title>
+    <title>Appointment Booking | Smart Healthcare</title>
 
     <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* COLLAPSIBLE SIDEBAR */
+
+        .dashboard-menu-group {
+            width: 100%;
+        }
+
+        .dashboard-menu-parent {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #dbe7ec;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-menu-parent:hover,
+        .dashboard-menu-parent.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        .menu-parent-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submenu-arrow {
+            font-size: 9px;
+            transition: transform 0.25s ease;
+        }
+
+        .dashboard-menu-group.open .submenu-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dashboard-submenu {
+            display: none;
+            margin: 5px 0 7px 30px;
+            padding-left: 13px;
+            border-left: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .dashboard-menu-group.open .dashboard-submenu {
+            display: block;
+        }
+
+        .dashboard-submenu-link {
+            display: block;
+            padding: 9px 11px;
+            margin: 3px 0;
+            border-radius: 7px;
+            color: #b9cbd3;
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-submenu-link:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            color: #ffffff;
+        }
+
+        .dashboard-submenu-link.active {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* PAGE */
+
+        .booking-page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin: 28px 0 22px;
+        }
+
+        .booking-page-header h1 {
+            margin: 5px 0 8px;
+            color: #16324f;
+        }
+
+        .booking-page-header p {
+            margin: 0;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .booking-availability-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border-radius: 9px;
+            padding: 11px 16px;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid #176cc8;
+            color: #176cc8;
+            background: #ffffff;
+        }
+
+        .booking-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+            gap: 20px;
+            align-items: start;
+        }
+
+        .booking-card,
+        .booking-summary-card,
+        .booking-note {
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+        }
+
+        .booking-card {
+            padding: 22px;
+        }
+
+        .booking-section-title {
+            margin-bottom: 18px;
+        }
+
+        .booking-section-title h2,
+        .booking-summary-card h3 {
+            margin: 0 0 5px;
+            color: #16324f;
+        }
+
+        .booking-section-title p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .booking-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .booking-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .booking-form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .booking-form-group label {
+            font-size: 13px;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .booking-form-group input,
+        .booking-form-group select,
+        .booking-form-group textarea {
+            width: 100%;
+            border: 1px solid #d8e0e8;
+            border-radius: 8px;
+            padding: 10px 11px;
+            background: #ffffff;
+            color: #334155;
+            outline: none;
+            font: inherit;
+        }
+
+        .booking-form-group input,
+        .booking-form-group select {
+            min-height: 42px;
+        }
+
+        .booking-form-group textarea {
+            min-height: 95px;
+            resize: vertical;
+        }
+
+        .booking-form-group input:focus,
+        .booking-form-group select:focus,
+        .booking-form-group textarea:focus {
+            border-color: #176cc8;
+        }
+
+        .booking-error {
+            min-height: 17px;
+            margin: 4px 0 0;
+            color: #c0392b;
+            font-size: 12px;
+        }
+
+        .booking-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .booking-reset-btn,
+        .booking-submit-btn {
+            min-height: 42px;
+            border-radius: 8px;
+            padding: 0 18px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .booking-reset-btn {
+            border: 1px solid #d8e0e8;
+            background: #ffffff;
+            color: #475569;
+        }
+
+        .booking-submit-btn {
+            border: none;
+            background: #176cc8;
+            color: #ffffff;
+        }
+
+        .booking-summary-card {
+            padding: 20px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .booking-summary-card > p {
+            margin: 0 0 18px;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .booking-summary-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .booking-summary-row {
+            padding-bottom: 11px;
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .booking-summary-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .booking-summary-row span {
+            display: block;
+            margin-bottom: 3px;
+            color: #64748b;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .booking-summary-row strong {
+            color: #334155;
+            font-size: 13px;
+            word-break: break-word;
+        }
+
+        .booking-status-preview {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 16px;
+            padding: 7px 11px;
+            border-radius: 999px;
+            background: #fff6db;
+            color: #9a6b00;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .booking-note {
+            margin: 22px 0 30px;
+            padding: 18px 20px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .booking-note-icon {
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #eaf3ff;
+            color: #176cc8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .booking-note h3 {
+            margin: 0 0 5px;
+            color: #16324f;
+            font-size: 15px;
+        }
+
+        .booking-note p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* BOOKING SUCCESS MODAL */
+
+        .booking-success-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.55);
+            z-index: 9999;
+        }
+
+        .booking-success-modal.show {
+            display: flex;
+        }
+
+        .booking-success-card {
+            width: min(430px, 100%);
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+        }
+
+        .booking-success-icon {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 14px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e8f8ef;
+            color: #22844b;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .booking-success-card h2 {
+            margin: 0 0 8px;
+            color: #16324f;
+        }
+
+        .booking-success-card p {
+            margin: 0 0 20px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .booking-success-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .booking-done-btn,
+        .booking-view-btn {
+            min-height: 40px;
+            padding: 0 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .booking-done-btn {
+            border: 1px solid #d8e0e8;
+            background: #ffffff;
+            color: #475569;
+        }
+
+        .booking-view-btn {
+            border: none;
+            background: #176cc8;
+            color: #ffffff;
+        }
+
+        @media (max-width: 980px) {
+            .booking-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-summary-card {
+                position: static;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .booking-page-header {
+                flex-direction: column;
+            }
+
+            .booking-availability-btn {
+                width: 100%;
+            }
+
+            .booking-form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-form-group.full {
+                grid-column: auto;
+            }
+
+            .booking-actions {
+                flex-direction: column;
+            }
+
+            .booking-reset-btn,
+            .booking-submit-btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body class="dashboard-body">
@@ -30,83 +468,157 @@
 
             <nav class="dashboard-menu">
 
-                <a href="patient-dashboard.html"
-                   class="dashboard-menu-link">
-
+                <a href="patient-dashboard.html" class="dashboard-menu-link">
                     <span class="menu-icon">D</span>
                     Dashboard
-
                 </a>
 
-
-                <a href="patient-profile.html"
-                   class="dashboard-menu-link">
-
+                <a href="patient-profile.html" class="dashboard-menu-link">
                     <span class="menu-icon">P</span>
                     My Profile
-
                 </a>
 
 
-                <a href="doctor-availability.html"
-                   class="dashboard-menu-link">
+                <!-- APPOINTMENTS -->
+                <div class="dashboard-menu-group open">
 
-                    <span class="menu-icon">DA</span>
-                    Doctor Availability
+                    <button type="button"
+                            class="dashboard-menu-parent active">
 
-                </a>
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">A</span>
+                            Appointments
+                        </span>
 
+                        <span class="submenu-arrow">▼</span>
 
-                <a href="appointment-booking.html"
-                   class="dashboard-menu-link active">
+                    </button>
 
-                    <span class="menu-icon">A</span>
-                    Book Appointment
+                    <div class="dashboard-submenu">
 
-                </a>
+                        <a href="doctor-availability.html"
+                           class="dashboard-submenu-link">
+                            Doctor Availability
+                        </a>
 
+                        <a href="appointment-booking.html"
+                           class="dashboard-submenu-link active">
+                            Book Appointment
+                        </a>
 
-                <a href="ai-symptom-assessment.html" class="dashboard-menu-link">
+                        <a href="appointment-management.html"
+                           class="dashboard-submenu-link">
+                            My Appointments
+                        </a>
 
-                    <span class="menu-icon">AI</span>
-                    AI Symptom Assessment
+                    </div>
 
-                </a>
-
-
-                <a href="medical-records.html" class="dashboard-menu-link">
-
-                    <span class="menu-icon">MR</span>
-                    Medical Records
-
-                </a>
-
-
-                <a href="digital-prescription.html" class="dashboard-menu-link">
-
-                    <span class="menu-icon">Rx</span>
-                    Prescriptions
-
-                </a>
+                </div>
 
 
-                <a href="laboratory-results.html" class="dashboard-menu-link">
+                <!-- HEALTH SERVICES -->
+                <div class="dashboard-menu-group">
 
-                    <span class="menu-icon">LR</span>
-                    Laboratory Reports
+                    <button type="button"
+                            class="dashboard-menu-parent">
 
-                </a>
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">H</span>
+                            Health Services
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="ai-symptom-assessment.html"
+                           class="dashboard-submenu-link">
+                            AI Symptom Assessment
+                        </a>
+
+                        <a href="medical-records.html"
+                           class="dashboard-submenu-link">
+                            Medical Records
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REPORTS -->
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">R</span>
+                            Reports & Treatment
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="digital-prescription.html"
+                           class="dashboard-submenu-link">
+                            Prescriptions
+                        </a>
+
+                        <a href="laboratory-results.html"
+                           class="dashboard-submenu-link">
+                            Laboratory Reports
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BILLING -->
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">S</span>
+                            Billing & Support
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="billing-payment.html"
+                           class="dashboard-submenu-link">
+                            Billing & Payment
+                        </a>
+
+                        <a href="feedback-complaint.html"
+                           class="dashboard-submenu-link">
+                            Feedback & Complaint
+                        </a>
+
+                    </div>
+
+                </div>
 
             </nav>
 
 
             <div class="dashboard-sidebar-footer">
 
-                <button
-                    type="button"
-                    class="dashboard-logout-btn"
-                    id="bookingLogoutBtn"
-                >
+                <button type="button"
+                        class="dashboard-logout-btn"
+                        id="bookingLogoutBtn">
                     Logout
                 </button>
 
@@ -132,13 +644,9 @@
                         ☰
                     </button>
 
-
                     <div>
-
                         <p>Patient Portal</p>
-
                         <h2>Book Appointment</h2>
-
                     </div>
 
                 </div>
@@ -146,21 +654,23 @@
 
                 <div class="dashboard-user">
 
-                    <div class="dashboard-user-info">
+                    <div class="dashboard-notification">
+                        1
+                    </div>
+
+                    <a href="patient-profile.html"
+                       class="dashboard-user-info">
 
                         <div class="dashboard-user-avatar">
                             P
                         </div>
 
                         <div>
-
                             <strong>Patient</strong>
-
-                            <span>Patient Account</span>
-
+                            <span>View Profile</span>
                         </div>
 
-                    </div>
+                    </a>
 
                 </div>
 
@@ -168,365 +678,341 @@
 
 
             <!-- PAGE HEADER -->
-            <section class="booking-header-card">
+            <section class="booking-page-header">
 
                 <div>
-
-                    <p class="small-title">
-                        Appointment Management
-                    </p>
+                    <p class="small-title">Appointment Management</p>
 
                     <h1>
-                        Schedule Your Appointment
+                        Book a Medical Appointment
                     </h1>
 
                     <p>
-                        Select a medical specialty, available doctor,
-                        preferred date and consultation time to create
-                        an appointment request.
+                        Select an available doctor, appointment date, and time slot.
+                        Review the information before submitting the booking request.
                     </p>
-
                 </div>
 
-
-                <a
-                    href="doctor-availability.html"
-                    class="booking-availability-btn"
-                >
-                    Check Doctor Availability
+                <a href="doctor-availability.html"
+                   class="booking-availability-btn">
+                    View Doctor Availability
                 </a>
 
             </section>
 
 
-            <!-- BOOKING CONTENT -->
-            <section class="booking-layout">
+            <div class="booking-layout">
 
                 <!-- BOOKING FORM -->
-                <div class="booking-form-card">
+                <section class="booking-card">
 
-                    <div class="booking-section-heading">
+                    <div class="booking-section-title">
 
-                        <div>
+                        <h2>
+                            Appointment Information
+                        </h2>
 
-                            <h3>
-                                Appointment Information
-                            </h3>
-
-                            <p>
-                                Complete the information below
-                            </p>
-
-                        </div>
-
-                        <span>
-                            01
-                        </span>
+                        <p>
+                            Complete the required information below.
+                        </p>
 
                     </div>
 
 
-                    <form id="appointmentBookingForm">
-
-                        <div
-                            class="booking-error-message"
-                            id="bookingError"
-                        ></div>
-
+                    <form id="appointmentBookingForm"
+                          novalidate>
 
                         <div class="booking-form-grid">
 
-                            <!-- SPECIALTY -->
                             <div class="booking-form-group">
 
-                                <label for="bookingSpecialty">
-                                    Medical Specialty
-                                </label>
-
-                                <select id="bookingSpecialty">
-
-                                    <option value="">
-                                        Select Specialty
-                                    </option>
-
-                                    <option value="general">
-                                        General Medicine
-                                    </option>
-
-                                    <option value="cardiology">
-                                        Cardiology
-                                    </option>
-
-                                    <option value="dermatology">
-                                        Dermatology
-                                    </option>
-
-                                    <option value="pediatrics">
-                                        Pediatrics
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <!-- DOCTOR -->
-                            <div class="booking-form-group">
-
-                                <label for="bookingDoctor">
-                                    Doctor
-                                </label>
-
-                                <select id="bookingDoctor" disabled>
-
-                                    <option value="">
-                                        Select Specialty First
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <!-- DATE -->
-                            <div class="booking-form-group">
-
-                                <label for="bookingDate">
-                                    Appointment Date
+                                <label for="bookingPatientName">
+                                    Patient Name
                                 </label>
 
                                 <input
-                                    type="date"
-                                    id="bookingDate"
+                                    type="text"
+                                    id="bookingPatientName"
+                                    value="Patient User"
+                                    readonly
                                 >
 
                             </div>
 
 
-                            <!-- CONSULTATION TYPE -->
                             <div class="booking-form-group">
 
-                                <label for="consultationType">
-                                    Consultation Type
+                                <label for="bookingPatientId">
+                                    Patient ID
                                 </label>
 
-                                <select id="consultationType">
+                                <input
+                                    type="text"
+                                    id="bookingPatientId"
+                                    value="#P1024"
+                                    readonly
+                                >
+
+                            </div>
+
+
+                            <div class="booking-form-group">
+
+                                <label for="bookingDepartment">
+                                    Department *
+                                </label>
+
+                                <select id="bookingDepartment"
+                                        required>
 
                                     <option value="">
-                                        Select Consultation Type
+                                        Select Department
                                     </option>
 
-                                    <option value="general">
-                                        General Consultation
+                                    <option value="General Medicine">
+                                        General Medicine
                                     </option>
 
-                                    <option value="follow-up">
-                                        Follow-up Consultation
+                                    <option value="Cardiology">
+                                        Cardiology
                                     </option>
 
-                                    <option value="routine">
-                                        Routine Check-up
+                                    <option value="Dermatology">
+                                        Dermatology
                                     </option>
 
                                 </select>
 
                             </div>
 
-                        </div>
+
+                            <div class="booking-form-group">
+
+                                <label for="bookingDoctor">
+                                    Doctor *
+                                </label>
+
+                                <select id="bookingDoctor"
+                                        required>
+
+                                    <option value="">
+                                        Select Doctor
+                                    </option>
+
+                                </select>
+
+                            </div>
 
 
-                        <!-- TIME SLOT -->
-                        <div class="booking-time-section">
+                            <div class="booking-form-group">
 
-                            <div class="booking-time-heading">
+                                <label for="bookingDate">
+                                    Appointment Date *
+                                </label>
 
-                                <h4>
-                                    Available Time
-                                </h4>
-
-                                <p>
-                                    Select one available consultation slot
-                                </p>
+                                <input
+                                    type="date"
+                                    id="bookingDate"
+                                    required
+                                >
 
                             </div>
 
 
-                            <div
-                                class="booking-time-slots"
-                                id="bookingTimeSlots"
-                            >
+                            <div class="booking-form-group">
 
-                                <p class="booking-time-placeholder">
-                                    Select a doctor to view available time slots.
-                                </p>
+                                <label for="bookingTime">
+                                    Time Slot *
+                                </label>
+
+                                <select id="bookingTime"
+                                        required>
+
+                                    <option value="">
+                                        Select Time Slot
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="booking-form-group">
+
+                                <label for="bookingVisitType">
+                                    Visit Type *
+                                </label>
+
+                                <select id="bookingVisitType"
+                                        required>
+
+                                    <option value="">
+                                        Select Visit Type
+                                    </option>
+
+                                    <option value="General Consultation">
+                                        General Consultation
+                                    </option>
+
+                                    <option value="Follow-up Consultation">
+                                        Follow-up Consultation
+                                    </option>
+
+                                    <option value="Specialist Consultation">
+                                        Specialist Consultation
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="booking-form-group">
+
+                                <label for="bookingPhone">
+                                    Contact Number *
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="bookingPhone"
+                                    value="01700000000"
+                                    placeholder="01XXXXXXXXX"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="booking-form-group full">
+
+                                <label for="bookingSymptoms">
+                                    Symptoms / Reason for Visit
+                                </label>
+
+                                <textarea
+                                    id="bookingSymptoms"
+                                    placeholder="Briefly describe the reason for your appointment"
+                                ></textarea>
 
                             </div>
 
                         </div>
 
 
-                        <!-- REASON -->
-                        <div class="booking-form-group booking-full-width">
-
-                            <label for="appointmentReason">
-                                Reason for Appointment
-                            </label>
-
-                            <textarea
-                                id="appointmentReason"
-                                rows="5"
-                                placeholder="Briefly describe the reason for your appointment..."
-                            ></textarea>
-
-                        </div>
+                        <p class="booking-error"
+                           id="bookingError"></p>
 
 
-                        <!-- FORM ACTIONS -->
-                        <div class="booking-form-actions">
+                        <div class="booking-actions">
 
-                            <a
-                                href="patient-dashboard.html"
-                                class="booking-cancel-btn"
+                            <button
+                                type="reset"
+                                class="booking-reset-btn"
+                                id="bookingResetBtn"
                             >
-                                Cancel
-                            </a>
-
+                                Reset
+                            </button>
 
                             <button
                                 type="submit"
                                 class="booking-submit-btn"
                             >
-                                Confirm Appointment
+                                Submit Booking Request
                             </button>
 
                         </div>
 
                     </form>
 
-                </div>
+                </section>
 
 
-                <!-- BOOKING SUMMARY -->
+                <!-- SUMMARY -->
                 <aside class="booking-summary-card">
 
-                    <div class="booking-summary-heading">
+                    <h3>
+                        Booking Summary
+                    </h3>
 
-                        <h3>
-                            Appointment Summary
-                        </h3>
-
-                        <p>
-                            Review your selected information
-                        </p>
-
-                    </div>
-
-
-                    <div class="booking-summary-doctor">
-
-                        <div
-                            class="booking-summary-avatar"
-                            id="summaryDoctorAvatar"
-                        >
-                            DR
-                        </div>
-
-
-                        <div>
-
-                            <h4 id="summaryDoctorName">
-                                No Doctor Selected
-                            </h4>
-
-                            <p id="summarySpecialty">
-                                Select a specialty
-                            </p>
-
-                        </div>
-
-                    </div>
+                    <p>
+                        Review your selected appointment details before submission.
+                    </p>
 
 
                     <div class="booking-summary-list">
 
-                        <div>
+                        <div class="booking-summary-row">
+                            <span>Patient</span>
+                            <strong id="summaryPatient">
+                                Patient User
+                            </strong>
+                        </div>
 
-                            <span>
-                                Appointment Date
-                            </span>
+                        <div class="booking-summary-row">
+                            <span>Department</span>
+                            <strong id="summaryDepartment">
+                                Not selected
+                            </strong>
+                        </div>
 
+                        <div class="booking-summary-row">
+                            <span>Doctor</span>
+                            <strong id="summaryDoctor">
+                                Not selected
+                            </strong>
+                        </div>
+
+                        <div class="booking-summary-row">
+                            <span>Date</span>
                             <strong id="summaryDate">
-                                Not Selected
+                                Not selected
                             </strong>
-
                         </div>
 
-
-                        <div>
-
-                            <span>
-                                Appointment Time
-                            </span>
-
+                        <div class="booking-summary-row">
+                            <span>Time</span>
                             <strong id="summaryTime">
-                                Not Selected
+                                Not selected
                             </strong>
-
                         </div>
 
-
-                        <div>
-
-                            <span>
-                                Consultation Type
-                            </span>
-
-                            <strong id="summaryConsultation">
-                                Not Selected
+                        <div class="booking-summary-row">
+                            <span>Visit Type</span>
+                            <strong id="summaryVisitType">
+                                Not selected
                             </strong>
-
                         </div>
 
                     </div>
 
 
-                    <div class="booking-summary-notice">
-
-                        <div>
-                            i
-                        </div>
-
-                        <p>
-                            Appointment requests may require confirmation
-                            according to doctor availability.
-                        </p>
-
-                    </div>
+                    <span class="booking-status-preview">
+                        Initial Status: Pending
+                    </span>
 
                 </aside>
 
-            </section>
+            </div>
 
 
-            <!-- INFORMATION -->
-            <section class="booking-info-card">
+            <!-- NOTE -->
+            <section class="booking-note">
 
-                <div class="booking-info-icon">
+                <div class="booking-note-icon">
                     i
                 </div>
-
 
                 <div>
 
                     <h3>
-                        Prototype Appointment Booking
+                        Appointment Confirmation
                     </h3>
 
                     <p>
-                        This page currently demonstrates the appointment
-                        booking workflow. Real appointment records, slot
-                        conflicts and notifications will be handled during
-                        backend and database integration.
+                        Submitting this form creates a prototype booking request.
+                        The appointment remains Pending until it is confirmed through
+                        the appointment management process.
                     </p>
 
                 </div>
@@ -549,10 +1035,8 @@
 
 
     <!-- SUCCESS MODAL -->
-    <div
-        class="booking-success-modal"
-        id="bookingSuccessModal"
-    >
+    <div class="booking-success-modal"
+         id="bookingSuccessModal">
 
         <div class="booking-success-card">
 
@@ -560,62 +1044,35 @@
                 ✓
             </div>
 
-
             <h2>
-                Appointment Requested
+                Appointment Request Submitted
             </h2>
 
-
-            <p>
-                Your appointment request has been created successfully
-                in this prototype session.
+            <p id="bookingSuccessText">
+                Your medical appointment request has been submitted successfully.
+                The current appointment status is Pending.
             </p>
 
 
-            <div class="booking-success-details">
+            <div class="booking-success-actions">
 
-                <div>
+                <button
+                    type="button"
+                    class="booking-done-btn"
+                    id="bookingDoneBtn"
+                >
+                    Done
+                </button>
 
-                    <span>Doctor</span>
-
-                    <strong id="modalDoctor">
-                        -
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>Date</span>
-
-                    <strong id="modalDate">
-                        -
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>Time</span>
-
-                    <strong id="modalTime">
-                        -
-                    </strong>
-
-                </div>
+                <button
+                    type="button"
+                    class="booking-view-btn"
+                    id="bookingViewBtn"
+                >
+                    View Appointments
+                </button>
 
             </div>
-
-
-            <button
-                type="button"
-                class="booking-success-btn"
-                id="bookingSuccessBtn"
-            >
-                Back to Dashboard
-            </button>
 
         </div>
 
@@ -623,10 +1080,8 @@
 
 
     <!-- LOGOUT MODAL -->
-    <div
-        class="logout-modal"
-        id="bookingLogoutModal"
-    >
+    <div class="logout-modal"
+         id="bookingLogoutModal">
 
         <div class="logout-modal-card">
 
@@ -653,7 +1108,6 @@
                     Cancel
                 </button>
 
-
                 <button
                     type="button"
                     class="logout-confirm-btn"
@@ -669,7 +1123,743 @@
     </div>
 
 
-    <script src="../js/appointment-booking.js"></script>
+    <script>
+        /* SIDEBAR ACCORDION */
+
+        const menuGroups =
+            document.querySelectorAll(".dashboard-menu-group");
+
+        menuGroups.forEach(function (group) {
+
+            const parentButton =
+                group.querySelector(".dashboard-menu-parent");
+
+            parentButton.addEventListener("click", function () {
+
+                menuGroups.forEach(function (otherGroup) {
+
+                    if (otherGroup !== group) {
+
+                        otherGroup.classList.remove("open");
+
+                        const otherButton =
+                            otherGroup.querySelector(
+                                ".dashboard-menu-parent"
+                            );
+
+                        if (otherButton) {
+                            otherButton.classList.remove("active");
+                        }
+
+                    }
+
+                });
+
+                group.classList.toggle("open");
+
+                parentButton.classList.toggle(
+                    "active",
+                    group.classList.contains("open")
+                );
+
+            });
+
+        });
+
+
+        /* ACTIVE PAGE */
+
+        const currentPage =
+            window.location.pathname.split("/").pop();
+
+        const sidebarLinks =
+            document.querySelectorAll(
+                ".dashboard-menu-link, .dashboard-submenu-link"
+            );
+
+        sidebarLinks.forEach(function (link) {
+
+            const linkPage =
+                link.getAttribute("href");
+
+            link.classList.remove("active");
+
+            if (linkPage === currentPage) {
+
+                link.classList.add("active");
+
+                const parentGroup =
+                    link.closest(".dashboard-menu-group");
+
+                if (parentGroup) {
+
+                    parentGroup.classList.add("open");
+
+                    const parentButton =
+                        parentGroup.querySelector(
+                            ".dashboard-menu-parent"
+                        );
+
+                    if (parentButton) {
+                        parentButton.classList.add("active");
+                    }
+
+                }
+
+            }
+
+        });
+
+
+        /* MOBILE SIDEBAR */
+
+        const bookingMenuToggle =
+            document.getElementById("bookingMenuToggle");
+
+        const bookingSidebar =
+            document.getElementById("bookingSidebar");
+
+        bookingMenuToggle.addEventListener(
+            "click",
+            function () {
+
+                bookingSidebar.classList.toggle("open");
+
+            }
+        );
+
+
+        /* APPOINTMENT DATA */
+
+        const doctorData = {
+
+            "General Medicine": {
+                doctors: [
+                    "Dr. Sarah Ahmed"
+                ],
+                times: [
+                    "09:30 AM",
+                    "10:30 AM",
+                    "11:30 AM"
+                ]
+            },
+
+            "Cardiology": {
+                doctors: [
+                    "Dr. Mahmud Hasan"
+                ],
+                times: [
+                    "02:00 PM",
+                    "03:00 PM",
+                    "04:00 PM"
+                ]
+            },
+
+            "Dermatology": {
+                doctors: [
+                    "Dr. Nusrat Jahan"
+                ],
+                times: [
+                    "05:00 PM",
+                    "06:00 PM",
+                    "07:00 PM"
+                ]
+            }
+
+        };
+
+
+        const bookingDepartment =
+            document.getElementById("bookingDepartment");
+
+        const bookingDoctor =
+            document.getElementById("bookingDoctor");
+
+        const bookingDate =
+            document.getElementById("bookingDate");
+
+        const bookingTime =
+            document.getElementById("bookingTime");
+
+        const bookingVisitType =
+            document.getElementById("bookingVisitType");
+
+        const bookingPhone =
+            document.getElementById("bookingPhone");
+
+        const bookingSymptoms =
+            document.getElementById("bookingSymptoms");
+
+        const appointmentBookingForm =
+            document.getElementById(
+                "appointmentBookingForm"
+            );
+
+        const bookingError =
+            document.getElementById("bookingError");
+
+
+        /* TODAY DATE */
+
+        const today =
+            new Date();
+
+        const year =
+            today.getFullYear();
+
+        const month =
+            String(
+                today.getMonth() + 1
+            ).padStart(2, "0");
+
+        const day =
+            String(
+                today.getDate()
+            ).padStart(2, "0");
+
+        const todayValue =
+            year + "-" + month + "-" + day;
+
+        bookingDate.min =
+            todayValue;
+
+        bookingDate.value =
+            todayValue;
+
+
+        /* LOAD DOCTORS */
+
+        function loadDoctors() {
+
+            const department =
+                bookingDepartment.value;
+
+            bookingDoctor.innerHTML =
+                '<option value="">Select Doctor</option>';
+
+            bookingTime.innerHTML =
+                '<option value="">Select Time Slot</option>';
+
+
+            if (
+                !department ||
+                !doctorData[department]
+            ) {
+
+                updateSummary();
+                return;
+
+            }
+
+
+            doctorData[department].doctors.forEach(
+                function (doctor) {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value =
+                        doctor;
+
+                    option.textContent =
+                        doctor;
+
+                    bookingDoctor.appendChild(option);
+
+                }
+            );
+
+
+            doctorData[department].times.forEach(
+                function (time) {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value =
+                        time;
+
+                    option.textContent =
+                        time;
+
+                    bookingTime.appendChild(option);
+
+                }
+            );
+
+
+            updateSummary();
+
+        }
+
+
+        /* SUMMARY */
+
+        const summaryDepartment =
+            document.getElementById(
+                "summaryDepartment"
+            );
+
+        const summaryDoctor =
+            document.getElementById(
+                "summaryDoctor"
+            );
+
+        const summaryDate =
+            document.getElementById(
+                "summaryDate"
+            );
+
+        const summaryTime =
+            document.getElementById(
+                "summaryTime"
+            );
+
+        const summaryVisitType =
+            document.getElementById(
+                "summaryVisitType"
+            );
+
+
+        function formatDate(dateValue) {
+
+            if (!dateValue) {
+                return "Not selected";
+            }
+
+            const date =
+                new Date(
+                    dateValue + "T00:00:00"
+                );
+
+            return date.toLocaleDateString(
+                "en-GB",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+
+        }
+
+
+        function updateSummary() {
+
+            summaryDepartment.textContent =
+                bookingDepartment.value ||
+                "Not selected";
+
+            summaryDoctor.textContent =
+                bookingDoctor.value ||
+                "Not selected";
+
+            summaryDate.textContent =
+                formatDate(
+                    bookingDate.value
+                );
+
+            summaryTime.textContent =
+                bookingTime.value ||
+                "Not selected";
+
+            summaryVisitType.textContent =
+                bookingVisitType.value ||
+                "Not selected";
+
+        }
+
+
+        bookingDepartment.addEventListener(
+            "change",
+            loadDoctors
+        );
+
+        bookingDoctor.addEventListener(
+            "change",
+            updateSummary
+        );
+
+        bookingDate.addEventListener(
+            "change",
+            updateSummary
+        );
+
+        bookingTime.addEventListener(
+            "change",
+            updateSummary
+        );
+
+        bookingVisitType.addEventListener(
+            "change",
+            updateSummary
+        );
+
+
+        /* VALIDATION */
+
+        function isValidPhone(phone) {
+
+            return /^01\d{9}$/.test(phone);
+
+        }
+
+
+        appointmentBookingForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                bookingError.textContent = "";
+
+
+                if (!bookingDepartment.value) {
+
+                    bookingError.textContent =
+                        "Please select a department.";
+
+                    bookingDepartment.focus();
+                    return;
+
+                }
+
+
+                if (!bookingDoctor.value) {
+
+                    bookingError.textContent =
+                        "Please select a doctor.";
+
+                    bookingDoctor.focus();
+                    return;
+
+                }
+
+
+                if (!bookingDate.value) {
+
+                    bookingError.textContent =
+                        "Please select an appointment date.";
+
+                    bookingDate.focus();
+                    return;
+
+                }
+
+
+                if (!bookingTime.value) {
+
+                    bookingError.textContent =
+                        "Please select an available time slot.";
+
+                    bookingTime.focus();
+                    return;
+
+                }
+
+
+                if (!bookingVisitType.value) {
+
+                    bookingError.textContent =
+                        "Please select a visit type.";
+
+                    bookingVisitType.focus();
+                    return;
+
+                }
+
+
+                if (
+                    !isValidPhone(
+                        bookingPhone.value.trim()
+                    )
+                ) {
+
+                    bookingError.textContent =
+                        "Please enter a valid 11-digit Bangladesh mobile number.";
+
+                    bookingPhone.focus();
+                    return;
+
+                }
+
+
+                const prototypeAppointment = {
+
+                    id:
+                        "APT-" +
+                        String(
+                            Date.now()
+                        ).slice(-6),
+
+                    patient:
+                        "Patient User",
+
+                    patientId:
+                        "#P1024",
+
+                    department:
+                        bookingDepartment.value,
+
+                    doctor:
+                        bookingDoctor.value,
+
+                    date:
+                        bookingDate.value,
+
+                    time:
+                        bookingTime.value,
+
+                    visitType:
+                        bookingVisitType.value,
+
+                    phone:
+                        bookingPhone.value.trim(),
+
+                    symptoms:
+                        bookingSymptoms.value.trim(),
+
+                    status:
+                        "Pending"
+
+                };
+
+
+                localStorage.setItem(
+                    "latestPrototypeAppointment",
+                    JSON.stringify(
+                        prototypeAppointment
+                    )
+                );
+
+
+                const bookingSuccessModal =
+                    document.getElementById(
+                        "bookingSuccessModal"
+                    );
+
+                const bookingSuccessText =
+                    document.getElementById(
+                        "bookingSuccessText"
+                    );
+
+                bookingSuccessText.textContent =
+                    "Appointment " +
+                    prototypeAppointment.id +
+                    " with " +
+                    prototypeAppointment.doctor +
+                    " on " +
+                    formatDate(
+                        prototypeAppointment.date
+                    ) +
+                    " at " +
+                    prototypeAppointment.time +
+                    " has been submitted. Current status: Pending.";
+
+                bookingSuccessModal.classList.add(
+                    "show"
+                );
+
+            }
+        );
+
+
+        /* RESET */
+
+        const bookingResetBtn =
+            document.getElementById(
+                "bookingResetBtn"
+            );
+
+        bookingResetBtn.addEventListener(
+            "click",
+            function () {
+
+                setTimeout(
+                    function () {
+
+                        bookingDate.value =
+                            todayValue;
+
+                        bookingDoctor.innerHTML =
+                            '<option value="">Select Doctor</option>';
+
+                        bookingTime.innerHTML =
+                            '<option value="">Select Time Slot</option>';
+
+                        bookingError.textContent = "";
+
+                        updateSummary();
+
+                    },
+                    0
+                );
+
+            }
+        );
+
+
+        /* SUCCESS MODAL */
+
+        const bookingSuccessModal =
+            document.getElementById(
+                "bookingSuccessModal"
+            );
+
+        const bookingDoneBtn =
+            document.getElementById(
+                "bookingDoneBtn"
+            );
+
+        const bookingViewBtn =
+            document.getElementById(
+                "bookingViewBtn"
+            );
+
+
+        bookingDoneBtn.addEventListener(
+            "click",
+            function () {
+
+                bookingSuccessModal.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+
+        bookingViewBtn.addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "appointment-management.html";
+
+            }
+        );
+
+
+        bookingSuccessModal.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target ===
+                    bookingSuccessModal
+                ) {
+
+                    bookingSuccessModal.classList.remove(
+                        "show"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* LOGOUT */
+
+        const bookingLogoutBtn =
+            document.getElementById(
+                "bookingLogoutBtn"
+            );
+
+        const bookingLogoutModal =
+            document.getElementById(
+                "bookingLogoutModal"
+            );
+
+        const bookingCancelLogout =
+            document.getElementById(
+                "bookingCancelLogout"
+            );
+
+        const bookingConfirmLogout =
+            document.getElementById(
+                "bookingConfirmLogout"
+            );
+
+
+        bookingLogoutBtn.addEventListener(
+            "click",
+            function () {
+
+                bookingLogoutModal.classList.add(
+                    "show"
+                );
+
+            }
+        );
+
+
+        bookingCancelLogout.addEventListener(
+            "click",
+            function () {
+
+                bookingLogoutModal.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+
+        bookingConfirmLogout.addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+        bookingLogoutModal.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target ===
+                    bookingLogoutModal
+                ) {
+
+                    bookingLogoutModal.classList.remove(
+                        "show"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* CLOSE MOBILE SIDEBAR */
+
+        sidebarLinks.forEach(function (link) {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    if (window.innerWidth <= 900) {
+
+                        bookingSidebar.classList.remove(
+                            "open"
+                        );
+
+                    }
+
+                }
+            );
+
+        });
+
+
+        updateSummary();
+    </script>
 
 </body>
 
