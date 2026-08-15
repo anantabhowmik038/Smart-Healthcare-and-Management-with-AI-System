@@ -1,964 +1,691 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Laboratory Results | Smart Healthcare</title>
-
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+
+        /* COLLAPSIBLE SIDEBAR */
+        .dashboard-menu-group { width: 100%; }
+        .dashboard-menu-parent {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #dbe7ec;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+        .dashboard-menu-parent:hover,
+        .dashboard-menu-parent.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+        .menu-parent-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .submenu-arrow {
+            font-size: 9px;
+            transition: transform 0.25s ease;
+        }
+        .dashboard-menu-group.open .submenu-arrow { transform: rotate(180deg); }
+        .dashboard-submenu {
+            display: none;
+            margin: 5px 0 7px 30px;
+            padding-left: 13px;
+            border-left: 1px solid rgba(255,255,255,0.16);
+        }
+        .dashboard-menu-group.open .dashboard-submenu { display: block; }
+        .dashboard-submenu-link {
+            display: block;
+            padding: 9px 11px;
+            margin: 3px 0;
+            border-radius: 7px;
+            color: #b9cbd3;
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.2s ease;
+        }
+        .dashboard-submenu-link:hover {
+            background-color: rgba(255,255,255,0.07);
+            color: #ffffff;
+        }
+        .dashboard-submenu-link.active {
+            background-color: rgba(255,255,255,0.12);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .lab-page-header {
+            display:flex; justify-content:space-between; gap:20px;
+            align-items:flex-start; margin:28px 0 22px;
+        }
+        .lab-page-header h1 { margin:5px 0 8px; color:#16324f; }
+        .lab-page-header p { margin:0; color:#64748b; line-height:1.6; max-width:780px; }
+        .lab-upload-btn {
+            display:none; border:none; border-radius:9px; padding:11px 16px;
+            background:#176cc8; color:#fff; font-weight:600; cursor:pointer;
+        }
+        .lab-summary-grid {
+            display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px;
+        }
+        .lab-summary-card,.lab-filter-card,.lab-result-card {
+            background:#fff; border-radius:14px;
+            box-shadow:0 8px 22px rgba(15,23,42,.06);
+        }
+        .lab-summary-card { padding:18px; }
+        .lab-summary-card span { display:block; color:#64748b; font-size:12px; margin-bottom:5px; }
+        .lab-summary-card strong { color:#16324f; font-size:25px; }
+        .lab-filter-card { padding:18px; margin-bottom:20px; }
+        .lab-filter-grid {
+            display:grid; grid-template-columns:1.5fr 1fr auto; gap:12px; align-items:end;
+        }
+        .lab-field label {
+            display:block; margin-bottom:7px; color:#334155; font-size:13px; font-weight:600;
+        }
+        .lab-field input,.lab-field select {
+            width:100%; min-height:42px; border:1px solid #d8e0e8;
+            border-radius:8px; padding:9px 11px; outline:none; background:#fff;
+        }
+        .lab-clear-btn {
+            min-height:42px; padding:0 16px; border:1px solid #d8e0e8;
+            border-radius:8px; background:#fff; color:#475569; cursor:pointer; font-weight:600;
+        }
+        .lab-list { display:grid; gap:16px; }
+        .lab-result-card { padding:20px; }
+        .lab-result-top {
+            display:flex; justify-content:space-between; gap:18px; align-items:flex-start;
+            padding-bottom:14px; border-bottom:1px solid #edf1f5;
+        }
+        .lab-result-top h3 { margin:0 0 5px; color:#16324f; }
+        .lab-result-top p { margin:0; color:#64748b; font-size:12px; }
+        .lab-status {
+            padding:6px 10px; border-radius:999px; font-size:11px; font-weight:700;
+        }
+        .lab-status.completed { background:#e8f8ef; color:#22844b; }
+        .lab-status.pending { background:#fff6db; color:#9a6b00; }
+        .lab-meta {
+            display:grid; grid-template-columns:repeat(4,1fr); gap:12px; padding:14px 0;
+        }
+        .lab-meta span { display:block; color:#64748b; font-size:10px; text-transform:uppercase; }
+        .lab-meta strong { color:#334155; font-size:12px; }
+        .lab-values {
+            display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:5px;
+        }
+        .lab-value {
+            padding:12px; border-radius:9px; background:#f8fafc;
+        }
+        .lab-value span { display:block; color:#64748b; font-size:11px; margin-bottom:3px; }
+        .lab-value strong { color:#334155; font-size:13px; }
+        .lab-actions {
+            display:flex; justify-content:flex-end; gap:9px; margin-top:16px; flex-wrap:wrap;
+        }
+        .lab-action-btn {
+            min-height:38px; padding:0 13px; border-radius:8px; font-size:12px; font-weight:600;
+            cursor:pointer; text-decoration:none; display:inline-flex; align-items:center;
+        }
+        .lab-action-btn.secondary { border:1px solid #d8e0e8; background:#fff; color:#475569; }
+        .lab-action-btn.primary { border:none; background:#176cc8; color:#fff; }
+        .lab-empty {
+            display:none; background:#fff; border-radius:14px; padding:30px; text-align:center;
+            color:#64748b;
+        }
+        .lab-modal {
+            position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+            padding:20px; background:rgba(15,23,42,.55); z-index:9999;
+        }
+        .lab-modal.show { display:flex; }
+        .lab-modal-card {
+            width:min(560px,100%); background:#fff; border-radius:16px; padding:24px;
+            box-shadow:0 20px 50px rgba(15,23,42,.2);
+        }
+        .lab-modal-card h2 { margin:0 0 8px; color:#16324f; }
+        .lab-modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:13px; }
+        .lab-modal-field.full { grid-column:1/-1; }
+        .lab-modal-field label {
+            display:block; margin-bottom:6px; color:#334155; font-size:12px; font-weight:600;
+        }
+        .lab-modal-field input,.lab-modal-field select,.lab-modal-field textarea {
+            width:100%; border:1px solid #d8e0e8; border-radius:8px; padding:9px 11px; font:inherit;
+        }
+        .lab-modal-field textarea { min-height:80px; resize:vertical; }
+        .lab-modal-actions { display:flex; justify-content:flex-end; gap:9px; margin-top:18px; }
+        .lab-modal-actions button {
+            min-height:40px; padding:0 16px; border-radius:8px; font-weight:600; cursor:pointer;
+        }
+        .lab-cancel { border:1px solid #d8e0e8; background:#fff; color:#475569; }
+        .lab-save { border:none; background:#176cc8; color:#fff; }
+        @media(max-width:980px){
+            .lab-summary-grid{grid-template-columns:repeat(2,1fr);}
+            .lab-meta,.lab-values{grid-template-columns:repeat(2,1fr);}
+        }
+        @media(max-width:650px){
+            .lab-page-header,.lab-result-top{flex-direction:column;}
+            .lab-summary-grid,.lab-filter-grid,.lab-meta,.lab-values,.lab-modal-grid{grid-template-columns:1fr;}
+            .lab-modal-field.full{grid-column:auto;}
+            .lab-upload-btn{width:100%;}
+        }
+    </style>
 </head>
-
 <body class="dashboard-body">
+<div class="dashboard-layout">
 
-    <div class="dashboard-layout">
+    <aside class="dashboard-sidebar" id="labResultsSidebar">
+        <div class="dashboard-sidebar-header">
+            <a href="../index.html" class="dashboard-logo">Smart<span>Healthcare</span></a>
+            <p id="labPortalName">Patient Portal</p>
+        </div>
 
-        <!-- SIDEBAR -->
-        <aside class="dashboard-sidebar" id="labResultSidebar">
+        <nav class="dashboard-menu" id="labSidebarMenu"></nav>
 
-            <div class="dashboard-sidebar-header">
+        <div class="dashboard-sidebar-footer">
+            <button type="button" class="dashboard-logout-btn" id="labLogoutBtn">Logout</button>
+        </div>
+    </aside>
 
-                <a href="../index.html" class="dashboard-logo">
-                    Smart<span>Healthcare</span>
-                </a>
-
-                <p>Laboratory Portal</p>
-
+    <main class="dashboard-main">
+        <header class="dashboard-topbar">
+            <div class="dashboard-topbar-left">
+                <button type="button" class="dashboard-menu-toggle" id="labMenuToggle">☰</button>
+                <div>
+                    <p id="labTopPortalName">Patient Portal</p>
+                    <h2>Laboratory Results</h2>
+                </div>
             </div>
 
-
-            <nav class="dashboard-menu">
-
-                <a href="lab-dashboard.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">D</span>
-                    Dashboard
-
-                </a>
-
-
-                <a href="lab-test-request.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">TR</span>
-                    Test Requests
-
-                </a>
-
-
-                <a href="laboratory-results.html"
-                   class="dashboard-menu-link active">
-
-                    <span class="menu-icon">RT</span>
-                    Record Test Result
-
-                </a>
-
-
-                <a href="laboratory-results.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">LR</span>
-                    Laboratory Reports
-
-                </a>
-
-
-                <a href="lab-test-request.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">PT</span>
-                    Patient Test Information
-
-                </a>
-
-
-                <a href="laboratory-results.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">H</span>
-                    Test History
-
-                </a>
-
-            </nav>
-
-
-            <div class="dashboard-sidebar-footer">
-
-                <button
-                    type="button"
-                    class="dashboard-logout-btn"
-                    id="labResultLogoutBtn"
-                >
-                    Logout
-                </button>
-
+            <div class="dashboard-user">
+                <div class="dashboard-notification">1</div>
+                <div class="dashboard-user-info">
+                    <div class="dashboard-user-avatar" id="labRoleAvatar">P</div>
+                    <div>
+                        <strong id="labRoleName">Patient</strong>
+                        <span>Laboratory Services</span>
+                    </div>
+                </div>
             </div>
-
-        </aside>
-
-
-        <!-- MAIN CONTENT -->
-        <main class="dashboard-main">
-
-            <!-- TOPBAR -->
-            <header class="dashboard-topbar">
-
-                <div class="dashboard-topbar-left">
-
-                    <button
-                        type="button"
-                        class="dashboard-menu-toggle"
-                        id="labResultMenuToggle"
-                        aria-label="Toggle navigation menu"
-                    >
-                        ☰
-                    </button>
-
-
-                    <div>
-
-                        <p>Laboratory Portal</p>
-
-                        <h2>Laboratory Results</h2>
-
-                    </div>
-
-                </div>
-
-
-                <div class="dashboard-user">
-
-                    <div class="dashboard-user-info">
-
-                        <div class="lab-avatar">
-                            LT
-                        </div>
-
-                        <div>
-
-                            <strong>Lab Technician</strong>
-
-                            <span>Laboratory Staff</span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </header>
-
-
-            <!-- PAGE HEADER -->
-            <section class="lab-result-header-card">
-
-                <div>
-
-                    <p class="small-title">
-                        Laboratory Result Management
-                    </p>
-
-                    <h1>
-                        Record Laboratory Test Results
-                    </h1>
-
-                    <p>
-                        Review the selected laboratory request,
-                        enter measured test information and prepare
-                        the completed laboratory report for professional review.
-                    </p>
-
-                </div>
-
-
-                <div class="lab-result-header-icon">
-                    LR
-                </div>
-
-            </section>
-
-
-            <!-- REQUEST INFORMATION -->
-            <section class="lab-result-request-card">
-
-                <div class="lab-result-request-main">
-
-                    <div class="lab-result-request-icon">
-                        CBC
-                    </div>
-
-
-                    <div>
-
-                        <p class="small-title">
-                            Selected Test Request
-                        </p>
-
-                        <h2>
-                            Complete Blood Count
-                        </h2>
-
-                        <p>
-                            Request ID: #LTR2056
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="lab-result-request-details">
-
-                    <div>
-
-                        <span>Patient</span>
-
-                        <strong>
-                            #P1024
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>Requested By</span>
-
-                        <strong>
-                            Current Doctor
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>Priority</span>
-
-                        <strong class="lab-result-priority">
-                            Routine
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>Status</span>
-
-                        <strong class="lab-result-progress-status">
-                            In Progress
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- RESULT LAYOUT -->
-            <section class="lab-result-layout">
-
-                <!-- RESULT FORM -->
-                <div class="lab-result-form-card">
-
-                    <div class="lab-result-section-heading">
-
-                        <div>
-
-                            <h3>
-                                Test Result Information
-                            </h3>
-
-                            <p>
-                                Record laboratory measurements and report information
-                            </p>
-
-                        </div>
-
-
-                        <span>
-                            01
-                        </span>
-
-                    </div>
-
-
-                    <form id="labResultForm">
-
-                        <div
-                            class="lab-result-error"
-                            id="labResultError"
-                        ></div>
-
-
-                        <!-- SAMPLE INFORMATION -->
-                        <div class="lab-result-subheading">
-
-                            <h4>
-                                Sample Information
-                            </h4>
-
-                            <p>
-                                Record basic laboratory sample details
-                            </p>
-
-                        </div>
-
-
-                        <div class="lab-result-form-grid">
-
-                            <div class="lab-result-form-group">
-
-                                <label for="sampleId">
-                                    Sample ID
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="sampleId"
-                                    value="SMP-2056"
-                                    readonly
-                                >
-
-                            </div>
-
-
-                            <div class="lab-result-form-group">
-
-                                <label for="collectionDate">
-                                    Collection Date
-                                </label>
-
-                                <input
-                                    type="date"
-                                    id="collectionDate"
-                                >
-
-                            </div>
-
-
-                            <div class="lab-result-form-group">
-
-                                <label for="sampleType">
-                                    Sample Type
-                                </label>
-
-                                <select id="sampleType">
-
-                                    <option value="">
-                                        Select Sample Type
-                                    </option>
-
-                                    <option value="blood">
-                                        Blood
-                                    </option>
-
-                                    <option value="urine">
-                                        Urine
-                                    </option>
-
-                                    <option value="other">
-                                        Other
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <div class="lab-result-form-group">
-
-                                <label for="resultDate">
-                                    Result Date
-                                </label>
-
-                                <input
-                                    type="date"
-                                    id="resultDate"
-                                >
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- RESULT VALUES -->
-                        <div class="lab-result-subheading">
-
-                            <div>
-
-                                <h4>
-                                    Result Values
-                                </h4>
-
-                                <p>
-                                    Add one or more measured laboratory values
-                                </p>
-
-                            </div>
-
-
-                            <button
-                                type="button"
-                                class="lab-result-add-btn"
-                                id="addResultBtn"
-                            >
-                                + Add Result
-                            </button>
-
-                        </div>
-
-
-                        <div
-                            class="lab-result-value-list"
-                            id="resultValueList"
-                        >
-
-                            <div class="lab-result-value-item">
-
-                                <div class="lab-result-value-number">
-                                    1
-                                </div>
-
-
-                                <div class="lab-result-value-fields">
-
-                                    <div class="lab-result-value-grid">
-
-                                        <div class="lab-result-form-group">
-
-                                            <label>
-                                                Parameter
-                                            </label>
-
-                                            <input
-                                                type="text"
-                                                class="result-parameter"
-                                                placeholder="Enter test parameter"
-                                            >
-
-                                        </div>
-
-
-                                        <div class="lab-result-form-group">
-
-                                            <label>
-                                                Result Value
-                                            </label>
-
-                                            <input
-                                                type="text"
-                                                class="result-value"
-                                                placeholder="Enter measured value"
-                                            >
-
-                                        </div>
-
-
-                                        <div class="lab-result-form-group">
-
-                                            <label>
-                                                Unit
-                                            </label>
-
-                                            <input
-                                                type="text"
-                                                class="result-unit"
-                                                placeholder="Enter unit"
-                                            >
-
-                                        </div>
-
-
-                                        <div class="lab-result-form-group">
-
-                                            <label>
-                                                Reference Information
-                                            </label>
-
-                                            <input
-                                                type="text"
-                                                class="result-reference"
-                                                placeholder="Enter laboratory reference information"
-                                            >
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-
-                                <button
-                                    type="button"
-                                    class="lab-result-remove-btn"
-                                    disabled
-                                >
-                                    ×
-                                </button>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- TECHNICIAN NOTE -->
-                        <div class="lab-result-form-group">
-
-                            <label for="technicianNote">
-                                Laboratory Technician Note
-                            </label>
-
-                            <textarea
-                                id="technicianNote"
-                                rows="4"
-                                placeholder="Enter optional laboratory processing notes..."
-                            ></textarea>
-
-                        </div>
-
-
-                        <!-- REPORT STATUS -->
-                        <div class="lab-result-form-grid">
-
-                            <div class="lab-result-form-group">
-
-                                <label for="reportStatus">
-                                    Report Status
-                                </label>
-
-                                <select id="reportStatus">
-
-                                    <option value="">
-                                        Select Status
-                                    </option>
-
-                                    <option value="completed">
-                                        Completed
-                                    </option>
-
-                                    <option value="review">
-                                        Ready for Doctor Review
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <div class="lab-result-form-group">
-
-                                <label for="verifiedBy">
-                                    Recorded By
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="verifiedBy"
-                                    value="Laboratory Technician"
-                                    readonly
-                                >
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- ACTIONS -->
-                        <div class="lab-result-form-actions">
-
-                            <a
-                                href="lab-dashboard.html"
-                                class="lab-result-cancel-btn"
-                            >
-                                Cancel
-                            </a>
-
-
-                            <button
-                                type="submit"
-                                class="lab-result-submit-btn"
-                            >
-                                Save Laboratory Report
-                            </button>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-
-                <!-- REPORT SUMMARY -->
-                <aside class="lab-result-summary-card">
-
-                    <div class="lab-result-summary-heading">
-
-                        <h3>
-                            Report Summary
-                        </h3>
-
-                        <p>
-                            Current laboratory report
-                        </p>
-
-                    </div>
-
-
-                    <div class="lab-result-summary-id">
-
-                        <span>
-                            Report ID
-                        </span>
-
-                        <strong>
-                            #LR2056
-                        </strong>
-
-                    </div>
-
-
-                    <div class="lab-result-summary-list">
-
-                        <div>
-
-                            <span>Request ID</span>
-
-                            <strong>
-                                #LTR2056
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>Patient</span>
-
-                            <strong>
-                                #P1024
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>Test</span>
-
-                            <strong>
-                                CBC
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>Result Parameters</span>
-
-                            <strong id="resultParameterCount">
-                                1
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>Current Status</span>
-
-                            <strong id="labResultSummaryStatus">
-                                In Progress
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="lab-result-summary-note">
-
-                        <div>
-                            i
-                        </div>
-
-                        <p>
-                            Laboratory staff record measured results.
-                            Clinical interpretation and treatment decisions
-                            remain with authorized healthcare professionals.
-                        </p>
-
-                    </div>
-
-                </aside>
-
-            </section>
-
-
-            <!-- RECENT REPORTS -->
-            <section class="lab-result-history-card">
-
-                <div class="lab-result-history-heading">
-
-                    <div>
-
-                        <h3>
-                            Recent Laboratory Reports
-                        </h3>
-
-                        <p>
-                            Recently completed laboratory records
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="lab-result-history-row">
-
-                    <div class="lab-result-history-icon">
-                        BG
-                    </div>
-
-
-                    <div>
-
-                        <h4>
-                            Report #LR2042
-                        </h4>
-
-                        <p>
-                            Patient #P1078 — Blood Glucose Test
-                        </p>
-
-                    </div>
-
-
-                    <span class="lab-result-history-date">
-                        10 Aug 2026
-                    </span>
-
-
-                    <span class="lab-result-history-status review">
-                        Doctor Review
-                    </span>
-
-                </div>
-
-
-                <div class="lab-result-history-row">
-
-                    <div class="lab-result-history-icon">
-                        UA
-                    </div>
-
-
-                    <div>
-
-                        <h4>
-                            Report #LR2038
-                        </h4>
-
-                        <p>
-                            Patient #P1092 — Urine Analysis
-                        </p>
-
-                    </div>
-
-
-                    <span class="lab-result-history-date">
-                        08 Aug 2026
-                    </span>
-
-
-                    <span class="lab-result-history-status completed">
-                        Completed
-                    </span>
-
-                </div>
-
-
-                <div class="lab-result-history-row">
-
-                    <div class="lab-result-history-icon">
-                        LP
-                    </div>
-
-
-                    <div>
-
-                        <h4>
-                            Report #LR2035
-                        </h4>
-
-                        <p>
-                            Patient #P1116 — Lipid Profile
-                        </p>
-
-                    </div>
-
-
-                    <span class="lab-result-history-date">
-                        06 Aug 2026
-                    </span>
-
-
-                    <span class="lab-result-history-status completed">
-                        Completed
-                    </span>
-
-                </div>
-
-            </section>
-
-
-            <!-- NOTE -->
-            <section class="lab-result-note-card">
-
-                <div class="lab-result-note-icon">
-                    i
-                </div>
-
-
-                <div>
-
-                    <h3>
-                        Prototype Laboratory Result Module
-                    </h3>
-
-                    <p>
-                        Laboratory values entered here are demonstration
-                        records only. Secure patient linking, report storage,
-                        doctor notification and permanent database records
-                        will be implemented during backend integration.
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- FOOTER -->
-            <footer class="patient-dashboard-footer">
-
-                <p>
-                    © 2026 Smart Healthcare and Management with AI System
+        </header>
+
+        <section class="lab-page-header">
+            <div>
+                <p class="small-title">Laboratory Test Management</p>
+                <h1 id="labPageTitle">My Laboratory Reports</h1>
+                <p id="labPageDescription">
+                    View laboratory test results, report status, and related medical information.
                 </p>
+            </div>
 
-            </footer>
+            <button type="button" class="lab-upload-btn" id="labUploadBtn">Record Test Result</button>
+        </section>
 
-        </main>
+        <section class="lab-summary-grid">
+            <div class="lab-summary-card"><span>Total Reports</span><strong id="labTotal">0</strong></div>
+            <div class="lab-summary-card"><span>Completed</span><strong id="labCompleted">0</strong></div>
+            <div class="lab-summary-card"><span>Pending</span><strong id="labPending">0</strong></div>
+            <div class="lab-summary-card"><span>Recent</span><strong id="labRecent">0</strong></div>
+        </section>
 
+        <section class="lab-filter-card">
+            <div class="lab-filter-grid">
+                <div class="lab-field">
+                    <label for="labSearch">Search Report</label>
+                    <input type="text" id="labSearch" placeholder="Search report ID, test, doctor, or patient">
+                </div>
+
+                <div class="lab-field">
+                    <label for="labStatusFilter">Status</label>
+                    <select id="labStatusFilter">
+                        <option value="all">All Status</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+
+                <button type="button" class="lab-clear-btn" id="labClearBtn">Clear</button>
+            </div>
+        </section>
+
+        <section class="lab-list" id="labList"></section>
+        <div class="lab-empty" id="labEmpty">No laboratory report matches the current filter.</div>
+
+        <footer class="patient-dashboard-footer">
+            <p>© 2026 Smart Healthcare and Management with AI System</p>
+        </footer>
+    </main>
+</div>
+
+<div class="lab-modal" id="labResultModal">
+    <div class="lab-modal-card">
+        <h2>Record Laboratory Result</h2>
+
+        <div class="lab-modal-grid">
+            <div class="lab-modal-field">
+                <label for="labTestName">Test Name</label>
+                <input type="text" id="labTestName" placeholder="Example: Complete Blood Count">
+            </div>
+
+            <div class="lab-modal-field">
+                <label for="labPatientName">Patient Name</label>
+                <input type="text" id="labPatientName" value="Patient User">
+            </div>
+
+            <div class="lab-modal-field">
+                <label for="labRequestedBy">Requested By</label>
+                <input type="text" id="labRequestedBy" value="Dr. Sarah Ahmed">
+            </div>
+
+            <div class="lab-modal-field">
+                <label for="labResultStatus">Status</label>
+                <select id="labResultStatus">
+                    <option value="Completed">Completed</option>
+                    <option value="Pending">Pending</option>
+                </select>
+            </div>
+
+            <div class="lab-modal-field full">
+                <label for="labResultSummary">Result Summary</label>
+                <textarea id="labResultSummary" placeholder="Enter a short result summary"></textarea>
+            </div>
+        </div>
+
+        <div class="lab-modal-actions">
+            <button type="button" class="lab-cancel" id="labModalCancel">Cancel</button>
+            <button type="button" class="lab-save" id="labModalSave">Save Result</button>
+        </div>
     </div>
+</div>
 
+<div class="logout-modal" id="labLogoutModal">
+    <div class="logout-modal-card">
+        <div class="logout-modal-icon">?</div>
+        <h2>Logout from Account?</h2>
+        <p>Are you sure you want to leave the system?</p>
+        <div class="logout-modal-actions">
+            <button type="button" class="logout-cancel-btn" id="labCancelLogout">Cancel</button>
+            <button type="button" class="logout-confirm-btn" id="labConfirmLogout">Logout</button>
+        </div>
+    </div>
+</div>
 
-    <!-- SUCCESS MODAL -->
-    <div
-        class="lab-result-success-modal"
-        id="labResultSuccessModal"
-    >
+<script>
+function detectLabRole() {
+    const ref = document.referrer.toLowerCase();
 
-        <div class="lab-result-success-card">
+    if (ref.includes("lab-dashboard") || ref.includes("lab-test-request")) {
+        localStorage.setItem("healthcareActiveRole", "lab");
+        return "lab";
+    }
 
-            <div class="lab-result-success-icon">
-                ✓
-            </div>
+    if (ref.includes("doctor-dashboard") || ref.includes("consultation")) {
+        localStorage.setItem("healthcareActiveRole", "doctor");
+        return "doctor";
+    }
 
+    if (ref.includes("patient-dashboard") || ref.includes("patient-profile") ||
+        ref.includes("digital-prescription") || ref.includes("medical-records")) {
+        if (localStorage.getItem("healthcareActiveRole") !== "doctor" &&
+            localStorage.getItem("healthcareActiveRole") !== "lab") {
+            localStorage.setItem("healthcareActiveRole", "patient");
+        }
+    }
 
-            <h2>
-                Laboratory Report Saved
-            </h2>
+    return localStorage.getItem("healthcareActiveRole") || "patient";
+}
 
+const labRole = detectLabRole();
 
-            <p>
-                Report #LR2056 has been recorded successfully
-                in this prototype session.
-            </p>
+function patientSidebar() {
+    return `
+        <a href="patient-dashboard.html" class="dashboard-menu-link"><span class="menu-icon">D</span>Dashboard</a>
+        <a href="patient-profile.html" class="dashboard-menu-link"><span class="menu-icon">P</span>My Profile</a>
 
-
-            <div class="lab-result-success-info">
-
-                <span>
-                    Result Parameters
-                </span>
-
-                <strong id="successResultCount">
-                    1
-                </strong>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="lab-result-success-btn"
-                id="labResultSuccessBtn"
-            >
-                Back to Laboratory Dashboard
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">A</span>Appointments</span>
+                <span class="submenu-arrow">▼</span>
             </button>
-
+            <div class="dashboard-submenu">
+                <a href="doctor-availability.html" class="dashboard-submenu-link">Doctor Availability</a>
+                <a href="appointment-booking.html" class="dashboard-submenu-link">Book Appointment</a>
+                <a href="appointment-management.html" class="dashboard-submenu-link">My Appointments</a>
+            </div>
         </div>
 
-    </div>
-
-
-    <!-- LOGOUT MODAL -->
-    <div
-        class="logout-modal"
-        id="labResultLogoutModal"
-    >
-
-        <div class="logout-modal-card">
-
-            <div class="logout-modal-icon">
-                ?
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">H</span>Health Services</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="ai-symptom-assessment.html" class="dashboard-submenu-link">AI Symptom Assessment</a>
+                <a href="medical-records.html" class="dashboard-submenu-link">Medical Records</a>
             </div>
-
-            <h2>
-                Logout from Account?
-            </h2>
-
-            <p>
-                Are you sure you want to leave the Laboratory Portal?
-            </p>
-
-
-            <div class="logout-modal-actions">
-
-                <button
-                    type="button"
-                    class="logout-cancel-btn"
-                    id="labResultCancelLogout"
-                >
-                    Cancel
-                </button>
-
-
-                <button
-                    type="button"
-                    class="logout-confirm-btn"
-                    id="labResultConfirmLogout"
-                >
-                    Logout
-                </button>
-
-            </div>
-
         </div>
 
-    </div>
+        <div class="dashboard-menu-group open">
+            <button type="button" class="dashboard-menu-parent active">
+                <span class="menu-parent-left"><span class="menu-icon">R</span>Reports & Treatment</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="digital-prescription.html" class="dashboard-submenu-link">Prescriptions</a>
+                <a href="laboratory-results.html" class="dashboard-submenu-link active">Laboratory Reports</a>
+            </div>
+        </div>
 
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">S</span>Billing & Support</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="billing-payment.html" class="dashboard-submenu-link">Billing & Payment</a>
+                <a href="feedback-complaint.html" class="dashboard-submenu-link">Feedback & Complaint</a>
+            </div>
+        </div>
+    `;
+}
 
-    <script src="../js/laboratory-results.js"></script>
+function doctorSidebar() {
+    return `
+        <a href="doctor-dashboard.html" class="dashboard-menu-link"><span class="menu-icon">D</span>Dashboard</a>
 
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">A</span>Appointments</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="appointment-management.html" class="dashboard-submenu-link">Appointment List</a>
+                <a href="consultation.html" class="dashboard-submenu-link">Consultations</a>
+            </div>
+        </div>
+
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">P</span>Patient Care</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="medical-records.html" class="dashboard-submenu-link">Patient Records</a>
+                <a href="digital-prescription.html" class="dashboard-submenu-link">Prescriptions</a>
+            </div>
+        </div>
+
+        <div class="dashboard-menu-group open">
+            <button type="button" class="dashboard-menu-parent active">
+                <span class="menu-parent-left"><span class="menu-icon">L</span>Laboratory</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="lab-test-request.html" class="dashboard-submenu-link">Lab Test Requests</a>
+                <a href="laboratory-results.html" class="dashboard-submenu-link active">Laboratory Reports</a>
+            </div>
+        </div>
+    `;
+}
+
+function technicianSidebar() {
+    return `
+        <a href="lab-dashboard.html" class="dashboard-menu-link"><span class="menu-icon">D</span>Dashboard</a>
+
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">T</span>Test Management</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="lab-test-request.html" class="dashboard-submenu-link">Test Requests</a>
+                <a href="lab-test-request.html" class="dashboard-submenu-link">Patient Test Information</a>
+            </div>
+        </div>
+
+        <div class="dashboard-menu-group open">
+            <button type="button" class="dashboard-menu-parent active">
+                <span class="menu-parent-left"><span class="menu-icon">R</span>Reports</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="laboratory-results.html" class="dashboard-submenu-link active">Record Test Result</a>
+                <a href="laboratory-results.html" class="dashboard-submenu-link">Laboratory Reports</a>
+                <a href="laboratory-results.html" class="dashboard-submenu-link">Test History</a>
+            </div>
+        </div>
+    `;
+}
+
+const labSidebarMenu = document.getElementById("labSidebarMenu");
+
+if (labRole === "doctor") {
+    document.getElementById("labPortalName").textContent = "Doctor Portal";
+    document.getElementById("labTopPortalName").textContent = "Doctor Portal";
+    document.getElementById("labRoleAvatar").textContent = "D";
+    document.getElementById("labRoleName").textContent = "Doctor";
+    document.getElementById("labPageTitle").textContent = "Patient Laboratory Reports";
+    document.getElementById("labPageDescription").textContent =
+        "Review patient laboratory results during consultation and follow-up activities.";
+    labSidebarMenu.innerHTML = doctorSidebar();
+} else if (labRole === "lab") {
+    document.getElementById("labPortalName").textContent = "Laboratory Portal";
+    document.getElementById("labTopPortalName").textContent = "Laboratory Portal";
+    document.getElementById("labRoleAvatar").textContent = "LT";
+    document.getElementById("labRoleName").textContent = "Lab Technician";
+    document.getElementById("labPageTitle").textContent = "Laboratory Reports & Results";
+    document.getElementById("labPageDescription").textContent =
+        "Record, review, and manage patient laboratory results.";
+    document.getElementById("labUploadBtn").style.display = "inline-flex";
+    labSidebarMenu.innerHTML = technicianSidebar();
+} else {
+    labSidebarMenu.innerHTML = patientSidebar();
+}
+
+const groups = document.querySelectorAll(".dashboard-menu-group");
+groups.forEach(group => {
+    const btn = group.querySelector(".dashboard-menu-parent");
+    btn.addEventListener("click", () => {
+        groups.forEach(other => {
+            if (other !== group) {
+                other.classList.remove("open");
+                const b = other.querySelector(".dashboard-menu-parent");
+                if (b) b.classList.remove("active");
+            }
+        });
+        group.classList.toggle("open");
+        btn.classList.toggle("active", group.classList.contains("open"));
+    });
+});
+
+const labSidebar = document.getElementById("labResultsSidebar");
+document.getElementById("labMenuToggle").addEventListener("click", () => {
+    labSidebar.classList.toggle("open");
+});
+
+const defaultLabReports = [
+    {
+        id:"LAB-2041", test:"Complete Blood Count", patient:"Patient User",
+        requestedBy:"Dr. Sarah Ahmed", date:"2026-08-14", status:"Completed",
+        values:[
+            {name:"Hemoglobin", value:"13.6 g/dL"},
+            {name:"WBC", value:"7,800 /µL"},
+            {name:"Platelets", value:"245,000 /µL"}
+        ],
+        summary:"Values are within the expected reference range for this prototype record."
+    },
+    {
+        id:"LAB-2034", test:"Blood Glucose", patient:"Patient User",
+        requestedBy:"Dr. Mahmud Hasan", date:"2026-08-08", status:"Completed",
+        values:[
+            {name:"Fasting Glucose", value:"92 mg/dL"},
+            {name:"Post Meal", value:"128 mg/dL"},
+            {name:"HbA1c", value:"5.4%"}
+        ],
+        summary:"Routine glucose profile recorded."
+    },
+    {
+        id:"LAB-2050", test:"Liver Function Test", patient:"Patient User",
+        requestedBy:"Dr. Sarah Ahmed", date:"2026-08-15", status:"Pending",
+        values:[
+            {name:"ALT", value:"Pending"},
+            {name:"AST", value:"Pending"},
+            {name:"Bilirubin", value:"Pending"}
+        ],
+        summary:"Laboratory processing is still pending."
+    }
+];
+
+let labReports = JSON.parse(localStorage.getItem("prototypeLabReports"));
+if (!Array.isArray(labReports)) {
+    labReports = defaultLabReports;
+    localStorage.setItem("prototypeLabReports", JSON.stringify(labReports));
+}
+
+const labList = document.getElementById("labList");
+const labSearch = document.getElementById("labSearch");
+const labStatusFilter = document.getElementById("labStatusFilter");
+const labEmpty = document.getElementById("labEmpty");
+
+function formatLabDate(value) {
+    return new Date(value + "T00:00:00").toLocaleDateString("en-GB", {
+        day:"2-digit", month:"short", year:"numeric"
+    });
+}
+
+function renderLabReports() {
+    const q = labSearch.value.trim().toLowerCase();
+    const status = labStatusFilter.value;
+
+    const visible = labReports.filter(report => {
+        const text = (report.id + " " + report.test + " " + report.patient + " " + report.requestedBy).toLowerCase();
+        return text.includes(q) && (status === "all" || report.status === status);
+    });
+
+    labList.innerHTML = "";
+
+    visible.forEach(report => {
+        const values = report.values.map(item => `
+            <div class="lab-value">
+                <span>${item.name}</span>
+                <strong>${item.value}</strong>
+            </div>
+        `).join("");
+
+        const card = document.createElement("article");
+        card.className = "lab-result-card";
+        card.innerHTML = `
+            <div class="lab-result-top">
+                <div>
+                    <h3>${report.test}</h3>
+                    <p>Report ID: ${report.id}</p>
+                </div>
+                <span class="lab-status ${report.status.toLowerCase()}">${report.status}</span>
+            </div>
+
+            <div class="lab-meta">
+                <div><span>Patient</span><strong>${report.patient}</strong></div>
+                <div><span>Requested By</span><strong>${report.requestedBy}</strong></div>
+                <div><span>Date</span><strong>${formatLabDate(report.date)}</strong></div>
+                <div><span>Status</span><strong>${report.status}</strong></div>
+            </div>
+
+            <div class="lab-values">${values}</div>
+
+            <div class="lab-actions">
+                <a href="medical-records.html" class="lab-action-btn secondary">Medical Records</a>
+                <button type="button" class="lab-action-btn primary" data-id="${report.id}">View Summary</button>
+            </div>
+        `;
+        labList.appendChild(card);
+    });
+
+    labEmpty.style.display = visible.length ? "none" : "block";
+
+    document.getElementById("labTotal").textContent = labReports.length;
+    document.getElementById("labCompleted").textContent =
+        labReports.filter(r => r.status === "Completed").length;
+    document.getElementById("labPending").textContent =
+        labReports.filter(r => r.status === "Pending").length;
+    document.getElementById("labRecent").textContent =
+        labReports.filter(r => r.date >= "2026-08-01").length;
+}
+
+labSearch.addEventListener("input", renderLabReports);
+labStatusFilter.addEventListener("change", renderLabReports);
+document.getElementById("labClearBtn").addEventListener("click", () => {
+    labSearch.value = "";
+    labStatusFilter.value = "all";
+    renderLabReports();
+});
+
+const resultModal = document.getElementById("labResultModal");
+document.getElementById("labUploadBtn").addEventListener("click", () => resultModal.classList.add("show"));
+document.getElementById("labModalCancel").addEventListener("click", () => resultModal.classList.remove("show"));
+document.getElementById("labModalSave").addEventListener("click", () => {
+    const test = document.getElementById("labTestName").value.trim();
+    const patient = document.getElementById("labPatientName").value.trim();
+    const requestedBy = document.getElementById("labRequestedBy").value.trim();
+    const status = document.getElementById("labResultStatus").value;
+    const summary = document.getElementById("labResultSummary").value.trim();
+
+    if (!test || !patient || !requestedBy) return;
+
+    const now = new Date();
+    const date = now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
+
+    labReports.unshift({
+        id:"LAB-"+String(Date.now()).slice(-4),
+        test, patient, requestedBy, date, status,
+        values:[
+            {name:"Result 1", value: status === "Completed" ? "Recorded" : "Pending"},
+            {name:"Result 2", value: status === "Completed" ? "Recorded" : "Pending"},
+            {name:"Result 3", value: status === "Completed" ? "Recorded" : "Pending"}
+        ],
+        summary: summary || "Prototype laboratory result recorded."
+    });
+
+    localStorage.setItem("prototypeLabReports", JSON.stringify(labReports));
+    resultModal.classList.remove("show");
+    document.getElementById("labTestName").value = "";
+    document.getElementById("labResultSummary").value = "";
+    renderLabReports();
+});
+
+labList.addEventListener("click", event => {
+    const btn = event.target.closest("[data-id]");
+    if (!btn) return;
+    const report = labReports.find(r => r.id === btn.dataset.id);
+    if (!report) return;
+    const box = document.getElementById("labResultSummary");
+    box.value = report.summary;
+    resultModal.classList.add("show");
+});
+
+const logoutModal = document.getElementById("labLogoutModal");
+document.getElementById("labLogoutBtn").addEventListener("click", () => logoutModal.classList.add("show"));
+document.getElementById("labCancelLogout").addEventListener("click", () => logoutModal.classList.remove("show"));
+document.getElementById("labConfirmLogout").addEventListener("click", () => window.location.href = "login.html");
+
+[resultModal, logoutModal].forEach(modal => {
+    modal.addEventListener("click", event => {
+        if (event.target === modal) modal.classList.remove("show");
+    });
+});
+
+document.querySelectorAll(".dashboard-menu-link,.dashboard-submenu-link").forEach(link => {
+    link.addEventListener("click", () => {
+        if (window.innerWidth <= 900) labSidebar.classList.remove("open");
+    });
+});
+
+renderLabReports();
+</script>
 </body>
-
 </html>
