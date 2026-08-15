@@ -1,782 +1,432 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Consultation | Smart Healthcare</title>
-
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+
+        /* COLLAPSIBLE SIDEBAR */
+        .dashboard-menu-group { width: 100%; }
+        .dashboard-menu-parent {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #dbe7ec;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+        .dashboard-menu-parent:hover,
+        .dashboard-menu-parent.active {
+            background-color: rgba(255,255,255,0.08);
+            color: #fff;
+        }
+        .menu-parent-left { display:flex; align-items:center; gap:10px; }
+        .submenu-arrow { font-size:9px; transition:transform .25s ease; }
+        .dashboard-menu-group.open .submenu-arrow { transform:rotate(180deg); }
+        .dashboard-submenu {
+            display:none;
+            margin:5px 0 7px 30px;
+            padding-left:13px;
+            border-left:1px solid rgba(255,255,255,.16);
+        }
+        .dashboard-menu-group.open .dashboard-submenu { display:block; }
+        .dashboard-submenu-link {
+            display:block;
+            padding:9px 11px;
+            margin:3px 0;
+            border-radius:7px;
+            color:#b9cbd3;
+            text-decoration:none;
+            font-size:12px;
+            transition:.2s ease;
+        }
+        .dashboard-submenu-link:hover {
+            background-color:rgba(255,255,255,.07);
+            color:#fff;
+        }
+        .dashboard-submenu-link.active {
+            background-color:rgba(255,255,255,.12);
+            color:#fff;
+            font-weight:600;
+        }
+
+        .consult-page-header {
+            display:flex; justify-content:space-between; gap:20px; align-items:flex-start;
+            margin:28px 0 22px;
+        }
+        .consult-page-header h1 { margin:5px 0 8px; color:#16324f; }
+        .consult-page-header p { margin:0; color:#64748b; max-width:780px; line-height:1.6; }
+        .consult-record-btn {
+            text-decoration:none; padding:11px 16px; border-radius:9px;
+            background:#176cc8; color:#fff; font-weight:600; white-space:nowrap;
+        }
+        .consult-layout {
+            display:grid; grid-template-columns:minmax(0,1.35fr) minmax(290px,.75fr);
+            gap:20px; align-items:start;
+        }
+        .consult-card,.consult-side-card {
+            background:#fff; border-radius:14px; box-shadow:0 8px 22px rgba(15,23,42,.06);
+        }
+        .consult-card { padding:22px; }
+        .consult-card h2,.consult-side-card h3 { margin:0 0 5px; color:#16324f; }
+        .consult-card > p,.consult-side-card > p { margin:0 0 18px; color:#64748b; font-size:13px; }
+        .consult-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        .consult-field { display:flex; flex-direction:column; gap:7px; }
+        .consult-field.full { grid-column:1/-1; }
+        .consult-field label { color:#334155; font-size:12px; font-weight:600; }
+        .consult-field input,.consult-field select,.consult-field textarea {
+            width:100%; border:1px solid #d8e0e8; border-radius:8px; padding:9px 11px;
+            font:inherit; outline:none;
+        }
+        .consult-field input,.consult-field select { min-height:42px; }
+        .consult-field textarea { min-height:105px; resize:vertical; }
+        .consult-error { min-height:18px; margin:12px 0 0; color:#b42318; font-size:12px; }
+        .consult-actions { display:flex; justify-content:flex-end; gap:9px; margin-top:14px; }
+        .consult-actions button {
+            min-height:40px; padding:0 16px; border-radius:8px; font-weight:600; cursor:pointer;
+        }
+        .consult-reset { border:1px solid #d8e0e8; background:#fff; color:#475569; }
+        .consult-save { border:none; background:#176cc8; color:#fff; }
+        .consult-side-column { display:grid; gap:16px; }
+        .consult-side-card { padding:20px; }
+        .consult-info-list { display:grid; gap:11px; }
+        .consult-info-row {
+            padding:11px 12px; border-radius:9px; background:#f8fafc;
+        }
+        .consult-info-row span { display:block; color:#64748b; font-size:10px; text-transform:uppercase; }
+        .consult-info-row strong { color:#334155; font-size:12px; }
+        .consult-links { display:grid; gap:9px; margin-top:14px; }
+        .consult-links a {
+            text-decoration:none; padding:10px 12px; border-radius:8px;
+            text-align:center; font-size:12px; font-weight:600;
+            border:1px solid #d8e0e8; color:#475569;
+        }
+        .consult-links a.primary { border:none; background:#176cc8; color:#fff; }
+        .consult-success {
+            display:none; margin-top:14px; padding:12px 14px; border-radius:9px;
+            background:#e8f8ef; color:#22844b; font-size:12px; font-weight:600;
+        }
+        .consult-success.show { display:block; }
+        @media(max-width:980px){.consult-layout{grid-template-columns:1fr;}}
+        @media(max-width:650px){
+            .consult-page-header{flex-direction:column;}
+            .consult-grid{grid-template-columns:1fr;}
+            .consult-field.full{grid-column:auto;}
+            .consult-actions{flex-direction:column;}
+            .consult-actions button,.consult-record-btn{width:100%;text-align:center;}
+        }
+    </style>
 </head>
-
 <body class="dashboard-body">
+<div class="dashboard-layout">
 
-    <div class="dashboard-layout">
+    <aside class="dashboard-sidebar" id="consultSidebar">
+        <div class="dashboard-sidebar-header">
+            <a href="../index.html" class="dashboard-logo">Smart<span>Healthcare</span></a>
+            <p>Doctor Portal</p>
+        </div>
 
-        <!-- SIDEBAR -->
-        <aside class="dashboard-sidebar" id="consultationSidebar">
+        <nav class="dashboard-menu">
+            <a href="doctor-dashboard.html" class="dashboard-menu-link">
+                <span class="menu-icon">D</span>Dashboard
+            </a>
 
-            <div class="dashboard-sidebar-header">
-
-                <a href="../index.html" class="dashboard-logo">
-                    Smart<span>Healthcare</span>
-                </a>
-
-                <p>Doctor Portal</p>
-
-            </div>
-
-
-            <nav class="dashboard-menu">
-
-                <a href="doctor-dashboard.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">D</span>
-                    Dashboard
-
-                </a>
-
-
-                <a href="appointment-management.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">A</span>
-                    Appointments
-
-                </a>
-
-
-                <a href="medical-records.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">PR</span>
-                    Patient Records
-
-                </a>
-
-
-                <a href="consultation.html"
-                   class="dashboard-menu-link active">
-
-                    <span class="menu-icon">C</span>
-                    Consultations
-
-                </a>
-
-
-                <a href="digital-prescription.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">Rx</span>
-                    Prescriptions
-
-                </a>
-
-
-                <a href="lab-test-request.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">LT</span>
-                    Laboratory Requests
-
-                </a>
-
-
-                <a href="laboratory-results.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">LR</span>
-                    Laboratory Reports
-
-                </a>
-
-            </nav>
-
-
-            <div class="dashboard-sidebar-footer">
-
-                <button
-                    type="button"
-                    class="dashboard-logout-btn"
-                    id="consultationLogoutBtn"
-                >
-                    Logout
+            <div class="dashboard-menu-group open">
+                <button type="button" class="dashboard-menu-parent active">
+                    <span class="menu-parent-left"><span class="menu-icon">A</span>Appointments</span>
+                    <span class="submenu-arrow">▼</span>
                 </button>
-
+                <div class="dashboard-submenu">
+                    <a href="appointment-management.html" class="dashboard-submenu-link">Appointment List</a>
+                    <a href="consultation.html" class="dashboard-submenu-link active">Consultations</a>
+                </div>
             </div>
 
-        </aside>
-
-
-        <!-- MAIN CONTENT -->
-        <main class="dashboard-main">
-
-            <!-- TOPBAR -->
-            <header class="dashboard-topbar">
-
-                <div class="dashboard-topbar-left">
-
-                    <button
-                        type="button"
-                        class="dashboard-menu-toggle"
-                        id="consultationMenuToggle"
-                        aria-label="Toggle navigation menu"
-                    >
-                        ☰
-                    </button>
-
-
-                    <div>
-
-                        <p>Doctor Portal</p>
-
-                        <h2>Patient Consultation</h2>
-
-                    </div>
-
+            <div class="dashboard-menu-group">
+                <button type="button" class="dashboard-menu-parent">
+                    <span class="menu-parent-left"><span class="menu-icon">P</span>Patient Care</span>
+                    <span class="submenu-arrow">▼</span>
+                </button>
+                <div class="dashboard-submenu">
+                    <a href="medical-records.html" class="dashboard-submenu-link">Patient Records</a>
+                    <a href="digital-prescription.html" class="dashboard-submenu-link">Prescriptions</a>
                 </div>
+            </div>
 
-
-                <div class="dashboard-user">
-
-                    <div class="dashboard-user-info">
-
-                        <div class="doctor-avatar">
-                            DR
-                        </div>
-
-                        <div>
-
-                            <strong>Doctor</strong>
-
-                            <span>Medical Professional</span>
-
-                        </div>
-
-                    </div>
-
+            <div class="dashboard-menu-group">
+                <button type="button" class="dashboard-menu-parent">
+                    <span class="menu-parent-left"><span class="menu-icon">L</span>Laboratory</span>
+                    <span class="submenu-arrow">▼</span>
+                </button>
+                <div class="dashboard-submenu">
+                    <a href="lab-test-request.html" class="dashboard-submenu-link">Lab Test Requests</a>
+                    <a href="laboratory-results.html" class="dashboard-submenu-link">Laboratory Reports</a>
                 </div>
+            </div>
+        </nav>
 
-            </header>
+        <div class="dashboard-sidebar-footer">
+            <button type="button" class="dashboard-logout-btn" id="consultLogoutBtn">Logout</button>
+        </div>
+    </aside>
 
-
-            <!-- PAGE HEADER -->
-            <section class="consultation-header-card">
-
+    <main class="dashboard-main">
+        <header class="dashboard-topbar">
+            <div class="dashboard-topbar-left">
+                <button type="button" class="dashboard-menu-toggle" id="consultMenuToggle">☰</button>
                 <div>
-
-                    <p class="small-title">
-                        Consultation Management
-                    </p>
-
-                    <h1>
-                        Conduct Patient Consultation
-                    </h1>
-
-                    <p>
-                        Review the selected appointment, access relevant
-                        patient information and record professional
-                        consultation notes.
-                    </p>
-
+                    <p>Doctor Portal</p>
+                    <h2>Consultation</h2>
                 </div>
+            </div>
 
-
-                <div class="consultation-header-icon">
-                    C
-                </div>
-
-            </section>
-
-
-            <!-- PATIENT OVERVIEW -->
-            <section class="consultation-patient-card">
-
-                <div class="consultation-patient-main">
-
-                    <div class="consultation-patient-avatar">
-                        P
-                    </div>
-
-
+            <div class="dashboard-user">
+                <div class="dashboard-notification">1</div>
+                <div class="dashboard-user-info">
+                    <div class="dashboard-user-avatar">D</div>
                     <div>
-
-                        <p class="small-title">
-                            Current Patient
-                        </p>
-
-                        <h2>
-                            Patient #P1024
-                        </h2>
-
-                        <p>
-                            Appointment ID: #APT2041
-                        </p>
-
+                        <strong>Doctor</strong>
+                        <span>Consultation Services</span>
                     </div>
-
                 </div>
-
-
-                <div class="consultation-patient-details">
-
-                    <div>
-
-                        <span>Appointment Type</span>
-
-                        <strong>
-                            General Consultation
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>Appointment Time</span>
-
-                        <strong>
-                            10:30 AM
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>Status</span>
-
-                        <strong class="consultation-active-status">
-                            In Consultation
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- CONSULTATION LAYOUT -->
-            <section class="consultation-layout">
-
-                <!-- CONSULTATION FORM -->
-                <div class="consultation-form-card">
-
-                    <div class="consultation-section-heading">
-
-                        <div>
-
-                            <h3>
-                                Consultation Record
-                            </h3>
-
-                            <p>
-                                Enter professional consultation information
-                            </p>
-
-                        </div>
-
-
-                        <span>
-                            01
-                        </span>
-
-                    </div>
-
-
-                    <form id="consultationForm">
-
-                        <div
-                            class="consultation-error"
-                            id="consultationError"
-                        ></div>
-
-
-                        <!-- PATIENT CONCERN -->
-                        <div class="consultation-form-group">
-
-                            <label for="patientConcern">
-                                Patient Concern / Reason for Visit
-                            </label>
-
-                            <textarea
-                                id="patientConcern"
-                                rows="4"
-                                placeholder="Record the patient's reported concern or reason for consultation..."
-                            ></textarea>
-
-                        </div>
-
-
-                        <!-- OBSERVATION -->
-                        <div class="consultation-form-group">
-
-                            <label for="doctorObservation">
-                                Doctor's Observation
-                            </label>
-
-                            <textarea
-                                id="doctorObservation"
-                                rows="5"
-                                placeholder="Enter professional observations from the consultation..."
-                            ></textarea>
-
-                        </div>
-
-
-                        <div class="consultation-form-grid">
-
-                            <!-- FOLLOW UP -->
-                            <div class="consultation-form-group">
-
-                                <label for="followUpRequired">
-                                    Follow-up Required
-                                </label>
-
-                                <select id="followUpRequired">
-
-                                    <option value="">
-                                        Select Option
-                                    </option>
-
-                                    <option value="yes">
-                                        Yes
-                                    </option>
-
-                                    <option value="no">
-                                        No
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <!-- FOLLOW UP PERIOD -->
-                            <div class="consultation-form-group">
-
-                                <label for="followUpPeriod">
-                                    Follow-up Period
-                                </label>
-
-                                <select
-                                    id="followUpPeriod"
-                                    disabled
-                                >
-
-                                    <option value="">
-                                        Select Period
-                                    </option>
-
-                                    <option value="3-days">
-                                        Within 3 Days
-                                    </option>
-
-                                    <option value="1-week">
-                                        Within 1 Week
-                                    </option>
-
-                                    <option value="2-weeks">
-                                        Within 2 Weeks
-                                    </option>
-
-                                    <option value="1-month">
-                                        Within 1 Month
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- RECOMMENDATION -->
-                        <div class="consultation-form-group">
-
-                            <label for="consultationRecommendation">
-                                Professional Recommendation
-                            </label>
-
-                            <textarea
-                                id="consultationRecommendation"
-                                rows="4"
-                                placeholder="Record professional recommendations for the patient..."
-                            ></textarea>
-
-                        </div>
-
-
-                        <!-- ADDITIONAL NOTES -->
-                        <div class="consultation-form-group">
-
-                            <label for="consultationNotes">
-                                Additional Notes
-                            </label>
-
-                            <textarea
-                                id="consultationNotes"
-                                rows="3"
-                                placeholder="Optional additional consultation notes..."
-                            ></textarea>
-
-                        </div>
-
-
-                        <!-- FORM ACTIONS -->
-                        <div class="consultation-form-actions">
-
-                            <a
-                                href="doctor-dashboard.html"
-                                class="consultation-cancel-btn"
-                            >
-                                Cancel
-                            </a>
-
-
-                            <button
-                                type="submit"
-                                class="consultation-complete-btn"
-                            >
-                                Complete Consultation
-                            </button>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-
-                <!-- CLINICAL ACTIONS -->
-                <aside class="consultation-actions-card">
-
-                    <div class="consultation-actions-heading">
-
-                        <h3>
-                            Clinical Actions
-                        </h3>
-
-                        <p>
-                            Related consultation tasks
-                        </p>
-
-                    </div>
-
-
-                    <a
-                        href="#"
-                        class="consultation-action-item"
-                    >
-
-                        <span>
-                            Rx
-                        </span>
-
-                        <div>
-
-                            <h4>
-                                Create Prescription
-                            </h4>
-
-                            <p>
-                                Prepare a digital prescription
-                            </p>
-
-                        </div>
-
-                    </a>
-
-
-                    <a
-                        href="#"
-                        class="consultation-action-item"
-                    >
-
-                        <span>
-                            LT
-                        </span>
-
-                        <div>
-
-                            <h4>
-                                Request Lab Test
-                            </h4>
-
-                            <p>
-                                Submit a laboratory test request
-                            </p>
-
-                        </div>
-
-                    </a>
-
-
-                    <a
-                        href="medical-records.html"
-                        class="consultation-action-item"
-                    >
-
-                        <span>
-                            MR
-                        </span>
-
-                        <div>
-
-                            <h4>
-                                Patient Records
-                            </h4>
-
-                            <p>
-                                Review previous medical records
-                            </p>
-
-                        </div>
-
-                    </a>
-
-
-                    <div class="consultation-action-note">
-
-                        <strong>
-                            Professional Record
-                        </strong>
-
-                        <p>
-                            Consultation information should be recorded
-                            accurately before completing the session.
-                        </p>
-
-                    </div>
-
-                </aside>
-
-            </section>
-
-
-            <!-- CONSULTATION HISTORY -->
-            <section class="consultation-history-card">
-
-                <div class="consultation-history-heading">
-
-                    <div>
-
-                        <h3>
-                            Recent Patient Consultation History
-                        </h3>
-
-                        <p>
-                            Previous consultation records for reference
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="consultation-history-row">
-
-                    <div class="consultation-history-date">
-
-                        <strong>
-                            21
-                        </strong>
-
-                        <span>
-                            JUL
-                        </span>
-
-                    </div>
-
-
-                    <div>
-
-                        <h4>
-                            Follow-up Consultation
-                        </h4>
-
-                        <p>
-                            Previous consultation record available
-                            in the patient's medical history.
-                        </p>
-
-                    </div>
-
-
-                    <span class="consultation-history-status">
-                        Completed
-                    </span>
-
-                </div>
-
-
-                <div class="consultation-history-row">
-
-                    <div class="consultation-history-date">
-
-                        <strong>
-                            18
-                        </strong>
-
-                        <span>
-                            JUN
-                        </span>
-
-                    </div>
-
-
-                    <div>
-
-                        <h4>
-                            General Consultation
-                        </h4>
-
-                        <p>
-                            Professional consultation information
-                            was previously recorded.
-                        </p>
-
-                    </div>
-
-
-                    <span class="consultation-history-status">
-                        Completed
-                    </span>
-
-                </div>
-
-            </section>
-
-
-            <!-- PROTOTYPE NOTE -->
-            <section class="consultation-note-card">
-
-                <div class="consultation-note-icon">
-                    i
-                </div>
-
-
-                <div>
-
-                    <h3>
-                        Prototype Consultation Module
-                    </h3>
-
-                    <p>
-                        Consultation records entered here are currently
-                        stored only in the prototype interface. Secure
-                        database storage and authenticated patient-record
-                        updates will be added during backend integration.
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- FOOTER -->
-            <footer class="patient-dashboard-footer">
-
+            </div>
+        </header>
+
+        <section class="consult-page-header">
+            <div>
+                <p class="small-title">Consultation & Prescription Management</p>
+                <h1>Record Patient Consultation</h1>
                 <p>
-                    © 2026 Smart Healthcare and Management with AI System
+                    Review patient information and record symptoms, clinical findings,
+                    diagnosis, treatment advice, and follow-up details.
                 </p>
-
-            </footer>
-
-        </main>
-
-    </div>
-
-
-    <!-- SUCCESS MODAL -->
-    <div
-        class="consultation-success-modal"
-        id="consultationSuccessModal"
-    >
-
-        <div class="consultation-success-card">
-
-            <div class="consultation-success-icon">
-                ✓
             </div>
 
+            <a href="medical-records.html" class="consult-record-btn">View Medical Records</a>
+        </section>
 
-            <h2>
-                Consultation Completed
-            </h2>
+        <div class="consult-layout">
+            <section class="consult-card">
+                <h2>Consultation Details</h2>
+                <p>Complete the prototype consultation record.</p>
 
+                <form id="consultForm" novalidate>
+                    <div class="consult-grid">
+                        <div class="consult-field">
+                            <label for="consultPatient">Patient Name *</label>
+                            <input type="text" id="consultPatient" value="Patient User">
+                        </div>
 
-            <p>
-                The consultation record has been completed successfully
-                in this prototype session.
-            </p>
+                        <div class="consult-field">
+                            <label for="consultAppointment">Appointment ID *</label>
+                            <input type="text" id="consultAppointment" value="APT-1021">
+                        </div>
 
+                        <div class="consult-field full">
+                            <label for="consultSymptoms">Symptoms / Chief Complaint *</label>
+                            <textarea id="consultSymptoms" placeholder="Enter reported symptoms"></textarea>
+                        </div>
 
-            <button
-                type="button"
-                class="consultation-success-btn"
-                id="consultationSuccessBtn"
-            >
-                Back to Doctor Dashboard
-            </button>
+                        <div class="consult-field full">
+                            <label for="consultFindings">Clinical Findings *</label>
+                            <textarea id="consultFindings" placeholder="Enter examination or clinical findings"></textarea>
+                        </div>
 
+                        <div class="consult-field full">
+                            <label for="consultDiagnosis">Diagnosis / Assessment *</label>
+                            <textarea id="consultDiagnosis" placeholder="Enter doctor's assessment"></textarea>
+                        </div>
+
+                        <div class="consult-field full">
+                            <label for="consultAdvice">Treatment / Advice *</label>
+                            <textarea id="consultAdvice" placeholder="Enter treatment advice"></textarea>
+                        </div>
+
+                        <div class="consult-field">
+                            <label for="consultFollowUp">Follow-up</label>
+                            <select id="consultFollowUp">
+                                <option value="No routine follow-up">No Routine Follow-up</option>
+                                <option value="Follow up in 7 days">Follow up in 7 Days</option>
+                                <option value="Follow up in 14 days">Follow up in 14 Days</option>
+                                <option value="Follow up in 1 month">Follow up in 1 Month</option>
+                            </select>
+                        </div>
+
+                        <div class="consult-field">
+                            <label for="consultPriority">Priority</label>
+                            <select id="consultPriority">
+                                <option value="Routine">Routine</option>
+                                <option value="Priority">Priority</option>
+                                <option value="Urgent">Urgent</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <p class="consult-error" id="consultError"></p>
+
+                    <div class="consult-actions">
+                        <button type="reset" class="consult-reset">Clear</button>
+                        <button type="submit" class="consult-save">Save Consultation</button>
+                    </div>
+
+                    <div class="consult-success" id="consultSuccess">
+                        Consultation saved successfully in this prototype.
+                    </div>
+                </form>
+            </section>
+
+            <aside class="consult-side-column">
+                <section class="consult-side-card">
+                    <h3>Patient Information</h3>
+                    <p>Selected appointment details.</p>
+
+                    <div class="consult-info-list">
+                        <div class="consult-info-row"><span>Patient ID</span><strong>#P1024</strong></div>
+                        <div class="consult-info-row"><span>Appointment</span><strong>APT-1021</strong></div>
+                        <div class="consult-info-row"><span>Department</span><strong>General Medicine</strong></div>
+                        <div class="consult-info-row"><span>Time</span><strong>10:30 AM</strong></div>
+                    </div>
+                </section>
+
+                <section class="consult-side-card">
+                    <h3>Next Actions</h3>
+                    <p>Continue the clinical workflow after consultation.</p>
+
+                    <div class="consult-links">
+                        <a href="digital-prescription.html" class="primary">Create Prescription</a>
+                        <a href="lab-test-request.html">Request Lab Test</a>
+                        <a href="laboratory-results.html">View Lab Reports</a>
+                    </div>
+                </section>
+            </aside>
         </div>
 
-    </div>
+        <footer class="patient-dashboard-footer">
+            <p>© 2026 Smart Healthcare and Management with AI System</p>
+        </footer>
+    </main>
+</div>
 
-
-    <!-- LOGOUT MODAL -->
-    <div
-        class="logout-modal"
-        id="consultationLogoutModal"
-    >
-
-        <div class="logout-modal-card">
-
-            <div class="logout-modal-icon">
-                ?
-            </div>
-
-            <h2>
-                Logout from Account?
-            </h2>
-
-            <p>
-                Are you sure you want to leave the Doctor Portal?
-            </p>
-
-
-            <div class="logout-modal-actions">
-
-                <button
-                    type="button"
-                    class="logout-cancel-btn"
-                    id="consultationCancelLogout"
-                >
-                    Cancel
-                </button>
-
-
-                <button
-                    type="button"
-                    class="logout-confirm-btn"
-                    id="consultationConfirmLogout"
-                >
-                    Logout
-                </button>
-
-            </div>
-
+<div class="logout-modal" id="consultLogoutModal">
+    <div class="logout-modal-card">
+        <div class="logout-modal-icon">?</div>
+        <h2>Logout from Account?</h2>
+        <p>Are you sure you want to leave the Doctor Portal?</p>
+        <div class="logout-modal-actions">
+            <button type="button" class="logout-cancel-btn" id="consultCancelLogout">Cancel</button>
+            <button type="button" class="logout-confirm-btn" id="consultConfirmLogout">Logout</button>
         </div>
-
     </div>
+</div>
 
+<script>
+localStorage.setItem("healthcareActiveRole", "doctor");
 
-    <script src="../js/consultation.js"></script>
+const groups = document.querySelectorAll(".dashboard-menu-group");
 
+groups.forEach(group => {
+    const button = group.querySelector(".dashboard-menu-parent");
+
+    button.addEventListener("click", () => {
+        groups.forEach(other => {
+            if (other !== group) {
+                other.classList.remove("open");
+                const otherButton = other.querySelector(".dashboard-menu-parent");
+                if (otherButton) otherButton.classList.remove("active");
+            }
+        });
+
+        group.classList.toggle("open");
+        button.classList.toggle("active", group.classList.contains("open"));
+    });
+});
+
+const consultSidebar = document.getElementById("consultSidebar");
+
+document.getElementById("consultMenuToggle").addEventListener("click", () => {
+    consultSidebar.classList.toggle("open");
+});
+
+const consultForm = document.getElementById("consultForm");
+const consultError = document.getElementById("consultError");
+const consultSuccess = document.getElementById("consultSuccess");
+
+consultForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    consultError.textContent = "";
+    consultSuccess.classList.remove("show");
+
+    const patient = document.getElementById("consultPatient").value.trim();
+    const appointment = document.getElementById("consultAppointment").value.trim();
+    const symptoms = document.getElementById("consultSymptoms").value.trim();
+    const findings = document.getElementById("consultFindings").value.trim();
+    const diagnosis = document.getElementById("consultDiagnosis").value.trim();
+    const advice = document.getElementById("consultAdvice").value.trim();
+
+    if (!patient || !appointment || !symptoms || !findings || !diagnosis || !advice) {
+        consultError.textContent = "Please complete all required consultation fields.";
+        return;
+    }
+
+    const record = {
+        id: "CON-" + String(Date.now()).slice(-6),
+        patient,
+        appointment,
+        symptoms,
+        findings,
+        diagnosis,
+        advice,
+        followUp: document.getElementById("consultFollowUp").value,
+        priority: document.getElementById("consultPriority").value,
+        createdAt: new Date().toISOString()
+    };
+
+    localStorage.setItem("latestPrototypeConsultation", JSON.stringify(record));
+    consultSuccess.classList.add("show");
+});
+
+consultForm.addEventListener("reset", () => {
+    setTimeout(() => {
+        consultError.textContent = "";
+        consultSuccess.classList.remove("show");
+        document.getElementById("consultPatient").value = "Patient User";
+        document.getElementById("consultAppointment").value = "APT-1021";
+    }, 0);
+});
+
+const consultLogoutModal = document.getElementById("consultLogoutModal");
+
+document.getElementById("consultLogoutBtn").addEventListener("click", () => {
+    consultLogoutModal.classList.add("show");
+});
+
+document.getElementById("consultCancelLogout").addEventListener("click", () => {
+    consultLogoutModal.classList.remove("show");
+});
+
+document.getElementById("consultConfirmLogout").addEventListener("click", () => {
+    window.location.href = "login.html";
+});
+
+consultLogoutModal.addEventListener("click", event => {
+    if (event.target === consultLogoutModal) consultLogoutModal.classList.remove("show");
+});
+
+document.querySelectorAll(".dashboard-menu-link,.dashboard-submenu-link").forEach(link => {
+    link.addEventListener("click", () => {
+        if (window.innerWidth <= 900) consultSidebar.classList.remove("open");
+    });
+});
+</script>
 </body>
-
 </html>
