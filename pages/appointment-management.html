@@ -5,9 +5,453 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>My Appointments | Smart Healthcare</title>
+    <title>Appointment Management | Smart Healthcare</title>
 
     <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* COLLAPSIBLE SIDEBAR */
+
+        .dashboard-menu-group {
+            width: 100%;
+        }
+
+        .dashboard-menu-parent {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #dbe7ec;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-menu-parent:hover,
+        .dashboard-menu-parent.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        .menu-parent-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submenu-arrow {
+            font-size: 9px;
+            transition: transform 0.25s ease;
+        }
+
+        .dashboard-menu-group.open .submenu-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dashboard-submenu {
+            display: none;
+            margin: 5px 0 7px 30px;
+            padding-left: 13px;
+            border-left: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .dashboard-menu-group.open .dashboard-submenu {
+            display: block;
+        }
+
+        .dashboard-submenu-link {
+            display: block;
+            padding: 9px 11px;
+            margin: 3px 0;
+            border-radius: 7px;
+            color: #b9cbd3;
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-submenu-link:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            color: #ffffff;
+        }
+
+        .dashboard-submenu-link.active {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* PAGE */
+
+        .appointment-page-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 28px 0 22px;
+        }
+
+        .appointment-page-header h1 {
+            margin: 5px 0 8px;
+            color: #16324f;
+        }
+
+        .appointment-page-header p {
+            margin: 0;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .appointment-new-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border-radius: 9px;
+            padding: 11px 16px;
+            font-weight: 600;
+            white-space: nowrap;
+            background: #176cc8;
+            color: #ffffff;
+        }
+
+        .appointment-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .appointment-summary-card {
+            background: #ffffff;
+            border-radius: 13px;
+            padding: 18px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+        }
+
+        .appointment-summary-card span {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .appointment-summary-card strong {
+            color: #16324f;
+            font-size: 25px;
+        }
+
+        .appointment-filter-card,
+        .appointment-table-card {
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+        }
+
+        .appointment-filter-card {
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .appointment-filter-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .appointment-filter-field label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .appointment-filter-field input,
+        .appointment-filter-field select {
+            width: 100%;
+            min-height: 42px;
+            border: 1px solid #d8e0e8;
+            border-radius: 8px;
+            padding: 9px 11px;
+            color: #334155;
+            background: #ffffff;
+            outline: none;
+        }
+
+        .appointment-filter-field input:focus,
+        .appointment-filter-field select:focus {
+            border-color: #176cc8;
+        }
+
+        .appointment-clear-btn {
+            min-height: 42px;
+            padding: 0 16px;
+            border: 1px solid #d8e0e8;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #475569;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .appointment-table-card {
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .appointment-table-heading {
+            padding: 18px 20px;
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .appointment-table-heading h2 {
+            margin: 0 0 4px;
+            color: #16324f;
+        }
+
+        .appointment-table-heading p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .appointment-table-wrap {
+            overflow-x: auto;
+        }
+
+        .appointment-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        .appointment-table th,
+        .appointment-table td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #edf1f5;
+            vertical-align: middle;
+        }
+
+        .appointment-table th {
+            color: #64748b;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            background: #f8fafc;
+        }
+
+        .appointment-table td {
+            color: #334155;
+            font-size: 13px;
+        }
+
+        .appointment-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .appointment-id {
+            font-weight: 700;
+            color: #176cc8;
+        }
+
+        .appointment-doctor {
+            font-weight: 600;
+            color: #16324f;
+        }
+
+        .appointment-status {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 9px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .appointment-status.pending {
+            background: #fff6db;
+            color: #9a6b00;
+        }
+
+        .appointment-status.confirmed {
+            background: #e8f8ef;
+            color: #22844b;
+        }
+
+        .appointment-status.completed {
+            background: #eaf3ff;
+            color: #176cc8;
+        }
+
+        .appointment-status.cancelled {
+            background: #fdecec;
+            color: #b42318;
+        }
+
+        .appointment-actions {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .appointment-action-btn {
+            border: 1px solid #d8e0e8;
+            border-radius: 7px;
+            background: #ffffff;
+            color: #475569;
+            padding: 7px 10px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .appointment-action-btn.primary {
+            border-color: #176cc8;
+            background: #176cc8;
+            color: #ffffff;
+        }
+
+        .appointment-action-btn.danger {
+            border-color: #efc3bf;
+            color: #b42318;
+        }
+
+        .appointment-empty {
+            display: none;
+            padding: 28px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        /* MODAL */
+
+        .appointment-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.55);
+            z-index: 9999;
+        }
+
+        .appointment-modal.show {
+            display: flex;
+        }
+
+        .appointment-modal-card {
+            width: min(470px, 100%);
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+        }
+
+        .appointment-modal-card h2 {
+            margin: 0 0 7px;
+            color: #16324f;
+        }
+
+        .appointment-modal-card > p {
+            margin: 0 0 18px;
+            color: #64748b;
+            line-height: 1.6;
+            font-size: 13px;
+        }
+
+        .appointment-modal-grid {
+            display: grid;
+            gap: 13px;
+        }
+
+        .appointment-modal-field label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .appointment-modal-field input,
+        .appointment-modal-field select {
+            width: 100%;
+            min-height: 42px;
+            border: 1px solid #d8e0e8;
+            border-radius: 8px;
+            padding: 9px 11px;
+            outline: none;
+        }
+
+        .appointment-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 9px;
+            margin-top: 20px;
+        }
+
+        .appointment-modal-cancel,
+        .appointment-modal-save {
+            min-height: 40px;
+            padding: 0 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .appointment-modal-cancel {
+            border: 1px solid #d8e0e8;
+            background: #ffffff;
+            color: #475569;
+        }
+
+        .appointment-modal-save {
+            border: none;
+            background: #176cc8;
+            color: #ffffff;
+        }
+
+        .appointment-modal-save.danger {
+            background: #b42318;
+        }
+
+        @media (max-width: 980px) {
+            .appointment-summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .appointment-filter-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .appointment-clear-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .appointment-page-header {
+                flex-direction: column;
+            }
+
+            .appointment-new-btn {
+                width: 100%;
+            }
+
+            .appointment-summary-grid,
+            .appointment-filter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body class="dashboard-body">
@@ -23,91 +467,20 @@
                     Smart<span>Healthcare</span>
                 </a>
 
-                <p>Patient Portal</p>
+                <p id="portalName">Patient Portal</p>
 
             </div>
 
 
-            <nav class="dashboard-menu">
-
-                <a href="patient-dashboard.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">D</span>
-                    Dashboard
-
-                </a>
-
-
-                <a href="patient-profile.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">P</span>
-                    My Profile
-
-                </a>
-
-
-                <a href="doctor-availability.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">DA</span>
-                    Doctor Availability
-
-                </a>
-
-
-                <a href="appointment-booking.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">BA</span>
-                    Book Appointment
-
-                </a>
-
-
-                <a href="appointment-management.html"
-                   class="dashboard-menu-link active">
-
-                    <span class="menu-icon">A</span>
-                    My Appointments
-
-                </a>
-
-
-                <a href="ai-symptom-assessment.html" class="dashboard-menu-link">
-
-                    <span class="menu-icon">AI</span>
-                    AI Symptom Assessment
-
-                </a>
-
-
-                <a href="medical-records.html" class="dashboard-menu-link">
-
-                    <span class="menu-icon">MR</span>
-                    Medical Records
-
-                </a>
-
-
-                <a href="digital-prescription.html" class="dashboard-menu-link">
-
-                    <span class="menu-icon">Rx</span>
-                    Prescriptions
-
-                </a>
-
+            <nav class="dashboard-menu" id="appointmentSidebarMenu">
             </nav>
 
 
             <div class="dashboard-sidebar-footer">
 
-                <button
-                    type="button"
-                    class="dashboard-logout-btn"
-                    id="appointmentLogoutBtn"
-                >
+                <button type="button"
+                        class="dashboard-logout-btn"
+                        id="appointmentLogoutBtn">
                     Logout
                 </button>
 
@@ -116,7 +489,7 @@
         </aside>
 
 
-        <!-- MAIN CONTENT -->
+        <!-- MAIN -->
         <main class="dashboard-main">
 
             <!-- TOPBAR -->
@@ -133,13 +506,9 @@
                         ☰
                     </button>
 
-
                     <div>
-
-                        <p>Patient Portal</p>
-
-                        <h2>My Appointments</h2>
-
+                        <p id="topPortalName">Patient Portal</p>
+                        <h2>Appointment Management</h2>
                     </div>
 
                 </div>
@@ -148,22 +517,19 @@
                 <div class="dashboard-user">
 
                     <div class="dashboard-notification">
-                        2
+                        1
                     </div>
-
 
                     <div class="dashboard-user-info">
 
-                        <div class="dashboard-user-avatar">
+                        <div class="dashboard-user-avatar"
+                             id="roleAvatar">
                             P
                         </div>
 
                         <div>
-
-                            <strong>Patient</strong>
-
-                            <span>Patient Account</span>
-
+                            <strong id="roleName">Patient</strong>
+                            <span>Appointment Services</span>
                         </div>
 
                     </div>
@@ -173,8 +539,8 @@
             </header>
 
 
-            <!-- PAGE HEADER -->
-            <section class="appointment-header-card">
+            <!-- HEADER -->
+            <section class="appointment-page-header">
 
                 <div>
 
@@ -182,24 +548,20 @@
                         Appointment Management
                     </p>
 
-                    <h1>
-                        Manage Your Appointments
+                    <h1 id="appointmentPageTitle">
+                        My Appointments
                     </h1>
 
-                    <p>
-                        Review upcoming and previous consultations,
-                        monitor appointment status and manage your
-                        scheduled healthcare visits.
+                    <p id="appointmentPageDescription">
+                        View, monitor, reschedule, or cancel your medical appointments.
                     </p>
 
                 </div>
 
-
-                <a
-                    href="appointment-booking.html"
-                    class="appointment-new-btn"
-                >
-                    + Book New Appointment
+                <a href="appointment-booking.html"
+                   class="appointment-new-btn"
+                   id="newAppointmentBtn">
+                    Book New Appointment
                 </a>
 
             </section>
@@ -209,86 +571,23 @@
             <section class="appointment-summary-grid">
 
                 <div class="appointment-summary-card">
-
-                    <div class="appointment-summary-icon">
-                        U
-                    </div>
-
-                    <div>
-
-                        <p>Upcoming</p>
-
-                        <h3 id="upcomingCount">
-                            3
-                        </h3>
-
-                        <span>Scheduled appointments</span>
-
-                    </div>
-
+                    <span>Total Appointments</span>
+                    <strong id="totalAppointments">0</strong>
                 </div>
 
-
                 <div class="appointment-summary-card">
-
-                    <div class="appointment-summary-icon">
-                        C
-                    </div>
-
-                    <div>
-
-                        <p>Completed</p>
-
-                        <h3 id="completedCount">
-                            2
-                        </h3>
-
-                        <span>Previous consultations</span>
-
-                    </div>
-
+                    <span>Pending</span>
+                    <strong id="pendingAppointments">0</strong>
                 </div>
 
-
                 <div class="appointment-summary-card">
-
-                    <div class="appointment-summary-icon">
-                        X
-                    </div>
-
-                    <div>
-
-                        <p>Cancelled</p>
-
-                        <h3 id="cancelledCount">
-                            1
-                        </h3>
-
-                        <span>Cancelled appointments</span>
-
-                    </div>
-
+                    <span>Confirmed</span>
+                    <strong id="confirmedAppointments">0</strong>
                 </div>
 
-
                 <div class="appointment-summary-card">
-
-                    <div class="appointment-summary-icon">
-                        T
-                    </div>
-
-                    <div>
-
-                        <p>Total</p>
-
-                        <h3 id="totalCount">
-                            6
-                        </h3>
-
-                        <span>Appointment records</span>
-
-                    </div>
-
+                    <span>Completed</span>
+                    <strong id="completedAppointments">0</strong>
                 </div>
 
             </section>
@@ -297,729 +596,116 @@
             <!-- FILTER -->
             <section class="appointment-filter-card">
 
-                <div>
+                <div class="appointment-filter-grid">
 
-                    <h3>
-                        Appointment History
-                    </h3>
+                    <div class="appointment-filter-field">
 
-                    <p>
-                        Filter appointments by current status
-                    </p>
+                        <label for="appointmentSearch">
+                            Search Appointment
+                        </label>
 
-                </div>
-
-
-                <div class="appointment-filter-buttons">
-
-                    <button
-                        type="button"
-                        class="appointment-filter-btn active"
-                        data-filter="all"
-                    >
-                        All
-                    </button>
-
-                    <button
-                        type="button"
-                        class="appointment-filter-btn"
-                        data-filter="upcoming"
-                    >
-                        Upcoming
-                    </button>
-
-                    <button
-                        type="button"
-                        class="appointment-filter-btn"
-                        data-filter="completed"
-                    >
-                        Completed
-                    </button>
-
-                    <button
-                        type="button"
-                        class="appointment-filter-btn"
-                        data-filter="cancelled"
-                    >
-                        Cancelled
-                    </button>
-
-                </div>
-
-            </section>
-
-
-            <!-- APPOINTMENTS -->
-            <section
-                class="appointment-list"
-                id="appointmentList"
-            >
-
-                <!-- APPOINTMENT 1 -->
-                <article
-                    class="appointment-item-card"
-                    data-status="upcoming"
-                    data-appointment-id="#APT2041"
-                    data-doctor="Dr. Sarah Ahmed"
-                >
-
-                    <div class="appointment-date-card">
-
-                        <span>AUG</span>
-
-                        <strong>15</strong>
-
-                        <small>2026</small>
+                        <input
+                            type="text"
+                            id="appointmentSearch"
+                            placeholder="Search by ID, doctor, patient, or department"
+                        >
 
                     </div>
 
 
-                    <div class="appointment-main-info">
+                    <div class="appointment-filter-field">
 
-                        <div class="appointment-title-row">
+                        <label for="appointmentStatusFilter">
+                            Status
+                        </label>
 
-                            <div>
+                        <select id="appointmentStatusFilter">
 
-                                <h3>
-                                    General Consultation
-                                </h3>
+                            <option value="all">
+                                All Status
+                            </option>
 
-                                <p>
-                                    Appointment ID: #APT2041
-                                </p>
+                            <option value="Pending">
+                                Pending
+                            </option>
 
-                            </div>
+                            <option value="Confirmed">
+                                Confirmed
+                            </option>
 
-
-                            <span class="appointment-status-badge upcoming">
-                                Upcoming
-                            </span>
-
-                        </div>
-
-
-                        <div class="appointment-details-grid">
-
-                            <div>
-
-                                <span>Doctor</span>
-
-                                <strong>
-                                    Dr. Sarah Ahmed
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Specialty</span>
-
-                                <strong>
-                                    General Medicine
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Time</span>
-
-                                <strong>
-                                    10:30 AM
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Type</span>
-
-                                <strong>
-                                    General Consultation
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="appointment-card-actions">
-
-                            <a
-                                href="appointment-booking.html"
-                                class="appointment-reschedule-btn"
-                            >
-                                Reschedule
-                            </a>
-
-
-                            <button
-                                type="button"
-                                class="appointment-cancel-action"
-                            >
-                                Cancel Appointment
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- APPOINTMENT 2 -->
-                <article
-                    class="appointment-item-card"
-                    data-status="upcoming"
-                    data-appointment-id="#APT2048"
-                    data-doctor="Dr. Mahmud Hasan"
-                >
-
-                    <div class="appointment-date-card">
-
-                        <span>AUG</span>
-
-                        <strong>22</strong>
-
-                        <small>2026</small>
-
-                    </div>
-
-
-                    <div class="appointment-main-info">
-
-                        <div class="appointment-title-row">
-
-                            <div>
-
-                                <h3>
-                                    Follow-up Consultation
-                                </h3>
-
-                                <p>
-                                    Appointment ID: #APT2048
-                                </p>
-
-                            </div>
-
-
-                            <span class="appointment-status-badge upcoming">
-                                Upcoming
-                            </span>
-
-                        </div>
-
-
-                        <div class="appointment-details-grid">
-
-                            <div>
-
-                                <span>Doctor</span>
-
-                                <strong>
-                                    Dr. Mahmud Hasan
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Specialty</span>
-
-                                <strong>
-                                    Cardiology
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Time</span>
-
-                                <strong>
-                                    04:00 PM
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Type</span>
-
-                                <strong>
-                                    Follow-up Consultation
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="appointment-card-actions">
-
-                            <a
-                                href="appointment-booking.html"
-                                class="appointment-reschedule-btn"
-                            >
-                                Reschedule
-                            </a>
-
-
-                            <button
-                                type="button"
-                                class="appointment-cancel-action"
-                            >
-                                Cancel Appointment
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- APPOINTMENT 3 -->
-                <article
-                    class="appointment-item-card"
-                    data-status="upcoming"
-                    data-appointment-id="#APT2055"
-                    data-doctor="Dr. Nabila Rahman"
-                >
-
-                    <div class="appointment-date-card">
-
-                        <span>SEP</span>
-
-                        <strong>03</strong>
-
-                        <small>2026</small>
-
-                    </div>
-
-
-                    <div class="appointment-main-info">
-
-                        <div class="appointment-title-row">
-
-                            <div>
-
-                                <h3>
-                                    Routine Check-up
-                                </h3>
-
-                                <p>
-                                    Appointment ID: #APT2055
-                                </p>
-
-                            </div>
-
-
-                            <span class="appointment-status-badge upcoming">
-                                Upcoming
-                            </span>
-
-                        </div>
-
-
-                        <div class="appointment-details-grid">
-
-                            <div>
-
-                                <span>Doctor</span>
-
-                                <strong>
-                                    Dr. Nabila Rahman
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Specialty</span>
-
-                                <strong>
-                                    Dermatology
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Time</span>
-
-                                <strong>
-                                    12:00 PM
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Type</span>
-
-                                <strong>
-                                    Routine Check-up
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="appointment-card-actions">
-
-                            <a
-                                href="appointment-booking.html"
-                                class="appointment-reschedule-btn"
-                            >
-                                Reschedule
-                            </a>
-
-
-                            <button
-                                type="button"
-                                class="appointment-cancel-action"
-                            >
-                                Cancel Appointment
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- APPOINTMENT 4 -->
-                <article
-                    class="appointment-item-card"
-                    data-status="completed"
-                >
-
-                    <div class="appointment-date-card completed">
-
-                        <span>JUL</span>
-
-                        <strong>21</strong>
-
-                        <small>2026</small>
-
-                    </div>
-
-
-                    <div class="appointment-main-info">
-
-                        <div class="appointment-title-row">
-
-                            <div>
-
-                                <h3>
-                                    General Consultation
-                                </h3>
-
-                                <p>
-                                    Appointment ID: #APT1987
-                                </p>
-
-                            </div>
-
-
-                            <span class="appointment-status-badge completed">
+                            <option value="Completed">
                                 Completed
-                            </span>
+                            </option>
 
-                        </div>
-
-
-                        <div class="appointment-details-grid">
-
-                            <div>
-
-                                <span>Doctor</span>
-
-                                <strong>
-                                    Dr. Sarah Ahmed
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Specialty</span>
-
-                                <strong>
-                                    General Medicine
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Time</span>
-
-                                <strong>
-                                    09:30 AM
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Type</span>
-
-                                <strong>
-                                    General Consultation
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- APPOINTMENT 5 -->
-                <article
-                    class="appointment-item-card"
-                    data-status="completed"
-                >
-
-                    <div class="appointment-date-card completed">
-
-                        <span>JUL</span>
-
-                        <strong>08</strong>
-
-                        <small>2026</small>
-
-                    </div>
-
-
-                    <div class="appointment-main-info">
-
-                        <div class="appointment-title-row">
-
-                            <div>
-
-                                <h3>
-                                    Follow-up Consultation
-                                </h3>
-
-                                <p>
-                                    Appointment ID: #APT1954
-                                </p>
-
-                            </div>
-
-
-                            <span class="appointment-status-badge completed">
-                                Completed
-                            </span>
-
-                        </div>
-
-
-                        <div class="appointment-details-grid">
-
-                            <div>
-
-                                <span>Doctor</span>
-
-                                <strong>
-                                    Dr. Mahmud Hasan
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Specialty</span>
-
-                                <strong>
-                                    Cardiology
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Time</span>
-
-                                <strong>
-                                    03:00 PM
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Type</span>
-
-                                <strong>
-                                    Follow-up Consultation
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- APPOINTMENT 6 -->
-                <article
-                    class="appointment-item-card"
-                    data-status="cancelled"
-                >
-
-                    <div class="appointment-date-card cancelled">
-
-                        <span>JUN</span>
-
-                        <strong>24</strong>
-
-                        <small>2026</small>
-
-                    </div>
-
-
-                    <div class="appointment-main-info">
-
-                        <div class="appointment-title-row">
-
-                            <div>
-
-                                <h3>
-                                    Routine Check-up
-                                </h3>
-
-                                <p>
-                                    Appointment ID: #APT1892
-                                </p>
-
-                            </div>
-
-
-                            <span class="appointment-status-badge cancelled">
+                            <option value="Cancelled">
                                 Cancelled
-                            </span>
+                            </option>
 
-                        </div>
-
-
-                        <div class="appointment-details-grid">
-
-                            <div>
-
-                                <span>Doctor</span>
-
-                                <strong>
-                                    Dr. Farhana Islam
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Specialty</span>
-
-                                <strong>
-                                    Pediatrics
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Time</span>
-
-                                <strong>
-                                    11:00 AM
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Type</span>
-
-                                <strong>
-                                    Routine Check-up
-                                </strong>
-
-                            </div>
-
-                        </div>
+                        </select>
 
                     </div>
 
-                </article>
+
+                    <button
+                        type="button"
+                        class="appointment-clear-btn"
+                        id="appointmentClearFilter"
+                    >
+                        Clear
+                    </button>
+
+                </div>
 
             </section>
 
 
-            <!-- NO RESULTS -->
-            <div
-                class="appointment-no-results"
-                id="appointmentNoResults"
-            >
+            <!-- TABLE -->
+            <section class="appointment-table-card">
 
-                <div>
-                    i
-                </div>
+                <div class="appointment-table-heading">
 
-                <h3>
-                    No Appointments Found
-                </h3>
+                    <h2>
+                        Appointment List
+                    </h2>
 
-                <p>
-                    There are no appointments available for this status.
-                </p>
-
-            </div>
-
-
-            <!-- NOTICE -->
-            <section class="appointment-note-card">
-
-                <div class="appointment-note-icon">
-                    i
-                </div>
-
-                <div>
-
-                    <h3>
-                        Appointment Records
-                    </h3>
-
-                    <p>
-                        The information shown on this page is prototype
-                        data. Appointment changes will be permanently stored
-                        and synchronized after backend and database integration.
+                    <p id="appointmentResultText">
+                        Current appointment records
                     </p>
+
+                </div>
+
+
+                <div class="appointment-table-wrap">
+
+                    <table class="appointment-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Appointment ID</th>
+                                <th id="personColumnHeading">Doctor</th>
+                                <th>Department</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Visit Type</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="appointmentTableBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div class="appointment-empty"
+                     id="appointmentEmpty">
+
+                    No appointment record matches your current filter.
 
                 </div>
 
@@ -1040,29 +726,118 @@
     </div>
 
 
-    <!-- CANCEL APPOINTMENT MODAL -->
-    <div
-        class="appointment-cancel-modal"
-        id="appointmentCancelModal"
-    >
+    <!-- RESCHEDULE MODAL -->
+    <div class="appointment-modal"
+         id="rescheduleModal">
 
-        <div class="appointment-cancel-modal-card">
+        <div class="appointment-modal-card">
 
-            <div class="appointment-cancel-modal-icon">
-                !
+            <h2>
+                Reschedule Appointment
+            </h2>
+
+            <p>
+                Select a new date and time for the selected appointment.
+            </p>
+
+
+            <div class="appointment-modal-grid">
+
+                <div class="appointment-modal-field">
+
+                    <label for="rescheduleDate">
+                        New Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="rescheduleDate"
+                    >
+
+                </div>
+
+
+                <div class="appointment-modal-field">
+
+                    <label for="rescheduleTime">
+                        New Time
+                    </label>
+
+                    <select id="rescheduleTime">
+
+                        <option value="">
+                            Select Time
+                        </option>
+
+                        <option value="09:30 AM">
+                            09:30 AM
+                        </option>
+
+                        <option value="10:30 AM">
+                            10:30 AM
+                        </option>
+
+                        <option value="02:00 PM">
+                            02:00 PM
+                        </option>
+
+                        <option value="03:00 PM">
+                            03:00 PM
+                        </option>
+
+                        <option value="04:00 PM">
+                            04:00 PM
+                        </option>
+
+                        <option value="05:00 PM">
+                            05:00 PM
+                        </option>
+
+                    </select>
+
+                </div>
+
             </div>
 
+
+            <div class="appointment-modal-actions">
+
+                <button
+                    type="button"
+                    class="appointment-modal-cancel"
+                    id="closeRescheduleBtn"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="appointment-modal-save"
+                    id="saveRescheduleBtn"
+                >
+                    Save Changes
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CANCEL MODAL -->
+    <div class="appointment-modal"
+         id="cancelAppointmentModal">
+
+        <div class="appointment-modal-card">
 
             <h2>
                 Cancel Appointment?
             </h2>
 
-
             <p>
-                Are you sure you want to cancel
-                <strong id="cancelAppointmentId"></strong>
-                with
-                <strong id="cancelDoctorName"></strong>?
+                This prototype will update the selected appointment status
+                to Cancelled.
             </p>
 
 
@@ -1070,16 +845,15 @@
 
                 <button
                     type="button"
-                    class="appointment-modal-back-btn"
-                    id="keepAppointmentBtn"
+                    class="appointment-modal-cancel"
+                    id="closeCancelAppointmentBtn"
                 >
                     Keep Appointment
                 </button>
 
-
                 <button
                     type="button"
-                    class="appointment-modal-cancel-btn"
+                    class="appointment-modal-save danger"
                     id="confirmCancelAppointmentBtn"
                 >
                     Cancel Appointment
@@ -1092,48 +866,9 @@
     </div>
 
 
-    <!-- CANCEL SUCCESS MODAL -->
-    <div
-        class="appointment-success-modal"
-        id="appointmentSuccessModal"
-    >
-
-        <div class="appointment-success-modal-card">
-
-            <div class="appointment-success-modal-icon">
-                ✓
-            </div>
-
-
-            <h2>
-                Appointment Cancelled
-            </h2>
-
-
-            <p>
-                The appointment has been marked as cancelled
-                in this prototype session.
-            </p>
-
-
-            <button
-                type="button"
-                class="appointment-success-close-btn"
-                id="appointmentSuccessBtn"
-            >
-                Done
-            </button>
-
-        </div>
-
-    </div>
-
-
     <!-- LOGOUT MODAL -->
-    <div
-        class="logout-modal"
-        id="appointmentLogoutModal"
-    >
+    <div class="logout-modal"
+         id="appointmentLogoutModal">
 
         <div class="logout-modal-card">
 
@@ -1146,7 +881,7 @@
             </h2>
 
             <p>
-                Are you sure you want to leave the Patient Portal?
+                Are you sure you want to leave the system?
             </p>
 
 
@@ -1159,7 +894,6 @@
                 >
                     Cancel
                 </button>
-
 
                 <button
                     type="button"
@@ -1176,7 +910,1483 @@
     </div>
 
 
-    <script src="../js/appointment-management.js"></script>
+    <script>
+        /* ROLE */
+
+        function detectRole() {
+
+            const referrer =
+                document.referrer.toLowerCase();
+
+            if (referrer.includes("doctor-dashboard")) {
+                localStorage.setItem(
+                    "healthcareActiveRole",
+                    "doctor"
+                );
+            }
+
+            if (referrer.includes("receptionist-dashboard")) {
+                localStorage.setItem(
+                    "healthcareActiveRole",
+                    "receptionist"
+                );
+            }
+
+            if (
+                referrer.includes("patient-dashboard") ||
+                referrer.includes("patient-profile") ||
+                referrer.includes("appointment-booking") ||
+                referrer.includes("doctor-availability")
+            ) {
+                localStorage.setItem(
+                    "healthcareActiveRole",
+                    "patient"
+                );
+            }
+
+            return (
+                localStorage.getItem(
+                    "healthcareActiveRole"
+                ) || "patient"
+            );
+
+        }
+
+
+        const activeRole =
+            detectRole();
+
+
+        const portalName =
+            document.getElementById("portalName");
+
+        const topPortalName =
+            document.getElementById("topPortalName");
+
+        const roleAvatar =
+            document.getElementById("roleAvatar");
+
+        const roleName =
+            document.getElementById("roleName");
+
+        const appointmentPageTitle =
+            document.getElementById(
+                "appointmentPageTitle"
+            );
+
+        const appointmentPageDescription =
+            document.getElementById(
+                "appointmentPageDescription"
+            );
+
+        const newAppointmentBtn =
+            document.getElementById(
+                "newAppointmentBtn"
+            );
+
+        const personColumnHeading =
+            document.getElementById(
+                "personColumnHeading"
+            );
+
+        const appointmentSidebarMenu =
+            document.getElementById(
+                "appointmentSidebarMenu"
+            );
+
+
+        function patientSidebar() {
+
+            return `
+                <a href="patient-dashboard.html"
+                   class="dashboard-menu-link">
+                    <span class="menu-icon">D</span>
+                    Dashboard
+                </a>
+
+                <a href="patient-profile.html"
+                   class="dashboard-menu-link">
+                    <span class="menu-icon">P</span>
+                    My Profile
+                </a>
+
+                <div class="dashboard-menu-group open">
+
+                    <button type="button"
+                            class="dashboard-menu-parent active">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">A</span>
+                            Appointments
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="doctor-availability.html"
+                           class="dashboard-submenu-link">
+                            Doctor Availability
+                        </a>
+
+                        <a href="appointment-booking.html"
+                           class="dashboard-submenu-link">
+                            Book Appointment
+                        </a>
+
+                        <a href="appointment-management.html"
+                           class="dashboard-submenu-link active">
+                            My Appointments
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">H</span>
+                            Health Services
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="ai-symptom-assessment.html"
+                           class="dashboard-submenu-link">
+                            AI Symptom Assessment
+                        </a>
+
+                        <a href="medical-records.html"
+                           class="dashboard-submenu-link">
+                            Medical Records
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">R</span>
+                            Reports & Treatment
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="digital-prescription.html"
+                           class="dashboard-submenu-link">
+                            Prescriptions
+                        </a>
+
+                        <a href="laboratory-results.html"
+                           class="dashboard-submenu-link">
+                            Laboratory Reports
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">S</span>
+                            Billing & Support
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="billing-payment.html"
+                           class="dashboard-submenu-link">
+                            Billing & Payment
+                        </a>
+
+                        <a href="feedback-complaint.html"
+                           class="dashboard-submenu-link">
+                            Feedback & Complaint
+                        </a>
+
+                    </div>
+
+                </div>
+            `;
+
+        }
+
+
+        function doctorSidebar() {
+
+            return `
+                <a href="doctor-dashboard.html"
+                   class="dashboard-menu-link">
+                    <span class="menu-icon">D</span>
+                    Dashboard
+                </a>
+
+                <div class="dashboard-menu-group open">
+
+                    <button type="button"
+                            class="dashboard-menu-parent active">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">A</span>
+                            Appointments
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="appointment-management.html"
+                           class="dashboard-submenu-link active">
+                            Appointment List
+                        </a>
+
+                        <a href="consultation.html"
+                           class="dashboard-submenu-link">
+                            Consultations
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">P</span>
+                            Patient Care
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="medical-records.html"
+                           class="dashboard-submenu-link">
+                            Patient Records
+                        </a>
+
+                        <a href="digital-prescription.html"
+                           class="dashboard-submenu-link">
+                            Prescriptions
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">L</span>
+                            Laboratory
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="lab-test-request.html"
+                           class="dashboard-submenu-link">
+                            Lab Test Requests
+                        </a>
+
+                        <a href="laboratory-results.html"
+                           class="dashboard-submenu-link">
+                            Laboratory Reports
+                        </a>
+
+                    </div>
+
+                </div>
+            `;
+
+        }
+
+
+        function receptionistSidebar() {
+
+            return `
+                <a href="receptionist-dashboard.html"
+                   class="dashboard-menu-link">
+                    <span class="menu-icon">D</span>
+                    Dashboard
+                </a>
+
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">P</span>
+                            Patient Management
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="register.html"
+                           class="dashboard-submenu-link">
+                            Patient Registration
+                        </a>
+
+                        <a href="patient-profile.html"
+                           class="dashboard-submenu-link">
+                            Patient Profiles
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-menu-group open">
+
+                    <button type="button"
+                            class="dashboard-menu-parent active">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">A</span>
+                            Appointments
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="doctor-availability.html"
+                           class="dashboard-submenu-link">
+                            Doctor Availability
+                        </a>
+
+                        <a href="appointment-booking.html"
+                           class="dashboard-submenu-link">
+                            Book Appointment
+                        </a>
+
+                        <a href="appointment-management.html"
+                           class="dashboard-submenu-link active">
+                            Manage Appointments
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">B</span>
+                            Billing
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="billing-payment.html"
+                           class="dashboard-submenu-link">
+                            Billing Information
+                        </a>
+
+                        <a href="billing-payment.html"
+                           class="dashboard-submenu-link">
+                            Payment Status
+                        </a>
+
+                    </div>
+
+                </div>
+            `;
+
+        }
+
+
+        function setupRoleInterface() {
+
+            if (activeRole === "doctor") {
+
+                portalName.textContent =
+                    "Doctor Portal";
+
+                topPortalName.textContent =
+                    "Doctor Portal";
+
+                roleAvatar.textContent =
+                    "D";
+
+                roleName.textContent =
+                    "Doctor";
+
+                appointmentPageTitle.textContent =
+                    "Patient Appointments";
+
+                appointmentPageDescription.textContent =
+                    "Review scheduled patient appointments and continue to consultation services.";
+
+                newAppointmentBtn.style.display =
+                    "none";
+
+                personColumnHeading.textContent =
+                    "Patient";
+
+                appointmentSidebarMenu.innerHTML =
+                    doctorSidebar();
+
+            } else if (
+                activeRole === "receptionist"
+            ) {
+
+                portalName.textContent =
+                    "Receptionist Portal";
+
+                topPortalName.textContent =
+                    "Receptionist Portal";
+
+                roleAvatar.textContent =
+                    "R";
+
+                roleName.textContent =
+                    "Receptionist";
+
+                appointmentPageTitle.textContent =
+                    "Manage Appointments";
+
+                appointmentPageDescription.textContent =
+                    "Review, confirm, reschedule, cancel, and monitor patient appointments.";
+
+                newAppointmentBtn.textContent =
+                    "Book Appointment";
+
+                personColumnHeading.textContent =
+                    "Patient";
+
+                appointmentSidebarMenu.innerHTML =
+                    receptionistSidebar();
+
+            } else {
+
+                portalName.textContent =
+                    "Patient Portal";
+
+                topPortalName.textContent =
+                    "Patient Portal";
+
+                roleAvatar.textContent =
+                    "P";
+
+                roleName.textContent =
+                    "Patient";
+
+                appointmentPageTitle.textContent =
+                    "My Appointments";
+
+                appointmentPageDescription.textContent =
+                    "View, monitor, reschedule, or cancel your medical appointments.";
+
+                newAppointmentBtn.textContent =
+                    "Book New Appointment";
+
+                personColumnHeading.textContent =
+                    "Doctor";
+
+                appointmentSidebarMenu.innerHTML =
+                    patientSidebar();
+
+            }
+
+        }
+
+
+        setupRoleInterface();
+
+
+        /* SIDEBAR ACCORDION */
+
+        const menuGroups =
+            document.querySelectorAll(
+                ".dashboard-menu-group"
+            );
+
+        menuGroups.forEach(function (group) {
+
+            const parentButton =
+                group.querySelector(
+                    ".dashboard-menu-parent"
+                );
+
+            parentButton.addEventListener(
+                "click",
+                function () {
+
+                    menuGroups.forEach(
+                        function (otherGroup) {
+
+                            if (
+                                otherGroup !== group
+                            ) {
+
+                                otherGroup.classList.remove(
+                                    "open"
+                                );
+
+                                const otherButton =
+                                    otherGroup.querySelector(
+                                        ".dashboard-menu-parent"
+                                    );
+
+                                if (otherButton) {
+                                    otherButton.classList.remove(
+                                        "active"
+                                    );
+                                }
+
+                            }
+
+                        }
+                    );
+
+                    group.classList.toggle(
+                        "open"
+                    );
+
+                    parentButton.classList.toggle(
+                        "active",
+                        group.classList.contains(
+                            "open"
+                        )
+                    );
+
+                }
+            );
+
+        });
+
+
+        /* MOBILE SIDEBAR */
+
+        const appointmentMenuToggle =
+            document.getElementById(
+                "appointmentMenuToggle"
+            );
+
+        const appointmentSidebar =
+            document.getElementById(
+                "appointmentSidebar"
+            );
+
+        appointmentMenuToggle.addEventListener(
+            "click",
+            function () {
+
+                appointmentSidebar.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+
+        /* APPOINTMENTS */
+
+        const defaultAppointments = [
+            {
+                id: "APT-1021",
+                patient: "Patient User",
+                doctor: "Dr. Sarah Ahmed",
+                department: "General Medicine",
+                date: "2026-08-18",
+                time: "10:30 AM",
+                visitType: "General Consultation",
+                status: "Confirmed"
+            },
+            {
+                id: "APT-1022",
+                patient: "Patient User",
+                doctor: "Dr. Mahmud Hasan",
+                department: "Cardiology",
+                date: "2026-08-22",
+                time: "04:00 PM",
+                visitType: "Follow-up Consultation",
+                status: "Pending"
+            },
+            {
+                id: "APT-1015",
+                patient: "Patient User",
+                doctor: "Dr. Nusrat Jahan",
+                department: "Dermatology",
+                date: "2026-08-05",
+                time: "05:00 PM",
+                visitType: "Specialist Consultation",
+                status: "Completed"
+            }
+        ];
+
+
+        function loadAppointments() {
+
+            let appointments =
+                JSON.parse(
+                    localStorage.getItem(
+                        "prototypeAppointments"
+                    )
+                );
+
+
+            if (
+                !Array.isArray(appointments)
+            ) {
+
+                appointments =
+                    defaultAppointments;
+
+            }
+
+
+            const latest =
+                JSON.parse(
+                    localStorage.getItem(
+                        "latestPrototypeAppointment"
+                    )
+                );
+
+
+            if (
+                latest &&
+                !appointments.some(
+                    function (item) {
+                        return item.id === latest.id;
+                    }
+                )
+            ) {
+
+                appointments.unshift(
+                    latest
+                );
+
+            }
+
+
+            localStorage.setItem(
+                "prototypeAppointments",
+                JSON.stringify(
+                    appointments
+                )
+            );
+
+            return appointments;
+
+        }
+
+
+        let appointments =
+            loadAppointments();
+
+
+        const appointmentTableBody =
+            document.getElementById(
+                "appointmentTableBody"
+            );
+
+        const appointmentSearch =
+            document.getElementById(
+                "appointmentSearch"
+            );
+
+        const appointmentStatusFilter =
+            document.getElementById(
+                "appointmentStatusFilter"
+            );
+
+        const appointmentResultText =
+            document.getElementById(
+                "appointmentResultText"
+            );
+
+        const appointmentEmpty =
+            document.getElementById(
+                "appointmentEmpty"
+            );
+
+
+        function saveAppointments() {
+
+            localStorage.setItem(
+                "prototypeAppointments",
+                JSON.stringify(
+                    appointments
+                )
+            );
+
+        }
+
+
+        function formatDate(value) {
+
+            if (!value) {
+                return "";
+            }
+
+            return new Date(
+                value + "T00:00:00"
+            ).toLocaleDateString(
+                "en-GB",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+
+        }
+
+
+        function getVisibleAppointments() {
+
+            const searchText =
+                appointmentSearch.value
+                    .trim()
+                    .toLowerCase();
+
+            const status =
+                appointmentStatusFilter.value;
+
+
+            return appointments.filter(
+                function (appointment) {
+
+                    const text =
+                        (
+                            appointment.id + " " +
+                            appointment.patient + " " +
+                            appointment.doctor + " " +
+                            appointment.department
+                        ).toLowerCase();
+
+                    const searchMatch =
+                        text.includes(
+                            searchText
+                        );
+
+                    const statusMatch =
+                        status === "all" ||
+                        appointment.status === status;
+
+                    return (
+                        searchMatch &&
+                        statusMatch
+                    );
+
+                }
+            );
+
+        }
+
+
+        function buildActions(appointment) {
+
+            if (
+                appointment.status ===
+                "Cancelled"
+            ) {
+                return "";
+            }
+
+
+            if (activeRole === "doctor") {
+
+                if (
+                    appointment.status ===
+                    "Confirmed"
+                ) {
+
+                    return `
+                        <button
+                            type="button"
+                            class="appointment-action-btn primary"
+                            data-action="consult"
+                            data-id="${appointment.id}"
+                        >
+                            Consultation
+                        </button>
+                    `;
+
+                }
+
+                return "";
+
+            }
+
+
+            if (
+                activeRole ===
+                "receptionist"
+            ) {
+
+                let confirmButton = "";
+
+                if (
+                    appointment.status ===
+                    "Pending"
+                ) {
+
+                    confirmButton = `
+                        <button
+                            type="button"
+                            class="appointment-action-btn primary"
+                            data-action="confirm"
+                            data-id="${appointment.id}"
+                        >
+                            Confirm
+                        </button>
+                    `;
+
+                }
+
+
+                return `
+                    ${confirmButton}
+
+                    <button
+                        type="button"
+                        class="appointment-action-btn"
+                        data-action="reschedule"
+                        data-id="${appointment.id}"
+                    >
+                        Reschedule
+                    </button>
+
+                    <button
+                        type="button"
+                        class="appointment-action-btn danger"
+                        data-action="cancel"
+                        data-id="${appointment.id}"
+                    >
+                        Cancel
+                    </button>
+                `;
+
+            }
+
+
+            if (
+                appointment.status ===
+                "Completed"
+            ) {
+                return "";
+            }
+
+
+            return `
+                <button
+                    type="button"
+                    class="appointment-action-btn"
+                    data-action="reschedule"
+                    data-id="${appointment.id}"
+                >
+                    Reschedule
+                </button>
+
+                <button
+                    type="button"
+                    class="appointment-action-btn danger"
+                    data-action="cancel"
+                    data-id="${appointment.id}"
+                >
+                    Cancel
+                </button>
+            `;
+
+        }
+
+
+        function renderAppointments() {
+
+            const visibleAppointments =
+                getVisibleAppointments();
+
+            appointmentTableBody.innerHTML =
+                "";
+
+
+            visibleAppointments.forEach(
+                function (appointment) {
+
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    const person =
+                        activeRole === "patient"
+                            ? appointment.doctor
+                            : appointment.patient;
+
+
+                    row.innerHTML = `
+                        <td>
+                            <span class="appointment-id">
+                                ${appointment.id}
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="appointment-doctor">
+                                ${person}
+                            </span>
+                        </td>
+
+                        <td>
+                            ${appointment.department}
+                        </td>
+
+                        <td>
+                            ${formatDate(appointment.date)}
+                        </td>
+
+                        <td>
+                            ${appointment.time}
+                        </td>
+
+                        <td>
+                            ${appointment.visitType}
+                        </td>
+
+                        <td>
+                            <span class="appointment-status ${appointment.status.toLowerCase()}">
+                                ${appointment.status}
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="appointment-actions">
+                                ${buildActions(appointment)}
+                            </div>
+                        </td>
+                    `;
+
+
+                    appointmentTableBody.appendChild(
+                        row
+                    );
+
+                }
+            );
+
+
+            appointmentResultText.textContent =
+                visibleAppointments.length +
+                (
+                    visibleAppointments.length === 1
+                        ? " appointment shown"
+                        : " appointments shown"
+                );
+
+
+            if (
+                visibleAppointments.length === 0
+            ) {
+
+                appointmentEmpty.style.display =
+                    "block";
+
+            } else {
+
+                appointmentEmpty.style.display =
+                    "none";
+
+            }
+
+
+            updateSummary();
+
+        }
+
+
+        function updateSummary() {
+
+            document.getElementById(
+                "totalAppointments"
+            ).textContent =
+                appointments.length;
+
+
+            document.getElementById(
+                "pendingAppointments"
+            ).textContent =
+                appointments.filter(
+                    function (item) {
+                        return item.status === "Pending";
+                    }
+                ).length;
+
+
+            document.getElementById(
+                "confirmedAppointments"
+            ).textContent =
+                appointments.filter(
+                    function (item) {
+                        return item.status === "Confirmed";
+                    }
+                ).length;
+
+
+            document.getElementById(
+                "completedAppointments"
+            ).textContent =
+                appointments.filter(
+                    function (item) {
+                        return item.status === "Completed";
+                    }
+                ).length;
+
+        }
+
+
+        appointmentSearch.addEventListener(
+            "input",
+            renderAppointments
+        );
+
+
+        appointmentStatusFilter.addEventListener(
+            "change",
+            renderAppointments
+        );
+
+
+        document.getElementById(
+            "appointmentClearFilter"
+        ).addEventListener(
+            "click",
+            function () {
+
+                appointmentSearch.value = "";
+                appointmentStatusFilter.value = "all";
+                renderAppointments();
+
+            }
+        );
+
+
+        /* ACTIONS */
+
+        let selectedAppointmentId =
+            null;
+
+
+        const rescheduleModal =
+            document.getElementById(
+                "rescheduleModal"
+            );
+
+        const cancelAppointmentModal =
+            document.getElementById(
+                "cancelAppointmentModal"
+            );
+
+        const rescheduleDate =
+            document.getElementById(
+                "rescheduleDate"
+            );
+
+        const rescheduleTime =
+            document.getElementById(
+                "rescheduleTime"
+            );
+
+
+        const today =
+            new Date();
+
+        const year =
+            today.getFullYear();
+
+        const month =
+            String(
+                today.getMonth() + 1
+            ).padStart(2, "0");
+
+        const day =
+            String(
+                today.getDate()
+            ).padStart(2, "0");
+
+        rescheduleDate.min =
+            year + "-" + month + "-" + day;
+
+
+        appointmentTableBody.addEventListener(
+            "click",
+            function (event) {
+
+                const button =
+                    event.target.closest(
+                        ".appointment-action-btn"
+                    );
+
+                if (!button) {
+                    return;
+                }
+
+
+                selectedAppointmentId =
+                    button.dataset.id;
+
+                const action =
+                    button.dataset.action;
+
+
+                if (action === "confirm") {
+
+                    const appointment =
+                        appointments.find(
+                            function (item) {
+                                return (
+                                    item.id ===
+                                    selectedAppointmentId
+                                );
+                            }
+                        );
+
+                    if (appointment) {
+
+                        appointment.status =
+                            "Confirmed";
+
+                        saveAppointments();
+                        renderAppointments();
+
+                    }
+
+                }
+
+
+                if (action === "reschedule") {
+
+                    const appointment =
+                        appointments.find(
+                            function (item) {
+                                return (
+                                    item.id ===
+                                    selectedAppointmentId
+                                );
+                            }
+                        );
+
+                    if (appointment) {
+
+                        rescheduleDate.value =
+                            appointment.date;
+
+                        rescheduleTime.value =
+                            appointment.time;
+
+                    }
+
+                    rescheduleModal.classList.add(
+                        "show"
+                    );
+
+                }
+
+
+                if (action === "cancel") {
+
+                    cancelAppointmentModal.classList.add(
+                        "show"
+                    );
+
+                }
+
+
+                if (action === "consult") {
+
+                    window.location.href =
+                        "consultation.html";
+
+                }
+
+            }
+        );
+
+
+        document.getElementById(
+            "closeRescheduleBtn"
+        ).addEventListener(
+            "click",
+            function () {
+
+                rescheduleModal.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "saveRescheduleBtn"
+        ).addEventListener(
+            "click",
+            function () {
+
+                if (
+                    !rescheduleDate.value ||
+                    !rescheduleTime.value
+                ) {
+                    return;
+                }
+
+
+                const appointment =
+                    appointments.find(
+                        function (item) {
+                            return (
+                                item.id ===
+                                selectedAppointmentId
+                            );
+                        }
+                    );
+
+
+                if (appointment) {
+
+                    appointment.date =
+                        rescheduleDate.value;
+
+                    appointment.time =
+                        rescheduleTime.value;
+
+                    appointment.status =
+                        "Pending";
+
+                    saveAppointments();
+                    renderAppointments();
+
+                }
+
+
+                rescheduleModal.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "closeCancelAppointmentBtn"
+        ).addEventListener(
+            "click",
+            function () {
+
+                cancelAppointmentModal.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "confirmCancelAppointmentBtn"
+        ).addEventListener(
+            "click",
+            function () {
+
+                const appointment =
+                    appointments.find(
+                        function (item) {
+                            return (
+                                item.id ===
+                                selectedAppointmentId
+                            );
+                        }
+                    );
+
+
+                if (appointment) {
+
+                    appointment.status =
+                        "Cancelled";
+
+                    saveAppointments();
+                    renderAppointments();
+
+                }
+
+
+                cancelAppointmentModal.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+
+        /* LOGOUT */
+
+        const appointmentLogoutBtn =
+            document.getElementById(
+                "appointmentLogoutBtn"
+            );
+
+        const appointmentLogoutModal =
+            document.getElementById(
+                "appointmentLogoutModal"
+            );
+
+        appointmentLogoutBtn.addEventListener(
+            "click",
+            function () {
+
+                appointmentLogoutModal.classList.add(
+                    "show"
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "appointmentCancelLogout"
+        ).addEventListener(
+            "click",
+            function () {
+
+                appointmentLogoutModal.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "appointmentConfirmLogout"
+        ).addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+        /* CLOSE MODALS BY BACKDROP */
+
+        [
+            rescheduleModal,
+            cancelAppointmentModal,
+            appointmentLogoutModal
+        ].forEach(
+            function (modal) {
+
+                modal.addEventListener(
+                    "click",
+                    function (event) {
+
+                        if (
+                            event.target ===
+                            modal
+                        ) {
+
+                            modal.classList.remove(
+                                "show"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* CLOSE MOBILE SIDEBAR */
+
+        document.querySelectorAll(
+            ".dashboard-menu-link, .dashboard-submenu-link"
+        ).forEach(
+            function (link) {
+
+                link.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            window.innerWidth <=
+                            900
+                        ) {
+
+                            appointmentSidebar.classList.remove(
+                                "open"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        renderAppointments();
+    </script>
 
 </body>
 
