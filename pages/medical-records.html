@@ -8,6 +8,473 @@
     <title>Medical Records | Smart Healthcare</title>
 
     <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* COLLAPSIBLE SIDEBAR */
+
+        .dashboard-menu-group {
+            width: 100%;
+        }
+
+        .dashboard-menu-parent {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #dbe7ec;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-menu-parent:hover,
+        .dashboard-menu-parent.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        .menu-parent-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submenu-arrow {
+            font-size: 9px;
+            transition: transform 0.25s ease;
+        }
+
+        .dashboard-menu-group.open .submenu-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dashboard-submenu {
+            display: none;
+            margin: 5px 0 7px 30px;
+            padding-left: 13px;
+            border-left: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .dashboard-menu-group.open .dashboard-submenu {
+            display: block;
+        }
+
+        .dashboard-submenu-link {
+            display: block;
+            padding: 9px 11px;
+            margin: 3px 0;
+            border-radius: 7px;
+            color: #b9cbd3;
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-submenu-link:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            color: #ffffff;
+        }
+
+        .dashboard-submenu-link.active {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* PAGE */
+
+        .records-page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin: 28px 0 22px;
+        }
+
+        .records-page-header h1 {
+            margin: 5px 0 8px;
+            color: #16324f;
+        }
+
+        .records-page-header p {
+            margin: 0;
+            max-width: 780px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .records-profile-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border-radius: 9px;
+            padding: 11px 16px;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid #176cc8;
+            color: #176cc8;
+            background: #ffffff;
+        }
+
+        .records-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .records-summary-card,
+        .records-filter-card,
+        .records-card,
+        .records-note {
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+        }
+
+        .records-summary-card {
+            padding: 18px;
+        }
+
+        .records-summary-card span {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .records-summary-card strong {
+            color: #16324f;
+            font-size: 25px;
+        }
+
+        .records-filter-card {
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .records-filter-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .records-filter-field label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .records-filter-field input,
+        .records-filter-field select {
+            width: 100%;
+            min-height: 42px;
+            border: 1px solid #d8e0e8;
+            border-radius: 8px;
+            padding: 9px 11px;
+            outline: none;
+            color: #334155;
+            background: #ffffff;
+        }
+
+        .records-filter-field input:focus,
+        .records-filter-field select:focus {
+            border-color: #176cc8;
+        }
+
+        .records-clear-btn {
+            min-height: 42px;
+            padding: 0 16px;
+            border: 1px solid #d8e0e8;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #475569;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .records-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .records-card {
+            padding: 20px;
+        }
+
+        .records-card-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .records-card-title h3 {
+            margin: 0 0 5px;
+            color: #16324f;
+        }
+
+        .records-card-title p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .records-type {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #eaf3ff;
+            color: #176cc8;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .records-info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            padding: 14px 0;
+            border-top: 1px solid #edf1f5;
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .records-info-item span {
+            display: block;
+            margin-bottom: 3px;
+            color: #64748b;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .records-info-item strong {
+            color: #334155;
+            font-size: 13px;
+        }
+
+        .records-section {
+            margin-top: 15px;
+        }
+
+        .records-section h4 {
+            margin: 0 0 6px;
+            color: #334155;
+            font-size: 13px;
+        }
+
+        .records-section p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .records-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 9px;
+            margin-top: 16px;
+        }
+
+        .records-action-link,
+        .records-details-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 38px;
+            padding: 0 13px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .records-details-btn {
+            border: 1px solid #d8e0e8;
+            background: #ffffff;
+            color: #475569;
+        }
+
+        .records-action-link {
+            background: #176cc8;
+            color: #ffffff;
+        }
+
+        .records-empty {
+            display: none;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 14px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .records-note {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin: 22px 0 30px;
+            padding: 18px 20px;
+        }
+
+        .records-note-icon {
+            min-width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #eaf3ff;
+            color: #176cc8;
+            font-weight: 700;
+        }
+
+        .records-note h3 {
+            margin: 0 0 5px;
+            color: #16324f;
+            font-size: 15px;
+        }
+
+        .records-note p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* DETAILS MODAL */
+
+        .records-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.55);
+            z-index: 9999;
+        }
+
+        .records-modal.show {
+            display: flex;
+        }
+
+        .records-modal-card {
+            width: min(600px, 100%);
+            max-height: 88vh;
+            overflow-y: auto;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+        }
+
+        .records-modal-card h2 {
+            margin: 0 0 6px;
+            color: #16324f;
+        }
+
+        .records-modal-card > p {
+            margin: 0 0 18px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .records-modal-content {
+            display: grid;
+            gap: 13px;
+        }
+
+        .records-modal-row {
+            padding: 12px;
+            border-radius: 9px;
+            background: #f8fafc;
+        }
+
+        .records-modal-row span {
+            display: block;
+            margin-bottom: 4px;
+            color: #64748b;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .records-modal-row strong,
+        .records-modal-row p {
+            margin: 0;
+            color: #334155;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .records-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 18px;
+        }
+
+        .records-modal-close {
+            min-height: 40px;
+            padding: 0 16px;
+            border: none;
+            border-radius: 8px;
+            background: #176cc8;
+            color: #ffffff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        @media (max-width: 980px) {
+            .records-summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .records-info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .records-page-header,
+            .records-card-top {
+                flex-direction: column;
+            }
+
+            .records-profile-btn {
+                width: 100%;
+            }
+
+            .records-summary-grid,
+            .records-filter-grid,
+            .records-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .records-actions {
+                justify-content: stretch;
+            }
+
+            .records-action-link,
+            .records-details-btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body class="dashboard-body">
@@ -15,7 +482,7 @@
     <div class="dashboard-layout">
 
         <!-- SIDEBAR -->
-        <aside class="dashboard-sidebar" id="medicalSidebar">
+        <aside class="dashboard-sidebar" id="recordsSidebar">
 
             <div class="dashboard-sidebar-header">
 
@@ -23,90 +490,12 @@
                     Smart<span>Healthcare</span>
                 </a>
 
-                <p>Patient Portal</p>
+                <p id="recordsPortalName">Patient Portal</p>
 
             </div>
 
 
-            <nav class="dashboard-menu">
-
-                <a href="patient-dashboard.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">D</span>
-                    Dashboard
-
-                </a>
-
-
-                <a href="patient-profile.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">P</span>
-                    My Profile
-
-                </a>
-
-
-                <a href="doctor-availability.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">DA</span>
-                    Doctor Availability
-
-                </a>
-
-
-                <a href="appointment-booking.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">BA</span>
-                    Book Appointment
-
-                </a>
-
-
-                <a href="appointment-management.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">A</span>
-                    My Appointments
-
-                </a>
-
-
-                <a href="ai-symptom-assessment.html" class="dashboard-menu-link">
-
-                    <span class="menu-icon">AI</span>
-                    AI Symptom Assessment
-
-                </a>
-
-
-                <a href="medical-records.html"
-                   class="dashboard-menu-link active">
-
-                    <span class="menu-icon">MR</span>
-                    Medical Records
-
-                </a>
-
-
-                <a href="digital-prescription.html" class="dashboard-menu-link">
-
-                    <span class="menu-icon">Rx</span>
-                    Prescriptions
-
-                </a>
-
-
-                <a href="laboratory-results.html" class="dashboard-menu-link">
-
-                    <span class="menu-icon">LR</span>
-                    Laboratory Reports
-
-                </a>
-
+            <nav class="dashboard-menu" id="recordsSidebarMenu">
             </nav>
 
 
@@ -115,7 +504,7 @@
                 <button
                     type="button"
                     class="dashboard-logout-btn"
-                    id="medicalLogoutBtn"
+                    id="recordsLogoutBtn"
                 >
                     Logout
                 </button>
@@ -125,7 +514,7 @@
         </aside>
 
 
-        <!-- MAIN CONTENT -->
+        <!-- MAIN -->
         <main class="dashboard-main">
 
             <!-- TOPBAR -->
@@ -136,19 +525,15 @@
                     <button
                         type="button"
                         class="dashboard-menu-toggle"
-                        id="medicalMenuToggle"
+                        id="recordsMenuToggle"
                         aria-label="Toggle navigation menu"
                     >
                         ☰
                     </button>
 
-
                     <div>
-
-                        <p>Patient Portal</p>
-
+                        <p id="recordsTopPortalName">Patient Portal</p>
                         <h2>Medical Records</h2>
-
                     </div>
 
                 </div>
@@ -156,18 +541,20 @@
 
                 <div class="dashboard-user">
 
+                    <div class="dashboard-notification">
+                        1
+                    </div>
+
                     <div class="dashboard-user-info">
 
-                        <div class="dashboard-user-avatar">
+                        <div class="dashboard-user-avatar"
+                             id="recordsRoleAvatar">
                             P
                         </div>
 
                         <div>
-
-                            <strong>Patient</strong>
-
-                            <span>Patient Account</span>
-
+                            <strong id="recordsRoleName">Patient</strong>
+                            <span>Medical Information</span>
                         </div>
 
                     </div>
@@ -177,763 +564,140 @@
             </header>
 
 
-            <!-- PAGE HEADER -->
-            <section class="medical-header-card">
+            <!-- HEADER -->
+            <section class="records-page-header">
 
                 <div>
 
                     <p class="small-title">
-                        Health Record Management
+                        Patient Health Record Management
                     </p>
 
-                    <h1>
-                        Your Medical Record History
+                    <h1 id="recordsPageTitle">
+                        My Medical Records
                     </h1>
 
-                    <p>
-                        Review previous consultations and healthcare
-                        records stored under your patient profile.
+                    <p id="recordsPageDescription">
+                        Review your consultation history, diagnoses, prescriptions,
+                        and laboratory-related medical information.
                     </p>
 
                 </div>
 
 
-                <div class="medical-header-icon">
-                    MR
-                </div>
+                <a href="patient-profile.html"
+                   class="records-profile-btn"
+                   id="recordsProfileBtn">
+                    View Patient Profile
+                </a>
 
             </section>
 
 
             <!-- SUMMARY -->
-            <section class="medical-summary-grid">
+            <section class="records-summary-grid">
 
-                <div class="medical-summary-card">
-
-                    <div class="medical-summary-icon">
-                        R
-                    </div>
-
-                    <div>
-
-                        <p>Total Records</p>
-
-                        <h3 id="medicalTotalCount">
-                            5
-                        </h3>
-
-                        <span>Available medical records</span>
-
-                    </div>
-
+                <div class="records-summary-card">
+                    <span>Total Records</span>
+                    <strong id="recordsTotal">0</strong>
                 </div>
 
-
-                <div class="medical-summary-card">
-
-                    <div class="medical-summary-icon">
-                        C
-                    </div>
-
-                    <div>
-
-                        <p>Consultations</p>
-
-                        <h3>
-                            3
-                        </h3>
-
-                        <span>Consultation records</span>
-
-                    </div>
-
+                <div class="records-summary-card">
+                    <span>Consultations</span>
+                    <strong id="recordsConsultations">0</strong>
                 </div>
 
-
-                <div class="medical-summary-card">
-
-                    <div class="medical-summary-icon">
-                        F
-                    </div>
-
-                    <div>
-
-                        <p>Follow-ups</p>
-
-                        <h3>
-                            1
-                        </h3>
-
-                        <span>Follow-up record</span>
-
-                    </div>
-
+                <div class="records-summary-card">
+                    <span>Prescriptions</span>
+                    <strong id="recordsPrescriptions">3</strong>
                 </div>
 
-
-                <div class="medical-summary-card">
-
-                    <div class="medical-summary-icon">
-                        RC
-                    </div>
-
-                    <div>
-
-                        <p>Routine Check-ups</p>
-
-                        <h3>
-                            1
-                        </h3>
-
-                        <span>Routine health record</span>
-
-                    </div>
-
+                <div class="records-summary-card">
+                    <span>Lab Reports</span>
+                    <strong id="recordsLabReports">4</strong>
                 </div>
 
             </section>
 
 
-            <!-- SEARCH AND FILTER -->
-            <section class="medical-filter-card">
+            <!-- FILTER -->
+            <section class="records-filter-card">
 
-                <div class="medical-search-group">
+                <div class="records-filter-grid">
 
-                    <label for="medicalSearch">
-                        Search Records
-                    </label>
+                    <div class="records-filter-field">
 
-                    <input
-                        type="text"
-                        id="medicalSearch"
-                        placeholder="Search by record ID or doctor..."
-                    >
+                        <label for="recordsSearch">
+                            Search Medical Record
+                        </label>
 
-                </div>
-
-
-                <div class="medical-filter-group">
-
-                    <label for="medicalTypeFilter">
-                        Record Type
-                    </label>
-
-                    <select id="medicalTypeFilter">
-
-                        <option value="all">
-                            All Records
-                        </option>
-
-                        <option value="consultation">
-                            Consultation
-                        </option>
-
-                        <option value="follow-up">
-                            Follow-up
-                        </option>
-
-                        <option value="routine">
-                            Routine Check-up
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </section>
-
-
-            <!-- RECORD HEADING -->
-            <section class="medical-record-heading">
-
-                <div>
-
-                    <h3>
-                        Medical Record Timeline
-                    </h3>
-
-                    <p id="medicalResultCount">
-                        Showing 5 records
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- RECORD LIST -->
-            <section
-                class="medical-record-list"
-                id="medicalRecordList"
-            >
-
-                <!-- RECORD 1 -->
-                <article
-                    class="medical-record-card"
-                    data-search="mr1051 sarah ahmed"
-                    data-type="consultation"
-                >
-
-                    <div class="medical-record-date">
-
-                        <span>AUG</span>
-
-                        <strong>05</strong>
-
-                        <small>2026</small>
+                        <input
+                            type="text"
+                            id="recordsSearch"
+                            placeholder="Search doctor, diagnosis, department, or record ID"
+                        >
 
                     </div>
 
 
-                    <div class="medical-record-main">
+                    <div class="records-filter-field">
 
-                        <div class="medical-record-top">
+                        <label for="recordsTypeFilter">
+                            Record Type
+                        </label>
 
-                            <div>
+                        <select id="recordsTypeFilter">
 
-                                <h3>
-                                    General Consultation
-                                </h3>
+                            <option value="all">
+                                All Records
+                            </option>
 
-                                <p>
-                                    Record ID: #MR1051
-                                </p>
-
-                            </div>
-
-
-                            <span class="medical-record-badge consultation">
+                            <option value="Consultation">
                                 Consultation
-                            </span>
+                            </option>
 
-                        </div>
-
-
-                        <div class="medical-record-details">
-
-                            <div>
-
-                                <span>Doctor</span>
-
-                                <strong>
-                                    Dr. Sarah Ahmed
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Specialty</span>
-
-                                <strong>
-                                    General Medicine
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Appointment</span>
-
-                                <strong>
-                                    #APT2018
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="medical-record-bottom">
-
-                            <p>
-                                Consultation information and professional
-                                recommendations were added to the patient record.
-                            </p>
-
-
-                            <button
-                                type="button"
-                                class="medical-view-btn"
-                                data-id="#MR1051"
-                                data-title="General Consultation"
-                                data-doctor="Dr. Sarah Ahmed"
-                                data-specialty="General Medicine"
-                                data-date="05 August 2026"
-                                data-appointment="#APT2018"
-                                data-note="Consultation completed and healthcare recommendations were recorded for future reference."
-                            >
-                                View Details
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- RECORD 2 -->
-                <article
-                    class="medical-record-card"
-                    data-search="mr1038 mahmud hasan"
-                    data-type="follow-up"
-                >
-
-                    <div class="medical-record-date">
-
-                        <span>JUL</span>
-
-                        <strong>21</strong>
-
-                        <small>2026</small>
-
-                    </div>
-
-
-                    <div class="medical-record-main">
-
-                        <div class="medical-record-top">
-
-                            <div>
-
-                                <h3>
-                                    Follow-up Consultation
-                                </h3>
-
-                                <p>
-                                    Record ID: #MR1038
-                                </p>
-
-                            </div>
-
-
-                            <span class="medical-record-badge follow-up">
+                            <option value="Follow-up">
                                 Follow-up
-                            </span>
+                            </option>
 
-                        </div>
+                            <option value="Specialist Review">
+                                Specialist Review
+                            </option>
 
-
-                        <div class="medical-record-details">
-
-                            <div>
-
-                                <span>Doctor</span>
-
-                                <strong>
-                                    Dr. Mahmud Hasan
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Specialty</span>
-
-                                <strong>
-                                    Cardiology
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Appointment</span>
-
-                                <strong>
-                                    #APT1987
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="medical-record-bottom">
-
-                            <p>
-                                A scheduled follow-up consultation was completed
-                                and the record was updated.
-                            </p>
-
-
-                            <button
-                                type="button"
-                                class="medical-view-btn"
-                                data-id="#MR1038"
-                                data-title="Follow-up Consultation"
-                                data-doctor="Dr. Mahmud Hasan"
-                                data-specialty="Cardiology"
-                                data-date="21 July 2026"
-                                data-appointment="#APT1987"
-                                data-note="Follow-up consultation completed and relevant consultation information was added to the medical record."
-                            >
-                                View Details
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- RECORD 3 -->
-                <article
-                    class="medical-record-card"
-                    data-search="mr1025 nabila rahman"
-                    data-type="routine"
-                >
-
-                    <div class="medical-record-date">
-
-                        <span>JUL</span>
-
-                        <strong>08</strong>
-
-                        <small>2026</small>
+                        </select>
 
                     </div>
 
 
-                    <div class="medical-record-main">
-
-                        <div class="medical-record-top">
-
-                            <div>
-
-                                <h3>
-                                    Routine Check-up
-                                </h3>
-
-                                <p>
-                                    Record ID: #MR1025
-                                </p>
-
-                            </div>
-
-
-                            <span class="medical-record-badge routine">
-                                Routine
-                            </span>
-
-                        </div>
-
-
-                        <div class="medical-record-details">
-
-                            <div>
-
-                                <span>Doctor</span>
-
-                                <strong>
-                                    Dr. Nabila Rahman
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Specialty</span>
-
-                                <strong>
-                                    Dermatology
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Appointment</span>
-
-                                <strong>
-                                    #APT1954
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="medical-record-bottom">
-
-                            <p>
-                                Routine consultation information was recorded
-                                for future reference.
-                            </p>
-
-
-                            <button
-                                type="button"
-                                class="medical-view-btn"
-                                data-id="#MR1025"
-                                data-title="Routine Check-up"
-                                data-doctor="Dr. Nabila Rahman"
-                                data-specialty="Dermatology"
-                                data-date="08 July 2026"
-                                data-appointment="#APT1954"
-                                data-note="Routine check-up completed and the consultation information was stored in the patient record."
-                            >
-                                View Details
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- RECORD 4 -->
-                <article
-                    class="medical-record-card"
-                    data-search="mr1016 sarah ahmed"
-                    data-type="consultation"
-                >
-
-                    <div class="medical-record-date">
-
-                        <span>JUN</span>
-
-                        <strong>18</strong>
-
-                        <small>2026</small>
-
-                    </div>
-
-
-                    <div class="medical-record-main">
-
-                        <div class="medical-record-top">
-
-                            <div>
-
-                                <h3>
-                                    General Consultation
-                                </h3>
-
-                                <p>
-                                    Record ID: #MR1016
-                                </p>
-
-                            </div>
-
-
-                            <span class="medical-record-badge consultation">
-                                Consultation
-                            </span>
-
-                        </div>
-
-
-                        <div class="medical-record-details">
-
-                            <div>
-
-                                <span>Doctor</span>
-
-                                <strong>
-                                    Dr. Sarah Ahmed
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Specialty</span>
-
-                                <strong>
-                                    General Medicine
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Appointment</span>
-
-                                <strong>
-                                    #APT1901
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="medical-record-bottom">
-
-                            <p>
-                                General consultation record completed and
-                                stored under the patient profile.
-                            </p>
-
-
-                            <button
-                                type="button"
-                                class="medical-view-btn"
-                                data-id="#MR1016"
-                                data-title="General Consultation"
-                                data-doctor="Dr. Sarah Ahmed"
-                                data-specialty="General Medicine"
-                                data-date="18 June 2026"
-                                data-appointment="#APT1901"
-                                data-note="General consultation completed and the record was added to the patient's medical history."
-                            >
-                                View Details
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- RECORD 5 -->
-                <article
-                    class="medical-record-card"
-                    data-search="mr1009 farhana islam"
-                    data-type="consultation"
-                >
-
-                    <div class="medical-record-date">
-
-                        <span>MAY</span>
-
-                        <strong>27</strong>
-
-                        <small>2026</small>
-
-                    </div>
-
-
-                    <div class="medical-record-main">
-
-                        <div class="medical-record-top">
-
-                            <div>
-
-                                <h3>
-                                    General Consultation
-                                </h3>
-
-                                <p>
-                                    Record ID: #MR1009
-                                </p>
-
-                            </div>
-
-
-                            <span class="medical-record-badge consultation">
-                                Consultation
-                            </span>
-
-                        </div>
-
-
-                        <div class="medical-record-details">
-
-                            <div>
-
-                                <span>Doctor</span>
-
-                                <strong>
-                                    Dr. Farhana Islam
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Specialty</span>
-
-                                <strong>
-                                    Pediatrics
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Appointment</span>
-
-                                <strong>
-                                    #APT1855
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="medical-record-bottom">
-
-                            <p>
-                                Consultation details were added to the
-                                patient's historical medical records.
-                            </p>
-
-
-                            <button
-                                type="button"
-                                class="medical-view-btn"
-                                data-id="#MR1009"
-                                data-title="General Consultation"
-                                data-doctor="Dr. Farhana Islam"
-                                data-specialty="Pediatrics"
-                                data-date="27 May 2026"
-                                data-appointment="#APT1855"
-                                data-note="Consultation completed and relevant record information was stored for future healthcare reference."
-                            >
-                                View Details
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
+                    <button
+                        type="button"
+                        class="records-clear-btn"
+                        id="recordsClearBtn"
+                    >
+                        Clear
+                    </button>
+
+                </div>
 
             </section>
 
 
-            <!-- NO RESULTS -->
-            <div
-                class="medical-no-results"
-                id="medicalNoResults"
-            >
+            <!-- RECORDS -->
+            <section class="records-list"
+                     id="recordsList">
+            </section>
 
-                <div>
-                    !
-                </div>
 
-                <h3>
-                    No Medical Records Found
-                </h3>
-
-                <p>
-                    Try changing your search or record type filter.
-                </p>
-
+            <div class="records-empty"
+                 id="recordsEmpty">
+                No medical record matches your current search or filter.
             </div>
 
 
-            <!-- RECORD NOTICE -->
-            <section class="medical-note-card">
+            <!-- NOTE -->
+            <section class="records-note">
 
-                <div class="medical-note-icon">
+                <div class="records-note-icon">
                     i
                 </div>
 
@@ -944,10 +708,9 @@
                     </h3>
 
                     <p>
-                        The records displayed here are sample prototype
-                        information. Secure storage, access control and
-                        database synchronization will be implemented
-                        during backend integration.
+                        This prototype displays sample structured health records.
+                        In the complete system, only authorized users should be able
+                        to access or update protected patient medical information.
                     </p>
 
                 </div>
@@ -969,119 +732,37 @@
     </div>
 
 
-    <!-- RECORD DETAILS MODAL -->
-    <div
-        class="medical-details-modal"
-        id="medicalDetailsModal"
-    >
+    <!-- DETAILS MODAL -->
+    <div class="records-modal"
+         id="recordsDetailsModal">
 
-        <div class="medical-details-modal-card">
+        <div class="records-modal-card">
 
-            <div class="medical-details-modal-header">
+            <h2>
+                Medical Record Details
+            </h2>
 
-                <div>
+            <p>
+                Complete information for the selected prototype record.
+            </p>
 
-                    <p>
-                        Medical Record
-                    </p>
 
-                    <h2 id="modalRecordTitle">
-                        Consultation
-                    </h2>
+            <div class="records-modal-content"
+                 id="recordsModalContent">
+            </div>
 
-                </div>
 
+            <div class="records-modal-actions">
 
                 <button
                     type="button"
-                    class="medical-modal-close"
-                    id="medicalModalClose"
+                    class="records-modal-close"
+                    id="recordsModalClose"
                 >
-                    ×
+                    Close
                 </button>
 
             </div>
-
-
-            <div class="medical-modal-record-id">
-
-                <span>Record ID</span>
-
-                <strong id="modalRecordId">
-                    -
-                </strong>
-
-            </div>
-
-
-            <div class="medical-modal-grid">
-
-                <div>
-
-                    <span>Doctor</span>
-
-                    <strong id="modalRecordDoctor">
-                        -
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>Specialty</span>
-
-                    <strong id="modalRecordSpecialty">
-                        -
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>Date</span>
-
-                    <strong id="modalRecordDate">
-                        -
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>Appointment ID</span>
-
-                    <strong id="modalAppointmentId">
-                        -
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-            <div class="medical-modal-note">
-
-                <span>
-                    Record Summary
-                </span>
-
-                <p id="modalRecordNote">
-                    -
-                </p>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="medical-modal-done"
-                id="medicalModalDone"
-            >
-                Done
-            </button>
 
         </div>
 
@@ -1089,10 +770,8 @@
 
 
     <!-- LOGOUT MODAL -->
-    <div
-        class="logout-modal"
-        id="medicalLogoutModal"
-    >
+    <div class="logout-modal"
+         id="recordsLogoutModal">
 
         <div class="logout-modal-card">
 
@@ -1105,7 +784,7 @@
             </h2>
 
             <p>
-                Are you sure you want to leave the Patient Portal?
+                Are you sure you want to leave the system?
             </p>
 
 
@@ -1114,16 +793,15 @@
                 <button
                     type="button"
                     class="logout-cancel-btn"
-                    id="medicalCancelLogout"
+                    id="recordsCancelLogout"
                 >
                     Cancel
                 </button>
 
-
                 <button
                     type="button"
                     class="logout-confirm-btn"
-                    id="medicalConfirmLogout"
+                    id="recordsConfirmLogout"
                 >
                     Logout
                 </button>
@@ -1135,7 +813,1015 @@
     </div>
 
 
-    <script src="../js/medical-records.js"></script>
+    <script>
+        /* ROLE */
+
+        function detectRecordsRole() {
+
+            const referrer =
+                document.referrer.toLowerCase();
+
+            if (
+                referrer.includes("doctor-dashboard") ||
+                referrer.includes("consultation")
+            ) {
+                localStorage.setItem(
+                    "healthcareActiveRole",
+                    "doctor"
+                );
+            }
+
+            if (
+                referrer.includes("patient-dashboard") ||
+                referrer.includes("patient-profile") ||
+                referrer.includes("ai-symptom-assessment")
+            ) {
+                localStorage.setItem(
+                    "healthcareActiveRole",
+                    "patient"
+                );
+            }
+
+            return (
+                localStorage.getItem(
+                    "healthcareActiveRole"
+                ) || "patient"
+            );
+
+        }
+
+
+        const recordsRole =
+            detectRecordsRole();
+
+
+        const recordsPortalName =
+            document.getElementById(
+                "recordsPortalName"
+            );
+
+        const recordsTopPortalName =
+            document.getElementById(
+                "recordsTopPortalName"
+            );
+
+        const recordsRoleAvatar =
+            document.getElementById(
+                "recordsRoleAvatar"
+            );
+
+        const recordsRoleName =
+            document.getElementById(
+                "recordsRoleName"
+            );
+
+        const recordsPageTitle =
+            document.getElementById(
+                "recordsPageTitle"
+            );
+
+        const recordsPageDescription =
+            document.getElementById(
+                "recordsPageDescription"
+            );
+
+        const recordsProfileBtn =
+            document.getElementById(
+                "recordsProfileBtn"
+            );
+
+        const recordsSidebarMenu =
+            document.getElementById(
+                "recordsSidebarMenu"
+            );
+
+
+        function patientSidebar() {
+
+            return `
+                <a href="patient-dashboard.html"
+                   class="dashboard-menu-link">
+                    <span class="menu-icon">D</span>
+                    Dashboard
+                </a>
+
+                <a href="patient-profile.html"
+                   class="dashboard-menu-link">
+                    <span class="menu-icon">P</span>
+                    My Profile
+                </a>
+
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">A</span>
+                            Appointments
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="doctor-availability.html"
+                           class="dashboard-submenu-link">
+                            Doctor Availability
+                        </a>
+
+                        <a href="appointment-booking.html"
+                           class="dashboard-submenu-link">
+                            Book Appointment
+                        </a>
+
+                        <a href="appointment-management.html"
+                           class="dashboard-submenu-link">
+                            My Appointments
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-menu-group open">
+
+                    <button type="button"
+                            class="dashboard-menu-parent active">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">H</span>
+                            Health Services
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="ai-symptom-assessment.html"
+                           class="dashboard-submenu-link">
+                            AI Symptom Assessment
+                        </a>
+
+                        <a href="medical-records.html"
+                           class="dashboard-submenu-link active">
+                            Medical Records
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">R</span>
+                            Reports & Treatment
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="digital-prescription.html"
+                           class="dashboard-submenu-link">
+                            Prescriptions
+                        </a>
+
+                        <a href="laboratory-results.html"
+                           class="dashboard-submenu-link">
+                            Laboratory Reports
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">S</span>
+                            Billing & Support
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="billing-payment.html"
+                           class="dashboard-submenu-link">
+                            Billing & Payment
+                        </a>
+
+                        <a href="feedback-complaint.html"
+                           class="dashboard-submenu-link">
+                            Feedback & Complaint
+                        </a>
+
+                    </div>
+
+                </div>
+            `;
+
+        }
+
+
+        function doctorSidebar() {
+
+            return `
+                <a href="doctor-dashboard.html"
+                   class="dashboard-menu-link">
+                    <span class="menu-icon">D</span>
+                    Dashboard
+                </a>
+
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">A</span>
+                            Appointments
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="appointment-management.html"
+                           class="dashboard-submenu-link">
+                            Appointment List
+                        </a>
+
+                        <a href="consultation.html"
+                           class="dashboard-submenu-link">
+                            Consultations
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-menu-group open">
+
+                    <button type="button"
+                            class="dashboard-menu-parent active">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">P</span>
+                            Patient Care
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="medical-records.html"
+                           class="dashboard-submenu-link active">
+                            Patient Records
+                        </a>
+
+                        <a href="digital-prescription.html"
+                           class="dashboard-submenu-link">
+                            Prescriptions
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+                            <span class="menu-icon">L</span>
+                            Laboratory
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+                    <div class="dashboard-submenu">
+
+                        <a href="lab-test-request.html"
+                           class="dashboard-submenu-link">
+                            Lab Test Requests
+                        </a>
+
+                        <a href="laboratory-results.html"
+                           class="dashboard-submenu-link">
+                            Laboratory Reports
+                        </a>
+
+                    </div>
+
+                </div>
+            `;
+
+        }
+
+
+        function setupRecordsRole() {
+
+            if (recordsRole === "doctor") {
+
+                recordsPortalName.textContent =
+                    "Doctor Portal";
+
+                recordsTopPortalName.textContent =
+                    "Doctor Portal";
+
+                recordsRoleAvatar.textContent =
+                    "D";
+
+                recordsRoleName.textContent =
+                    "Doctor";
+
+                recordsPageTitle.textContent =
+                    "Patient Medical Records";
+
+                recordsPageDescription.textContent =
+                    "Review organized patient history before and during consultation activities.";
+
+                recordsProfileBtn.style.display =
+                    "none";
+
+                recordsSidebarMenu.innerHTML =
+                    doctorSidebar();
+
+            } else {
+
+                recordsPortalName.textContent =
+                    "Patient Portal";
+
+                recordsTopPortalName.textContent =
+                    "Patient Portal";
+
+                recordsRoleAvatar.textContent =
+                    "P";
+
+                recordsRoleName.textContent =
+                    "Patient";
+
+                recordsPageTitle.textContent =
+                    "My Medical Records";
+
+                recordsPageDescription.textContent =
+                    "Review your consultation history, diagnoses, prescriptions, and laboratory-related medical information.";
+
+                recordsProfileBtn.style.display =
+                    "inline-flex";
+
+                recordsSidebarMenu.innerHTML =
+                    patientSidebar();
+
+            }
+
+        }
+
+
+        setupRecordsRole();
+
+
+        /* SIDEBAR ACCORDION */
+
+        const menuGroups =
+            document.querySelectorAll(
+                ".dashboard-menu-group"
+            );
+
+        menuGroups.forEach(function (group) {
+
+            const parentButton =
+                group.querySelector(
+                    ".dashboard-menu-parent"
+                );
+
+            parentButton.addEventListener(
+                "click",
+                function () {
+
+                    menuGroups.forEach(
+                        function (otherGroup) {
+
+                            if (
+                                otherGroup !== group
+                            ) {
+
+                                otherGroup.classList.remove(
+                                    "open"
+                                );
+
+                                const otherButton =
+                                    otherGroup.querySelector(
+                                        ".dashboard-menu-parent"
+                                    );
+
+                                if (otherButton) {
+                                    otherButton.classList.remove(
+                                        "active"
+                                    );
+                                }
+
+                            }
+
+                        }
+                    );
+
+                    group.classList.toggle(
+                        "open"
+                    );
+
+                    parentButton.classList.toggle(
+                        "active",
+                        group.classList.contains(
+                            "open"
+                        )
+                    );
+
+                }
+            );
+
+        });
+
+
+        /* MOBILE SIDEBAR */
+
+        const recordsMenuToggle =
+            document.getElementById(
+                "recordsMenuToggle"
+            );
+
+        const recordsSidebar =
+            document.getElementById(
+                "recordsSidebar"
+            );
+
+        recordsMenuToggle.addEventListener(
+            "click",
+            function () {
+
+                recordsSidebar.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+
+        /* DATA */
+
+        const medicalRecords = [
+            {
+                id: "MR-2026-014",
+                type: "Consultation",
+                date: "2026-08-05",
+                doctor: "Dr. Sarah Ahmed",
+                patient: "Patient User",
+                department: "General Medicine",
+                diagnosis: "Seasonal viral infection",
+                symptoms: "Fever, mild cough, headache and body ache.",
+                treatment: "Rest, adequate hydration and prescribed supportive medication.",
+                followUp: "Follow up after 7 days if symptoms continue."
+            },
+            {
+                id: "MR-2026-009",
+                type: "Follow-up",
+                date: "2026-07-21",
+                doctor: "Dr. Mahmud Hasan",
+                patient: "Patient User",
+                department: "Cardiology",
+                diagnosis: "Routine follow-up review",
+                symptoms: "Occasional fatigue; no acute complaint reported.",
+                treatment: "Continue current management and regular monitoring.",
+                followUp: "Routine review after 3 months."
+            },
+            {
+                id: "MR-2026-004",
+                type: "Specialist Review",
+                date: "2026-06-12",
+                doctor: "Dr. Nusrat Jahan",
+                patient: "Patient User",
+                department: "Dermatology",
+                diagnosis: "Mild allergic skin reaction",
+                symptoms: "Localized itching and skin irritation.",
+                treatment: "Topical treatment and avoidance of suspected irritant.",
+                followUp: "Return if symptoms worsen or fail to improve."
+            }
+        ];
+
+
+        const recordsList =
+            document.getElementById(
+                "recordsList"
+            );
+
+        const recordsSearch =
+            document.getElementById(
+                "recordsSearch"
+            );
+
+        const recordsTypeFilter =
+            document.getElementById(
+                "recordsTypeFilter"
+            );
+
+        const recordsEmpty =
+            document.getElementById(
+                "recordsEmpty"
+            );
+
+
+        function formatRecordDate(value) {
+
+            return new Date(
+                value + "T00:00:00"
+            ).toLocaleDateString(
+                "en-GB",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+
+        }
+
+
+        function getVisibleRecords() {
+
+            const searchText =
+                recordsSearch.value
+                    .trim()
+                    .toLowerCase();
+
+            const selectedType =
+                recordsTypeFilter.value;
+
+
+            return medicalRecords.filter(
+                function (record) {
+
+                    const searchableText =
+                        (
+                            record.id + " " +
+                            record.type + " " +
+                            record.doctor + " " +
+                            record.patient + " " +
+                            record.department + " " +
+                            record.diagnosis
+                        ).toLowerCase();
+
+                    const searchMatches =
+                        searchableText.includes(
+                            searchText
+                        );
+
+                    const typeMatches =
+                        selectedType === "all" ||
+                        record.type === selectedType;
+
+                    return (
+                        searchMatches &&
+                        typeMatches
+                    );
+
+                }
+            );
+
+        }
+
+
+        function renderRecords() {
+
+            const visibleRecords =
+                getVisibleRecords();
+
+            recordsList.innerHTML =
+                "";
+
+
+            visibleRecords.forEach(
+                function (record) {
+
+                    const card =
+                        document.createElement(
+                            "article"
+                        );
+
+                    card.className =
+                        "records-card";
+
+
+                    card.innerHTML = `
+                        <div class="records-card-top">
+
+                            <div class="records-card-title">
+
+                                <h3>
+                                    ${record.diagnosis}
+                                </h3>
+
+                                <p>
+                                    Record ID: ${record.id}
+                                </p>
+
+                            </div>
+
+                            <span class="records-type">
+                                ${record.type}
+                            </span>
+
+                        </div>
+
+
+                        <div class="records-info-grid">
+
+                            <div class="records-info-item">
+                                <span>Date</span>
+                                <strong>
+                                    ${formatRecordDate(record.date)}
+                                </strong>
+                            </div>
+
+                            <div class="records-info-item">
+                                <span>Doctor</span>
+                                <strong>
+                                    ${record.doctor}
+                                </strong>
+                            </div>
+
+                            <div class="records-info-item">
+                                <span>Department</span>
+                                <strong>
+                                    ${record.department}
+                                </strong>
+                            </div>
+
+                            <div class="records-info-item">
+                                <span>Patient</span>
+                                <strong>
+                                    ${record.patient}
+                                </strong>
+                            </div>
+
+                        </div>
+
+
+                        <div class="records-section">
+
+                            <h4>
+                                Symptoms / Clinical Notes
+                            </h4>
+
+                            <p>
+                                ${record.symptoms}
+                            </p>
+
+                        </div>
+
+
+                        <div class="records-actions">
+
+                            <button
+                                type="button"
+                                class="records-details-btn"
+                                data-record-id="${record.id}"
+                            >
+                                View Details
+                            </button>
+
+                            <a href="digital-prescription.html"
+                               class="records-action-link">
+                                Prescription
+                            </a>
+
+                            <a href="laboratory-results.html"
+                               class="records-action-link">
+                                Lab Reports
+                            </a>
+
+                        </div>
+                    `;
+
+
+                    recordsList.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+
+            if (
+                visibleRecords.length === 0
+            ) {
+
+                recordsEmpty.style.display =
+                    "block";
+
+            } else {
+
+                recordsEmpty.style.display =
+                    "none";
+
+            }
+
+
+            document.getElementById(
+                "recordsTotal"
+            ).textContent =
+                medicalRecords.length;
+
+
+            document.getElementById(
+                "recordsConsultations"
+            ).textContent =
+                medicalRecords.filter(
+                    function (record) {
+                        return (
+                            record.type ===
+                            "Consultation"
+                        );
+                    }
+                ).length;
+
+        }
+
+
+        recordsSearch.addEventListener(
+            "input",
+            renderRecords
+        );
+
+
+        recordsTypeFilter.addEventListener(
+            "change",
+            renderRecords
+        );
+
+
+        document.getElementById(
+            "recordsClearBtn"
+        ).addEventListener(
+            "click",
+            function () {
+
+                recordsSearch.value =
+                    "";
+
+                recordsTypeFilter.value =
+                    "all";
+
+                renderRecords();
+
+            }
+        );
+
+
+        /* DETAILS */
+
+        const recordsDetailsModal =
+            document.getElementById(
+                "recordsDetailsModal"
+            );
+
+        const recordsModalContent =
+            document.getElementById(
+                "recordsModalContent"
+            );
+
+
+        recordsList.addEventListener(
+            "click",
+            function (event) {
+
+                const button =
+                    event.target.closest(
+                        ".records-details-btn"
+                    );
+
+                if (!button) {
+                    return;
+                }
+
+
+                const record =
+                    medicalRecords.find(
+                        function (item) {
+                            return (
+                                item.id ===
+                                button.dataset.recordId
+                            );
+                        }
+                    );
+
+
+                if (!record) {
+                    return;
+                }
+
+
+                recordsModalContent.innerHTML = `
+                    <div class="records-modal-row">
+                        <span>Record ID</span>
+                        <strong>${record.id}</strong>
+                    </div>
+
+                    <div class="records-modal-row">
+                        <span>Date</span>
+                        <strong>${formatRecordDate(record.date)}</strong>
+                    </div>
+
+                    <div class="records-modal-row">
+                        <span>Doctor</span>
+                        <strong>${record.doctor}</strong>
+                    </div>
+
+                    <div class="records-modal-row">
+                        <span>Department</span>
+                        <strong>${record.department}</strong>
+                    </div>
+
+                    <div class="records-modal-row">
+                        <span>Diagnosis</span>
+                        <strong>${record.diagnosis}</strong>
+                    </div>
+
+                    <div class="records-modal-row">
+                        <span>Symptoms / Clinical Notes</span>
+                        <p>${record.symptoms}</p>
+                    </div>
+
+                    <div class="records-modal-row">
+                        <span>Treatment / Advice</span>
+                        <p>${record.treatment}</p>
+                    </div>
+
+                    <div class="records-modal-row">
+                        <span>Follow-up</span>
+                        <p>${record.followUp}</p>
+                    </div>
+                `;
+
+
+                recordsDetailsModal.classList.add(
+                    "show"
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "recordsModalClose"
+        ).addEventListener(
+            "click",
+            function () {
+
+                recordsDetailsModal.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+
+        /* LOGOUT */
+
+        const recordsLogoutBtn =
+            document.getElementById(
+                "recordsLogoutBtn"
+            );
+
+        const recordsLogoutModal =
+            document.getElementById(
+                "recordsLogoutModal"
+            );
+
+
+        recordsLogoutBtn.addEventListener(
+            "click",
+            function () {
+
+                recordsLogoutModal.classList.add(
+                    "show"
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "recordsCancelLogout"
+        ).addEventListener(
+            "click",
+            function () {
+
+                recordsLogoutModal.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "recordsConfirmLogout"
+        ).addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+        /* BACKDROP CLOSE */
+
+        [
+            recordsDetailsModal,
+            recordsLogoutModal
+        ].forEach(
+            function (modal) {
+
+                modal.addEventListener(
+                    "click",
+                    function (event) {
+
+                        if (
+                            event.target ===
+                            modal
+                        ) {
+
+                            modal.classList.remove(
+                                "show"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* CLOSE MOBILE SIDEBAR */
+
+        document.querySelectorAll(
+            ".dashboard-menu-link, .dashboard-submenu-link"
+        ).forEach(
+            function (link) {
+
+                link.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            window.innerWidth <=
+                            900
+                        ) {
+
+                            recordsSidebar.classList.remove(
+                                "open"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        renderRecords();
+    </script>
 
 </body>
 
