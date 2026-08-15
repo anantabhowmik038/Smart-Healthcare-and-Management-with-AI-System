@@ -8,13 +8,92 @@
     <title>Patient Dashboard | Smart Healthcare</title>
 
     <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* COLLAPSIBLE SIDEBAR */
+
+        .dashboard-menu-group {
+            width: 100%;
+        }
+
+        .dashboard-menu-parent {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #dbe7ec;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-menu-parent:hover,
+        .dashboard-menu-parent.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+
+        .menu-parent-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submenu-arrow {
+            font-size: 9px;
+            transition: transform 0.25s ease;
+        }
+
+        .dashboard-menu-group.open .submenu-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dashboard-submenu {
+            display: none;
+            margin: 5px 0 7px 30px;
+            padding-left: 13px;
+            border-left: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .dashboard-menu-group.open .dashboard-submenu {
+            display: block;
+        }
+
+        .dashboard-submenu-link {
+            display: block;
+            padding: 9px 11px;
+            margin: 3px 0;
+            border-radius: 7px;
+            color: #b9cbd3;
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-submenu-link:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            color: white;
+        }
+
+        .dashboard-submenu-link.active {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: white;
+            font-weight: 600;
+        }
+    </style>
 </head>
+
 
 <body class="dashboard-body">
 
     <div class="dashboard-layout">
 
-        <!-- ================= SIDEBAR ================= -->
+        <!-- SIDEBAR -->
         <aside class="dashboard-sidebar" id="dashboardSidebar">
 
             <div class="dashboard-sidebar-header">
@@ -30,61 +109,176 @@
 
             <nav class="dashboard-menu">
 
-                <a href="patient-dashboard.html" class="dashboard-menu-link active">
+                <a href="patient-dashboard.html"
+                   class="dashboard-menu-link active">
+
                     <span class="menu-icon">D</span>
                     Dashboard
+
                 </a>
 
-                <a href="patient-profile.html" class="dashboard-menu-link">
+
+                <a href="patient-profile.html"
+                   class="dashboard-menu-link">
+
                     <span class="menu-icon">P</span>
                     My Profile
+
                 </a>
 
-                <a href="appointment-management.html" class="dashboard-menu-link">
-                    <span class="menu-icon">A</span>
-                    Appointments
-                </a>
 
-                <a href="ai-symptom-assessment.html" class="dashboard-menu-link">
-                    <span class="menu-icon">AI</span>
-                    AI Symptom Assessment
-                </a>
+                <!-- APPOINTMENTS -->
+                <div class="dashboard-menu-group">
 
-                <a href="medical-records.html" class="dashboard-menu-link">
-                    <span class="menu-icon">MR</span>
-                    Medical Records
-                </a>
+                    <button type="button"
+                            class="dashboard-menu-parent">
 
-                <a href="digital-prescription.html" class="dashboard-menu-link">
-                    <span class="menu-icon">Rx</span>
-                    Prescriptions
-                </a>
+                        <span class="menu-parent-left">
 
-                <a href="laboratory-results.html" class="dashboard-menu-link">
-                    <span class="menu-icon">LR</span>
-                    Laboratory Reports
-                </a>
+                            <span class="menu-icon">A</span>
+                            Appointments
 
-                <a href="billing-payment.html" class="dashboard-menu-link">
-                    <span class="menu-icon">B</span>
-                    Billing & Payment
-                </a>
+                        </span>
 
-                <a href="feedback-complaint.html" class="dashboard-menu-link">
-                    <span class="menu-icon">F</span>
-                    Feedback & Complaint
-                </a>
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+
+                    <div class="dashboard-submenu">
+
+                        <a href="doctor-availability.html"
+                           class="dashboard-submenu-link">
+                            Doctor Availability
+                        </a>
+
+                        <a href="appointment-booking.html"
+                           class="dashboard-submenu-link">
+                            Book Appointment
+                        </a>
+
+                        <a href="appointment-management.html"
+                           class="dashboard-submenu-link">
+                            My Appointments
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HEALTH SERVICES -->
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+
+                            <span class="menu-icon">H</span>
+                            Health Services
+
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+
+                    <div class="dashboard-submenu">
+
+                        <a href="ai-symptom-assessment.html"
+                           class="dashboard-submenu-link">
+                            AI Symptom Assessment
+                        </a>
+
+                        <a href="medical-records.html"
+                           class="dashboard-submenu-link">
+                            Medical Records
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REPORTS -->
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+
+                            <span class="menu-icon">R</span>
+                            Reports & Treatment
+
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+
+                    <div class="dashboard-submenu">
+
+                        <a href="digital-prescription.html"
+                           class="dashboard-submenu-link">
+                            Prescriptions
+                        </a>
+
+                        <a href="laboratory-results.html"
+                           class="dashboard-submenu-link">
+                            Laboratory Reports
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BILLING -->
+                <div class="dashboard-menu-group">
+
+                    <button type="button"
+                            class="dashboard-menu-parent">
+
+                        <span class="menu-parent-left">
+
+                            <span class="menu-icon">S</span>
+                            Billing & Support
+
+                        </span>
+
+                        <span class="submenu-arrow">▼</span>
+
+                    </button>
+
+
+                    <div class="dashboard-submenu">
+
+                        <a href="billing-payment.html"
+                           class="dashboard-submenu-link">
+                            Billing & Payment
+                        </a>
+
+                        <a href="feedback-complaint.html"
+                           class="dashboard-submenu-link">
+                            Feedback & Complaint
+                        </a>
+
+                    </div>
+
+                </div>
 
             </nav>
 
 
             <div class="dashboard-sidebar-footer">
 
-                <button
-                    type="button"
-                    class="dashboard-logout-btn"
-                    id="logoutBtn"
-                >
+                <button type="button"
+                        class="dashboard-logout-btn"
+                        id="logoutBtn">
                     Logout
                 </button>
 
@@ -93,10 +287,10 @@
         </aside>
 
 
-        <!-- ================= MAIN CONTENT ================= -->
+        <!-- MAIN CONTENT -->
         <main class="dashboard-main">
 
-            <!-- ================= TOPBAR ================= -->
+            <!-- TOPBAR -->
             <header class="dashboard-topbar">
 
                 <div class="dashboard-topbar-left">
@@ -111,8 +305,13 @@
                     </button>
 
                     <div>
+
                         <p>Patient Portal</p>
-                        <h2>Welcome Back</h2>
+
+                        <h2>
+                            Welcome Back
+                        </h2>
+
                     </div>
 
                 </div>
@@ -124,15 +323,24 @@
                         1
                     </div>
 
-                    <a href="patient-profile.html" class="dashboard-user-info">
+
+                    <a href="patient-profile.html"
+                       class="dashboard-user-info">
 
                         <div class="dashboard-user-avatar">
                             P
                         </div>
 
                         <div>
-                            <strong>Patient</strong>
-                            <span>View Profile</span>
+
+                            <strong>
+                                Patient
+                            </strong>
+
+                            <span>
+                                View Profile
+                            </span>
+
                         </div>
 
                     </a>
@@ -142,7 +350,7 @@
             </header>
 
 
-            <!-- ================= WELCOME SECTION ================= -->
+            <!-- WELCOME -->
             <section class="patient-welcome-card">
 
                 <div class="patient-welcome-content">
@@ -164,11 +372,13 @@
 
                     <div class="patient-welcome-actions">
 
-                        <a href="#" class="patient-main-btn">
+                        <a href="appointment-booking.html"
+                           class="patient-main-btn">
                             Book Appointment
                         </a>
 
-                        <a href="#" class="patient-outline-btn">
+                        <a href="ai-symptom-assessment.html"
+                           class="patient-outline-btn">
                             AI Symptom Assessment
                         </a>
 
@@ -184,7 +394,7 @@
             </section>
 
 
-            <!-- ================= SUMMARY ================= -->
+            <!-- SUMMARY -->
             <section class="patient-summary-grid">
 
                 <div class="patient-summary-card">
@@ -194,9 +404,19 @@
                     </div>
 
                     <div>
-                        <p>Upcoming Appointments</p>
-                        <h3>2</h3>
-                        <span>Next appointment available</span>
+
+                        <p>
+                            Upcoming Appointments
+                        </p>
+
+                        <h3>
+                            2
+                        </h3>
+
+                        <span>
+                            Next appointment available
+                        </span>
+
                     </div>
 
                 </div>
@@ -209,9 +429,19 @@
                     </div>
 
                     <div>
-                        <p>Active Prescriptions</p>
-                        <h3>3</h3>
-                        <span>View prescription details</span>
+
+                        <p>
+                            Active Prescriptions
+                        </p>
+
+                        <h3>
+                            3
+                        </h3>
+
+                        <span>
+                            View prescription details
+                        </span>
+
                     </div>
 
                 </div>
@@ -224,9 +454,19 @@
                     </div>
 
                     <div>
-                        <p>Laboratory Reports</p>
-                        <h3>4</h3>
-                        <span>1 new report available</span>
+
+                        <p>
+                            Laboratory Reports
+                        </p>
+
+                        <h3>
+                            4
+                        </h3>
+
+                        <span>
+                            1 new report available
+                        </span>
+
                     </div>
 
                 </div>
@@ -239,9 +479,19 @@
                     </div>
 
                     <div>
-                        <p>Pending Bills</p>
-                        <h3>1</h3>
-                        <span>Check payment information</span>
+
+                        <p>
+                            Pending Bills
+                        </p>
+
+                        <h3>
+                            1
+                        </h3>
+
+                        <span>
+                            Check payment information
+                        </span>
+
                     </div>
 
                 </div>
@@ -249,7 +499,7 @@
             </section>
 
 
-            <!-- ================= CONTENT GRID ================= -->
+            <!-- CONTENT GRID -->
             <section class="patient-dashboard-grid">
 
                 <!-- APPOINTMENTS -->
@@ -258,11 +508,19 @@
                     <div class="patient-card-heading">
 
                         <div>
-                            <h3>Upcoming Appointments</h3>
-                            <p>Your scheduled consultations</p>
+
+                            <h3>
+                                Upcoming Appointments
+                            </h3>
+
+                            <p>
+                                Your scheduled consultations
+                            </p>
+
                         </div>
 
-                        <a href="#">
+
+                        <a href="appointment-management.html">
                             View All
                         </a>
 
@@ -272,19 +530,34 @@
                     <div class="patient-appointment">
 
                         <div class="appointment-date-box">
-                            <strong>15</strong>
-                            <span>AUG</span>
+
+                            <strong>
+                                15
+                            </strong>
+
+                            <span>
+                                AUG
+                            </span>
+
                         </div>
+
 
                         <div class="appointment-details">
 
-                            <h4>General Consultation</h4>
+                            <h4>
+                                General Consultation
+                            </h4>
 
-                            <p>Dr. Sarah Ahmed</p>
+                            <p>
+                                Dr. Sarah Ahmed
+                            </p>
 
-                            <span>10:30 AM</span>
+                            <span>
+                                10:30 AM
+                            </span>
 
                         </div>
+
 
                         <div class="appointment-status confirmed">
                             Confirmed
@@ -296,19 +569,34 @@
                     <div class="patient-appointment">
 
                         <div class="appointment-date-box">
-                            <strong>22</strong>
-                            <span>AUG</span>
+
+                            <strong>
+                                22
+                            </strong>
+
+                            <span>
+                                AUG
+                            </span>
+
                         </div>
+
 
                         <div class="appointment-details">
 
-                            <h4>Follow-up Consultation</h4>
+                            <h4>
+                                Follow-up Consultation
+                            </h4>
 
-                            <p>Dr. Mahmud Hasan</p>
+                            <p>
+                                Dr. Mahmud Hasan
+                            </p>
 
-                            <span>04:00 PM</span>
+                            <span>
+                                04:00 PM
+                            </span>
 
                         </div>
+
 
                         <div class="appointment-status pending">
                             Pending
@@ -325,8 +613,15 @@
                     <div class="patient-card-heading">
 
                         <div>
-                            <h3>Quick Actions</h3>
-                            <p>Frequently used services</p>
+
+                            <h3>
+                                Quick Actions
+                            </h3>
+
+                            <p>
+                                Frequently used services
+                            </p>
+
                         </div>
 
                     </div>
@@ -334,49 +629,89 @@
 
                     <div class="patient-quick-grid">
 
-                        <a href="#" class="patient-quick-item">
+                        <a href="appointment-booking.html"
+                           class="patient-quick-item">
 
-                            <span>A</span>
+                            <span>
+                                A
+                            </span>
 
                             <div>
-                                <h4>Book Appointment</h4>
-                                <p>Schedule a doctor visit</p>
+
+                                <h4>
+                                    Book Appointment
+                                </h4>
+
+                                <p>
+                                    Schedule a doctor visit
+                                </p>
+
                             </div>
 
                         </a>
 
 
-                        <a href="#" class="patient-quick-item">
+                        <a href="ai-symptom-assessment.html"
+                           class="patient-quick-item">
 
-                            <span>AI</span>
+                            <span>
+                                AI
+                            </span>
 
                             <div>
-                                <h4>AI Assessment</h4>
-                                <p>Submit symptoms</p>
+
+                                <h4>
+                                    AI Assessment
+                                </h4>
+
+                                <p>
+                                    Submit symptoms
+                                </p>
+
                             </div>
 
                         </a>
 
 
-                        <a href="#" class="patient-quick-item">
+                        <a href="digital-prescription.html"
+                           class="patient-quick-item">
 
-                            <span>Rx</span>
+                            <span>
+                                Rx
+                            </span>
 
                             <div>
-                                <h4>Prescription</h4>
-                                <p>View prescriptions</p>
+
+                                <h4>
+                                    Prescription
+                                </h4>
+
+                                <p>
+                                    View prescriptions
+                                </p>
+
                             </div>
 
                         </a>
 
 
-                        <a href="#" class="patient-quick-item">
+                        <a href="laboratory-results.html"
+                           class="patient-quick-item">
 
-                            <span>LR</span>
+                            <span>
+                                LR
+                            </span>
 
                             <div>
-                                <h4>Lab Reports</h4>
-                                <p>View test reports</p>
+
+                                <h4>
+                                    Lab Reports
+                                </h4>
+
+                                <p>
+                                    View test reports
+                                </p>
+
                             </div>
 
                         </a>
@@ -388,7 +723,7 @@
             </section>
 
 
-            <!-- ================= AI SECTION ================= -->
+            <!-- AI SECTION -->
             <section class="patient-ai-card">
 
                 <div class="patient-ai-icon">
@@ -413,21 +748,29 @@
                 </div>
 
 
-                <a href="#" class="patient-ai-btn">
+                <a href="ai-symptom-assessment.html"
+                   class="patient-ai-btn">
                     Start Assessment
                 </a>
 
             </section>
 
 
-            <!-- ================= RECENT ACTIVITY ================= -->
+            <!-- RECENT ACTIVITY -->
             <section class="patient-dashboard-card patient-activity-card">
 
                 <div class="patient-card-heading">
 
                     <div>
-                        <h3>Recent Activity</h3>
-                        <p>Latest updates from your healthcare account</p>
+
+                        <h3>
+                            Recent Activity
+                        </h3>
+
+                        <p>
+                            Latest updates from your healthcare account
+                        </p>
+
                     </div>
 
                 </div>
@@ -440,15 +783,21 @@
                         <div class="patient-activity-dot"></div>
 
                         <div>
-                            <h4>Appointment Confirmed</h4>
+
+                            <h4>
+                                Appointment Confirmed
+                            </h4>
 
                             <p>
                                 Your upcoming medical appointment has
                                 been confirmed.
                             </p>
+
                         </div>
 
-                        <span>Today</span>
+                        <span>
+                            Today
+                        </span>
 
                     </div>
 
@@ -458,15 +807,21 @@
                         <div class="patient-activity-dot"></div>
 
                         <div>
-                            <h4>Laboratory Report Available</h4>
+
+                            <h4>
+                                Laboratory Report Available
+                            </h4>
 
                             <p>
                                 A new laboratory report has been added
                                 to your account.
                             </p>
+
                         </div>
 
-                        <span>Yesterday</span>
+                        <span>
+                            Yesterday
+                        </span>
 
                     </div>
 
@@ -476,15 +831,21 @@
                         <div class="patient-activity-dot"></div>
 
                         <div>
-                            <h4>Prescription Updated</h4>
+
+                            <h4>
+                                Prescription Updated
+                            </h4>
 
                             <p>
                                 Your latest digital prescription
                                 is now available.
                             </p>
+
                         </div>
 
-                        <span>2 days ago</span>
+                        <span>
+                            2 days ago
+                        </span>
 
                     </div>
 
@@ -493,7 +854,7 @@
             </section>
 
 
-            <!-- ================= FOOTER ================= -->
+            <!-- FOOTER -->
             <footer class="patient-dashboard-footer">
 
                 <p>
@@ -507,7 +868,7 @@
     </div>
 
 
-    <!-- ================= LOGOUT MODAL ================= -->
+    <!-- LOGOUT MODAL -->
     <div class="logout-modal" id="logoutModal">
 
         <div class="logout-modal-card">
@@ -550,7 +911,172 @@
     </div>
 
 
-    <script src="../js/patient-dashboard.js"></script>
+    <script>
+
+        /* SIDEBAR ACCORDION */
+
+        const menuGroups =
+            document.querySelectorAll(".dashboard-menu-group");
+
+        menuGroups.forEach(function (group) {
+
+            const parentButton =
+                group.querySelector(".dashboard-menu-parent");
+
+            parentButton.addEventListener("click", function () {
+
+                menuGroups.forEach(function (otherGroup) {
+
+                    if (otherGroup !== group) {
+                        otherGroup.classList.remove("open");
+                    }
+
+                });
+
+                group.classList.toggle("open");
+
+            });
+
+        });
+
+
+        /* CURRENT PAGE */
+
+        const currentPage =
+            window.location.pathname.split("/").pop();
+
+        const sidebarLinks =
+            document.querySelectorAll(
+                ".dashboard-menu-link, .dashboard-submenu-link"
+            );
+
+        sidebarLinks.forEach(function (link) {
+
+            const linkPage =
+                link.getAttribute("href");
+
+            link.classList.remove("active");
+
+            if (linkPage === currentPage) {
+
+                link.classList.add("active");
+
+                const parentGroup =
+                    link.closest(".dashboard-menu-group");
+
+                if (parentGroup) {
+
+                    parentGroup.classList.add("open");
+
+                    const parentButton =
+                        parentGroup.querySelector(
+                            ".dashboard-menu-parent"
+                        );
+
+                    if (parentButton) {
+                        parentButton.classList.add("active");
+                    }
+
+                }
+
+            }
+
+        });
+
+
+        /* MOBILE SIDEBAR */
+
+        const dashboardMenuToggle =
+            document.getElementById("dashboardMenuToggle");
+
+        const dashboardSidebar =
+            document.getElementById("dashboardSidebar");
+
+        dashboardMenuToggle.addEventListener(
+            "click",
+            function () {
+
+                dashboardSidebar.classList.toggle("open");
+
+            }
+        );
+
+
+        /* LOGOUT */
+
+        const logoutBtn =
+            document.getElementById("logoutBtn");
+
+        const logoutModal =
+            document.getElementById("logoutModal");
+
+        const cancelLogoutBtn =
+            document.getElementById("cancelLogoutBtn");
+
+        const confirmLogoutBtn =
+            document.getElementById("confirmLogoutBtn");
+
+
+        logoutBtn.addEventListener(
+            "click",
+            function () {
+
+                logoutModal.classList.add("show");
+
+            }
+        );
+
+
+        cancelLogoutBtn.addEventListener(
+            "click",
+            function () {
+
+                logoutModal.classList.remove("show");
+
+            }
+        );
+
+
+        confirmLogoutBtn.addEventListener(
+            "click",
+            function () {
+
+                window.location.href = "login.html";
+
+            }
+        );
+
+
+        logoutModal.addEventListener(
+            "click",
+            function (event) {
+
+                if (event.target === logoutModal) {
+                    logoutModal.classList.remove("show");
+                }
+
+            }
+        );
+
+
+        /* CLOSE MOBILE SIDEBAR */
+
+        sidebarLinks.forEach(function (link) {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    if (window.innerWidth <= 900) {
+                        dashboardSidebar.classList.remove("open");
+                    }
+
+                }
+            );
+
+        });
+
+    </script>
 
 </body>
 
