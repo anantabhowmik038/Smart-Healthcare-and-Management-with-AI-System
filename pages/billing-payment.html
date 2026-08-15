@@ -1,1296 +1,573 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Billing & Payment | Smart Healthcare</title>
-
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+
+        /* COLLAPSIBLE SIDEBAR */
+        .dashboard-menu-group { width: 100%; }
+        .dashboard-menu-parent {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #dbe7ec;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+        .dashboard-menu-parent:hover,
+        .dashboard-menu-parent.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+        .menu-parent-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .submenu-arrow {
+            font-size: 9px;
+            transition: transform 0.25s ease;
+        }
+        .dashboard-menu-group.open .submenu-arrow { transform: rotate(180deg); }
+        .dashboard-submenu {
+            display: none;
+            margin: 5px 0 7px 30px;
+            padding-left: 13px;
+            border-left: 1px solid rgba(255,255,255,0.16);
+        }
+        .dashboard-menu-group.open .dashboard-submenu { display: block; }
+        .dashboard-submenu-link {
+            display: block;
+            padding: 9px 11px;
+            margin: 3px 0;
+            border-radius: 7px;
+            color: #b9cbd3;
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.2s ease;
+        }
+        .dashboard-submenu-link:hover {
+            background-color: rgba(255,255,255,0.07);
+            color: #ffffff;
+        }
+        .dashboard-submenu-link.active {
+            background-color: rgba(255,255,255,0.12);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .billing-page-header {
+            display:flex; justify-content:space-between; gap:20px; align-items:flex-start;
+            margin:28px 0 22px;
+        }
+        .billing-page-header h1 { margin:5px 0 8px; color:#16324f; }
+        .billing-page-header p { margin:0; color:#64748b; max-width:780px; line-height:1.6; }
+        .billing-summary-grid {
+            display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px;
+        }
+        .billing-summary-card,.billing-filter-card,.billing-card {
+            background:#fff; border-radius:14px; box-shadow:0 8px 22px rgba(15,23,42,.06);
+        }
+        .billing-summary-card { padding:18px; }
+        .billing-summary-card span { display:block; color:#64748b; font-size:12px; margin-bottom:5px; }
+        .billing-summary-card strong { color:#16324f; font-size:24px; }
+        .billing-filter-card { padding:18px; margin-bottom:20px; }
+        .billing-filter-grid {
+            display:grid; grid-template-columns:1.5fr 1fr auto; gap:12px; align-items:end;
+        }
+        .billing-field label {
+            display:block; margin-bottom:7px; color:#334155; font-size:13px; font-weight:600;
+        }
+        .billing-field input,.billing-field select {
+            width:100%; min-height:42px; border:1px solid #d8e0e8; border-radius:8px;
+            padding:9px 11px; outline:none; background:#fff;
+        }
+        .billing-clear-btn {
+            min-height:42px; padding:0 16px; border:1px solid #d8e0e8; border-radius:8px;
+            background:#fff; color:#475569; cursor:pointer; font-weight:600;
+        }
+        .billing-list { display:grid; gap:16px; }
+        .billing-card { padding:20px; }
+        .billing-card-top {
+            display:flex; justify-content:space-between; gap:18px; align-items:flex-start;
+            padding-bottom:14px; border-bottom:1px solid #edf1f5;
+        }
+        .billing-card-top h3 { margin:0 0 5px; color:#16324f; }
+        .billing-card-top p { margin:0; color:#64748b; font-size:12px; }
+        .billing-status {
+            padding:6px 10px; border-radius:999px; font-size:11px; font-weight:700;
+        }
+        .billing-status.paid { background:#e8f8ef; color:#22844b; }
+        .billing-status.pending { background:#fff6db; color:#9a6b00; }
+        .billing-meta {
+            display:grid; grid-template-columns:repeat(4,1fr); gap:12px; padding:14px 0;
+        }
+        .billing-meta span { display:block; color:#64748b; font-size:10px; text-transform:uppercase; }
+        .billing-meta strong { color:#334155; font-size:12px; }
+        .billing-amount {
+            padding:13px 14px; border-radius:9px; background:#f8fafc; color:#334155;
+            display:flex; justify-content:space-between; gap:15px; align-items:center;
+        }
+        .billing-amount strong { color:#16324f; font-size:18px; }
+        .billing-actions {
+            display:flex; justify-content:flex-end; gap:9px; margin-top:16px; flex-wrap:wrap;
+        }
+        .billing-action-btn {
+            min-height:38px; padding:0 13px; border-radius:8px; font-size:12px;
+            font-weight:600; cursor:pointer;
+        }
+        .billing-action-btn.secondary { border:1px solid #d8e0e8; background:#fff; color:#475569; }
+        .billing-action-btn.primary { border:none; background:#176cc8; color:#fff; }
+        .billing-empty {
+            display:none; background:#fff; border-radius:14px; padding:30px; text-align:center; color:#64748b;
+        }
+        .payment-modal {
+            position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+            padding:20px; background:rgba(15,23,42,.55); z-index:9999;
+        }
+        .payment-modal.show { display:flex; }
+        .payment-modal-card {
+            width:min(450px,100%); background:#fff; border-radius:16px; padding:24px;
+            box-shadow:0 20px 50px rgba(15,23,42,.2);
+        }
+        .payment-modal-card h2 { margin:0 0 8px; color:#16324f; }
+        .payment-modal-card p { color:#64748b; font-size:13px; line-height:1.6; }
+        .payment-field { margin-top:12px; }
+        .payment-field label { display:block; margin-bottom:6px; color:#334155; font-size:12px; font-weight:600; }
+        .payment-field select {
+            width:100%; min-height:42px; border:1px solid #d8e0e8; border-radius:8px; padding:9px 11px;
+        }
+        .payment-modal-actions { display:flex; justify-content:flex-end; gap:9px; margin-top:18px; }
+        .payment-modal-actions button {
+            min-height:40px; padding:0 16px; border-radius:8px; font-weight:600; cursor:pointer;
+        }
+        .payment-cancel { border:1px solid #d8e0e8; background:#fff; color:#475569; }
+        .payment-confirm { border:none; background:#176cc8; color:#fff; }
+        @media(max-width:980px){
+            .billing-summary-grid{grid-template-columns:repeat(2,1fr);}
+            .billing-meta{grid-template-columns:repeat(2,1fr);}
+        }
+        @media(max-width:650px){
+            .billing-page-header,.billing-card-top{flex-direction:column;}
+            .billing-summary-grid,.billing-filter-grid,.billing-meta{grid-template-columns:1fr;}
+        }
+    </style>
 </head>
-
 <body class="dashboard-body">
+<div class="dashboard-layout">
 
-    <div class="dashboard-layout">
+    <aside class="dashboard-sidebar" id="billingSidebar">
+        <div class="dashboard-sidebar-header">
+            <a href="../index.html" class="dashboard-logo">Smart<span>Healthcare</span></a>
+            <p id="billingPortalName">Patient Portal</p>
+        </div>
 
-        <!-- SIDEBAR -->
-        <aside class="dashboard-sidebar" id="billingSidebar">
+        <nav class="dashboard-menu" id="billingSidebarMenu"></nav>
 
-            <div class="dashboard-sidebar-header">
+        <div class="dashboard-sidebar-footer">
+            <button type="button" class="dashboard-logout-btn" id="billingLogoutBtn">Logout</button>
+        </div>
+    </aside>
 
-                <a href="../index.html" class="dashboard-logo">
-                    Smart<span>Healthcare</span>
-                </a>
-
-                <p>Patient Portal</p>
-
+    <main class="dashboard-main">
+        <header class="dashboard-topbar">
+            <div class="dashboard-topbar-left">
+                <button type="button" class="dashboard-menu-toggle" id="billingMenuToggle">☰</button>
+                <div>
+                    <p id="billingTopPortalName">Patient Portal</p>
+                    <h2>Billing & Payment</h2>
+                </div>
             </div>
 
-
-            <nav class="dashboard-menu">
-
-                <a href="patient-dashboard.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">D</span>
-                    Dashboard
-
-                </a>
-
-
-                <a href="patient-profile.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">P</span>
-                    My Profile
-
-                </a>
-
-
-                <a href="doctor-availability.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">DA</span>
-                    Doctor Availability
-
-                </a>
-
-
-                <a href="appointment-booking.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">BA</span>
-                    Book Appointment
-
-                </a>
-
-
-                <a href="appointment-management.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">A</span>
-                    My Appointments
-
-                </a>
-
-
-                <a href="ai-symptom-assessment.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">AI</span>
-                    AI Symptom Assessment
-
-                </a>
-
-
-                <a href="medical-records.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">MR</span>
-                    Medical Records
-
-                </a>
-
-
-                <a href="billing-payment.html"
-                   class="dashboard-menu-link active">
-
-                    <span class="menu-icon">BP</span>
-                    Billing & Payment
-
-                </a>
-
-            </nav>
-
-
-            <div class="dashboard-sidebar-footer">
-
-                <button
-                    type="button"
-                    class="dashboard-logout-btn"
-                    id="billingLogoutBtn"
-                >
-                    Logout
-                </button>
-
+            <div class="dashboard-user">
+                <div class="dashboard-notification">1</div>
+                <div class="dashboard-user-info">
+                    <div class="dashboard-user-avatar" id="billingRoleAvatar">P</div>
+                    <div>
+                        <strong id="billingRoleName">Patient</strong>
+                        <span>Billing Services</span>
+                    </div>
+                </div>
             </div>
-
-        </aside>
-
-
-        <!-- MAIN CONTENT -->
-        <main class="dashboard-main">
-
-            <!-- TOPBAR -->
-            <header class="dashboard-topbar">
-
-                <div class="dashboard-topbar-left">
-
-                    <button
-                        type="button"
-                        class="dashboard-menu-toggle"
-                        id="billingMenuToggle"
-                        aria-label="Toggle navigation menu"
-                    >
-                        ☰
-                    </button>
-
-
-                    <div>
-
-                        <p>Patient Portal</p>
-
-                        <h2>Billing & Payment</h2>
-
-                    </div>
-
-                </div>
-
-
-                <div class="dashboard-user">
-
-                    <div class="dashboard-user-info">
-
-                        <div class="dashboard-user-avatar">
-                            P
-                        </div>
-
-                        <div>
-
-                            <strong>Patient</strong>
-
-                            <span>Patient Account</span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </header>
-
-
-            <!-- PAGE HEADER -->
-            <section class="billing-header-card">
-
-                <div>
-
-                    <p class="small-title">
-                        Billing Management
-                    </p>
-
-                    <h1>
-                        Manage Healthcare Bills
-                    </h1>
-
-                    <p>
-                        Review consultation and laboratory bills,
-                        check payment status and complete prototype
-                        payment transactions.
-                    </p>
-
-                </div>
-
-
-                <div class="billing-header-icon">
-                    BP
-                </div>
-
-            </section>
-
-
-            <!-- SUMMARY -->
-            <section class="billing-summary-grid">
-
-                <div class="billing-summary-card">
-
-                    <div class="billing-summary-icon">
-                        T
-                    </div>
-
-                    <div>
-
-                        <p>Total Bills</p>
-
-                        <h3 id="billingTotalCount">
-                            5
-                        </h3>
-
-                        <span>Billing records</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="billing-summary-card">
-
-                    <div class="billing-summary-icon">
-                        P
-                    </div>
-
-                    <div>
-
-                        <p>Pending Bills</p>
-
-                        <h3 id="billingPendingCount">
-                            2
-                        </h3>
-
-                        <span>Awaiting payment</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="billing-summary-card">
-
-                    <div class="billing-summary-icon">
-                        ✓
-                    </div>
-
-                    <div>
-
-                        <p>Paid Bills</p>
-
-                        <h3 id="billingPaidCount">
-                            3
-                        </h3>
-
-                        <span>Completed payments</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="billing-summary-card">
-
-                    <div class="billing-summary-icon">
-                        ৳
-                    </div>
-
-                    <div>
-
-                        <p>Pending Amount</p>
-
-                        <h3 id="billingPendingAmount">
-                            ৳3,000
-                        </h3>
-
-                        <span>Outstanding balance</span>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- FILTER -->
-            <section class="billing-filter-card">
-
-                <div>
-
-                    <h3>
-                        Billing History
-                    </h3>
-
-                    <p>
-                        Review and manage your billing records
-                    </p>
-
-                </div>
-
-
-                <div class="billing-filter-buttons">
-
-                    <button
-                        type="button"
-                        class="billing-filter-btn active"
-                        data-filter="all"
-                    >
-                        All
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="billing-filter-btn"
-                        data-filter="pending"
-                    >
-                        Pending
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="billing-filter-btn"
-                        data-filter="paid"
-                    >
-                        Paid
-                    </button>
-
-                </div>
-
-            </section>
-
-
-            <!-- BILL LIST -->
-            <section class="billing-list" id="billingList">
-
-                <!-- BILL 1 -->
-                <article
-                    class="billing-item-card"
-                    data-status="pending"
-                    data-id="#BILL2081"
-                    data-service="General Consultation"
-                    data-date="10 August 2026"
-                    data-amount="1500"
-                >
-
-                    <div class="billing-item-icon">
-                        C
-                    </div>
-
-
-                    <div class="billing-item-main">
-
-                        <div class="billing-item-top">
-
-                            <div>
-
-                                <h3>
-                                    General Consultation
-                                </h3>
-
-                                <p>
-                                    Bill ID: #BILL2081
-                                </p>
-
-                            </div>
-
-
-                            <span class="billing-status pending">
-                                Pending
-                            </span>
-
-                        </div>
-
-
-                        <div class="billing-item-details">
-
-                            <div>
-
-                                <span>Date</span>
-
-                                <strong>
-                                    10 Aug 2026
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Appointment</span>
-
-                                <strong>
-                                    #APT2041
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Service</span>
-
-                                <strong>
-                                    Consultation
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Amount</span>
-
-                                <strong class="billing-amount">
-                                    ৳1,500
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="billing-item-actions">
-
-                            <button
-                                type="button"
-                                class="billing-details-btn"
-                            >
-                                View Details
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="billing-pay-btn"
-                            >
-                                Pay Now
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- BILL 2 -->
-                <article
-                    class="billing-item-card"
-                    data-status="pending"
-                    data-id="#BILL2075"
-                    data-service="Laboratory Test"
-                    data-date="08 August 2026"
-                    data-amount="1500"
-                >
-
-                    <div class="billing-item-icon">
-                        LT
-                    </div>
-
-
-                    <div class="billing-item-main">
-
-                        <div class="billing-item-top">
-
-                            <div>
-
-                                <h3>
-                                    Laboratory Test
-                                </h3>
-
-                                <p>
-                                    Bill ID: #BILL2075
-                                </p>
-
-                            </div>
-
-
-                            <span class="billing-status pending">
-                                Pending
-                            </span>
-
-                        </div>
-
-
-                        <div class="billing-item-details">
-
-                            <div>
-
-                                <span>Date</span>
-
-                                <strong>
-                                    08 Aug 2026
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Reference</span>
-
-                                <strong>
-                                    #LTR2056
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Service</span>
-
-                                <strong>
-                                    Laboratory
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Amount</span>
-
-                                <strong class="billing-amount">
-                                    ৳1,500
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="billing-item-actions">
-
-                            <button
-                                type="button"
-                                class="billing-details-btn"
-                            >
-                                View Details
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="billing-pay-btn"
-                            >
-                                Pay Now
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- BILL 3 -->
-                <article
-                    class="billing-item-card"
-                    data-status="paid"
-                    data-id="#BILL2048"
-                    data-service="Follow-up Consultation"
-                    data-date="21 July 2026"
-                    data-amount="1200"
-                >
-
-                    <div class="billing-item-icon">
-                        C
-                    </div>
-
-
-                    <div class="billing-item-main">
-
-                        <div class="billing-item-top">
-
-                            <div>
-
-                                <h3>
-                                    Follow-up Consultation
-                                </h3>
-
-                                <p>
-                                    Bill ID: #BILL2048
-                                </p>
-
-                            </div>
-
-
-                            <span class="billing-status paid">
-                                Paid
-                            </span>
-
-                        </div>
-
-
-                        <div class="billing-item-details">
-
-                            <div>
-
-                                <span>Date</span>
-
-                                <strong>
-                                    21 Jul 2026
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Appointment</span>
-
-                                <strong>
-                                    #APT1987
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Service</span>
-
-                                <strong>
-                                    Consultation
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Amount</span>
-
-                                <strong class="billing-amount">
-                                    ৳1,200
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="billing-item-actions">
-
-                            <button
-                                type="button"
-                                class="billing-details-btn"
-                            >
-                                View Details
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- BILL 4 -->
-                <article
-                    class="billing-item-card"
-                    data-status="paid"
-                    data-id="#BILL2029"
-                    data-service="Routine Check-up"
-                    data-date="08 July 2026"
-                    data-amount="1000"
-                >
-
-                    <div class="billing-item-icon">
-                        C
-                    </div>
-
-
-                    <div class="billing-item-main">
-
-                        <div class="billing-item-top">
-
-                            <div>
-
-                                <h3>
-                                    Routine Check-up
-                                </h3>
-
-                                <p>
-                                    Bill ID: #BILL2029
-                                </p>
-
-                            </div>
-
-
-                            <span class="billing-status paid">
-                                Paid
-                            </span>
-
-                        </div>
-
-
-                        <div class="billing-item-details">
-
-                            <div>
-
-                                <span>Date</span>
-
-                                <strong>
-                                    08 Jul 2026
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Appointment</span>
-
-                                <strong>
-                                    #APT1954
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Service</span>
-
-                                <strong>
-                                    Consultation
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Amount</span>
-
-                                <strong class="billing-amount">
-                                    ৳1,000
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="billing-item-actions">
-
-                            <button
-                                type="button"
-                                class="billing-details-btn"
-                            >
-                                View Details
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- BILL 5 -->
-                <article
-                    class="billing-item-card"
-                    data-status="paid"
-                    data-id="#BILL2017"
-                    data-service="Laboratory Test"
-                    data-date="18 June 2026"
-                    data-amount="1800"
-                >
-
-                    <div class="billing-item-icon">
-                        LT
-                    </div>
-
-
-                    <div class="billing-item-main">
-
-                        <div class="billing-item-top">
-
-                            <div>
-
-                                <h3>
-                                    Laboratory Test
-                                </h3>
-
-                                <p>
-                                    Bill ID: #BILL2017
-                                </p>
-
-                            </div>
-
-
-                            <span class="billing-status paid">
-                                Paid
-                            </span>
-
-                        </div>
-
-
-                        <div class="billing-item-details">
-
-                            <div>
-
-                                <span>Date</span>
-
-                                <strong>
-                                    18 Jun 2026
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Reference</span>
-
-                                <strong>
-                                    #LTR1988
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Service</span>
-
-                                <strong>
-                                    Laboratory
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>Amount</span>
-
-                                <strong class="billing-amount">
-                                    ৳1,800
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="billing-item-actions">
-
-                            <button
-                                type="button"
-                                class="billing-details-btn"
-                            >
-                                View Details
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </section>
-
-
-            <!-- NO RESULTS -->
-            <div
-                class="billing-no-results"
-                id="billingNoResults"
-            >
-
-                <div>
-                    i
-                </div>
-
-                <h3>
-                    No Billing Records Found
-                </h3>
-
-                <p>
-                    No bills are available for the selected status.
+        </header>
+
+        <section class="billing-page-header">
+            <div>
+                <p class="small-title">Billing & Payment Management</p>
+                <h1 id="billingPageTitle">My Bills & Payments</h1>
+                <p id="billingPageDescription">
+                    Review healthcare bills, payment status, and prototype payment records.
                 </p>
-
             </div>
+        </section>
 
+        <section class="billing-summary-grid">
+            <div class="billing-summary-card"><span>Total Bills</span><strong id="billingTotal">0</strong></div>
+            <div class="billing-summary-card"><span>Paid</span><strong id="billingPaid">0</strong></div>
+            <div class="billing-summary-card"><span>Pending</span><strong id="billingPending">0</strong></div>
+            <div class="billing-summary-card"><span>Pending Amount</span><strong id="billingPendingAmount">BDT 0</strong></div>
+        </section>
 
-            <!-- PAYMENT INFORMATION -->
-            <section class="billing-payment-note">
-
-                <div class="billing-payment-note-icon">
-                    i
+        <section class="billing-filter-card">
+            <div class="billing-filter-grid">
+                <div class="billing-field">
+                    <label for="billingSearch">Search Bill</label>
+                    <input type="text" id="billingSearch" placeholder="Search bill ID, service, or patient">
                 </div>
 
-
-                <div>
-
-                    <h3>
-                        Payment Gateway Integration
-                    </h3>
-
-                    <p>
-                        Payments on this prototype are simulated only.
-                        Real transactions will later be processed securely
-                        through an authorized external payment gateway.
-                    </p>
-
+                <div class="billing-field">
+                    <label for="billingStatusFilter">Status</label>
+                    <select id="billingStatusFilter">
+                        <option value="all">All Status</option>
+                        <option value="Paid">Paid</option>
+                        <option value="Pending">Pending</option>
+                    </select>
                 </div>
 
-            </section>
+                <button type="button" class="billing-clear-btn" id="billingClearBtn">Clear</button>
+            </div>
+        </section>
 
+        <section class="billing-list" id="billingList"></section>
+        <div class="billing-empty" id="billingEmpty">No billing record matches the current filter.</div>
 
-            <!-- FOOTER -->
-            <footer class="patient-dashboard-footer">
+        <footer class="patient-dashboard-footer">
+            <p>© 2026 Smart Healthcare and Management with AI System</p>
+        </footer>
+    </main>
+</div>
 
-                <p>
-                    © 2026 Smart Healthcare and Management with AI System
-                </p>
+<div class="payment-modal" id="paymentModal">
+    <div class="payment-modal-card">
+        <h2>Prototype Payment</h2>
+        <p id="paymentText">Select a payment method to complete the prototype payment.</p>
 
-            </footer>
+        <div class="payment-field">
+            <label for="paymentMethod">Payment Method</label>
+            <select id="paymentMethod">
+                <option value="Mobile Banking">Mobile Banking</option>
+                <option value="Card">Card</option>
+                <option value="Cash">Cash</option>
+            </select>
+        </div>
 
-        </main>
-
+        <div class="payment-modal-actions">
+            <button type="button" class="payment-cancel" id="paymentCancel">Cancel</button>
+            <button type="button" class="payment-confirm" id="paymentConfirm">Confirm Payment</button>
+        </div>
     </div>
+</div>
 
+<div class="logout-modal" id="billingLogoutModal">
+    <div class="logout-modal-card">
+        <div class="logout-modal-icon">?</div>
+        <h2>Logout from Account?</h2>
+        <p>Are you sure you want to leave the system?</p>
+        <div class="logout-modal-actions">
+            <button type="button" class="logout-cancel-btn" id="billingCancelLogout">Cancel</button>
+            <button type="button" class="logout-confirm-btn" id="billingConfirmLogout">Logout</button>
+        </div>
+    </div>
+</div>
 
-    <!-- BILL DETAILS MODAL -->
-    <div
-        class="billing-details-modal"
-        id="billingDetailsModal"
-    >
+<script>
+function detectBillingRole() {
+    const ref = document.referrer.toLowerCase();
 
-        <div class="billing-details-modal-card">
+    if (ref.includes("receptionist-dashboard")) {
+        localStorage.setItem("healthcareActiveRole", "receptionist");
+        return "receptionist";
+    }
 
-            <div class="billing-modal-header">
+    if (ref.includes("patient-dashboard") || ref.includes("patient-profile") ||
+        ref.includes("feedback-complaint") || ref.includes("laboratory-results")) {
+        if (localStorage.getItem("healthcareActiveRole") !== "receptionist") {
+            localStorage.setItem("healthcareActiveRole", "patient");
+        }
+    }
 
-                <div>
+    return localStorage.getItem("healthcareActiveRole") || "patient";
+}
 
-                    <p>
-                        Billing Information
-                    </p>
+const billingRole = detectBillingRole();
 
-                    <h2 id="detailsService">
-                        Service
-                    </h2>
+function patientSidebar() {
+    return `
+        <a href="patient-dashboard.html" class="dashboard-menu-link"><span class="menu-icon">D</span>Dashboard</a>
+        <a href="patient-profile.html" class="dashboard-menu-link"><span class="menu-icon">P</span>My Profile</a>
 
-                </div>
-
-
-                <button
-                    type="button"
-                    class="billing-modal-close"
-                    id="billingDetailsClose"
-                >
-                    ×
-                </button>
-
-            </div>
-
-
-            <div class="billing-modal-id">
-
-                <span>
-                    Bill ID
-                </span>
-
-                <strong id="detailsBillId">
-                    -
-                </strong>
-
-            </div>
-
-
-            <div class="billing-modal-grid">
-
-                <div>
-
-                    <span>Patient</span>
-
-                    <strong>
-                        #P1024
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>Billing Date</span>
-
-                    <strong id="detailsDate">
-                        -
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>Service</span>
-
-                    <strong id="detailsServiceName">
-                        -
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>Payment Status</span>
-
-                    <strong id="detailsStatus">
-                        -
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-            <div class="billing-modal-total">
-
-                <span>
-                    Total Amount
-                </span>
-
-                <strong id="detailsAmount">
-                    ৳0
-                </strong>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="billing-modal-done"
-                id="billingDetailsDone"
-            >
-                Done
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">A</span>Appointments</span>
+                <span class="submenu-arrow">▼</span>
             </button>
-
+            <div class="dashboard-submenu">
+                <a href="doctor-availability.html" class="dashboard-submenu-link">Doctor Availability</a>
+                <a href="appointment-booking.html" class="dashboard-submenu-link">Book Appointment</a>
+                <a href="appointment-management.html" class="dashboard-submenu-link">My Appointments</a>
+            </div>
         </div>
 
-    </div>
-
-
-    <!-- PAYMENT MODAL -->
-    <div
-        class="billing-pay-modal"
-        id="billingPayModal"
-    >
-
-        <div class="billing-pay-modal-card">
-
-            <div class="billing-modal-header">
-
-                <div>
-
-                    <p>
-                        Prototype Payment
-                    </p>
-
-                    <h2>
-                        Complete Payment
-                    </h2>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="billing-modal-close"
-                    id="billingPayClose"
-                >
-                    ×
-                </button>
-
-            </div>
-
-
-            <div class="billing-pay-summary">
-
-                <div>
-
-                    <span>Bill ID</span>
-
-                    <strong id="paymentBillId">
-                        -
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>Amount</span>
-
-                    <strong id="paymentAmount">
-                        ৳0
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-            <div class="billing-payment-method">
-
-                <label for="paymentMethod">
-                    Payment Method
-                </label>
-
-                <select id="paymentMethod">
-
-                    <option value="">
-                        Select Payment Method
-                    </option>
-
-                    <option value="card">
-                        Card Payment
-                    </option>
-
-                    <option value="mobile">
-                        Mobile Banking
-                    </option>
-
-                    <option value="gateway">
-                        Online Payment Gateway
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="billing-demo-message">
-
-                <div>
-                    i
-                </div>
-
-                <p>
-                    This is a prototype transaction. Do not enter
-                    real card, bank or mobile financial information.
-                </p>
-
-            </div>
-
-
-            <div
-                class="billing-payment-error"
-                id="billingPaymentError"
-            ></div>
-
-
-            <div class="billing-payment-actions">
-
-                <button
-                    type="button"
-                    class="billing-payment-cancel"
-                    id="billingPaymentCancel"
-                >
-                    Cancel
-                </button>
-
-
-                <button
-                    type="button"
-                    class="billing-payment-confirm"
-                    id="billingPaymentConfirm"
-                >
-                    Confirm Demo Payment
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- SUCCESS MODAL -->
-    <div
-        class="billing-success-modal"
-        id="billingSuccessModal"
-    >
-
-        <div class="billing-success-card">
-
-            <div class="billing-success-icon">
-                ✓
-            </div>
-
-
-            <h2>
-                Payment Successful
-            </h2>
-
-
-            <p>
-                The bill has been marked as paid successfully
-                in this prototype session.
-            </p>
-
-
-            <div class="billing-success-info">
-
-                <span>
-                    Transaction Reference
-                </span>
-
-                <strong id="billingTransactionId">
-                    -
-                </strong>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="billing-success-btn"
-                id="billingSuccessBtn"
-            >
-                Done
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">H</span>Health Services</span>
+                <span class="submenu-arrow">▼</span>
             </button>
-
+            <div class="dashboard-submenu">
+                <a href="ai-symptom-assessment.html" class="dashboard-submenu-link">AI Symptom Assessment</a>
+                <a href="medical-records.html" class="dashboard-submenu-link">Medical Records</a>
+            </div>
         </div>
 
-    </div>
-
-
-    <!-- LOGOUT MODAL -->
-    <div
-        class="logout-modal"
-        id="billingLogoutModal"
-    >
-
-        <div class="logout-modal-card">
-
-            <div class="logout-modal-icon">
-                ?
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">R</span>Reports & Treatment</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="digital-prescription.html" class="dashboard-submenu-link">Prescriptions</a>
+                <a href="laboratory-results.html" class="dashboard-submenu-link">Laboratory Reports</a>
             </div>
-
-
-            <h2>
-                Logout from Account?
-            </h2>
-
-
-            <p>
-                Are you sure you want to leave the Patient Portal?
-            </p>
-
-
-            <div class="logout-modal-actions">
-
-                <button
-                    type="button"
-                    class="logout-cancel-btn"
-                    id="billingCancelLogout"
-                >
-                    Cancel
-                </button>
-
-
-                <button
-                    type="button"
-                    class="logout-confirm-btn"
-                    id="billingConfirmLogout"
-                >
-                    Logout
-                </button>
-
-            </div>
-
         </div>
 
-    </div>
+        <div class="dashboard-menu-group open">
+            <button type="button" class="dashboard-menu-parent active">
+                <span class="menu-parent-left"><span class="menu-icon">S</span>Billing & Support</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="billing-payment.html" class="dashboard-submenu-link active">Billing & Payment</a>
+                <a href="feedback-complaint.html" class="dashboard-submenu-link">Feedback & Complaint</a>
+            </div>
+        </div>
+    `;
+}
 
+function receptionistSidebar() {
+    return `
+        <a href="receptionist-dashboard.html" class="dashboard-menu-link"><span class="menu-icon">D</span>Dashboard</a>
 
-    <script src="../js/billing-payment.js"></script>
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">P</span>Patient Management</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="patient-profile.html" class="dashboard-submenu-link">Patient Profiles</a>
+            </div>
+        </div>
 
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">A</span>Appointments</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="doctor-availability.html" class="dashboard-submenu-link">Doctor Availability</a>
+                <a href="appointment-booking.html" class="dashboard-submenu-link">Book Appointment</a>
+                <a href="appointment-management.html" class="dashboard-submenu-link">Manage Appointments</a>
+            </div>
+        </div>
+
+        <div class="dashboard-menu-group open">
+            <button type="button" class="dashboard-menu-parent active">
+                <span class="menu-parent-left"><span class="menu-icon">B</span>Billing</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="billing-payment.html" class="dashboard-submenu-link active">Billing Information</a>
+                <a href="billing-payment.html" class="dashboard-submenu-link">Payment Status</a>
+            </div>
+        </div>
+    `;
+}
+
+const billingSidebarMenu = document.getElementById("billingSidebarMenu");
+
+if (billingRole === "receptionist") {
+    document.getElementById("billingPortalName").textContent = "Receptionist Portal";
+    document.getElementById("billingTopPortalName").textContent = "Receptionist Portal";
+    document.getElementById("billingRoleAvatar").textContent = "R";
+    document.getElementById("billingRoleName").textContent = "Receptionist";
+    document.getElementById("billingPageTitle").textContent = "Billing Information & Payment Status";
+    document.getElementById("billingPageDescription").textContent =
+        "Review patient billing records and update prototype payment status.";
+    billingSidebarMenu.innerHTML = receptionistSidebar();
+} else {
+    billingSidebarMenu.innerHTML = patientSidebar();
+}
+
+const groups = document.querySelectorAll(".dashboard-menu-group");
+groups.forEach(group => {
+    const btn = group.querySelector(".dashboard-menu-parent");
+    btn.addEventListener("click", () => {
+        groups.forEach(other => {
+            if (other !== group) {
+                other.classList.remove("open");
+                const b = other.querySelector(".dashboard-menu-parent");
+                if (b) b.classList.remove("active");
+            }
+        });
+        group.classList.toggle("open");
+        btn.classList.toggle("active", group.classList.contains("open"));
+    });
+});
+
+const billingSidebar = document.getElementById("billingSidebar");
+document.getElementById("billingMenuToggle").addEventListener("click", () => billingSidebar.classList.toggle("open"));
+
+const defaultBills = [
+    {id:"BILL-3012", patient:"Patient User", service:"General Consultation", date:"2026-08-15", amount:1200, status:"Pending"},
+    {id:"BILL-3004", patient:"Patient User", service:"Laboratory Services", date:"2026-08-08", amount:1800, status:"Paid"},
+    {id:"BILL-2989", patient:"Patient User", service:"Specialist Consultation", date:"2026-07-21", amount:1500, status:"Paid"}
+];
+
+let bills = JSON.parse(localStorage.getItem("prototypeBills"));
+if (!Array.isArray(bills)) {
+    bills = defaultBills;
+    localStorage.setItem("prototypeBills", JSON.stringify(bills));
+}
+
+const billingList = document.getElementById("billingList");
+const billingSearch = document.getElementById("billingSearch");
+const billingStatusFilter = document.getElementById("billingStatusFilter");
+const billingEmpty = document.getElementById("billingEmpty");
+
+function formatBillingDate(value) {
+    return new Date(value + "T00:00:00").toLocaleDateString("en-GB", {
+        day:"2-digit", month:"short", year:"numeric"
+    });
+}
+
+function renderBills() {
+    const q = billingSearch.value.trim().toLowerCase();
+    const status = billingStatusFilter.value;
+
+    const visible = bills.filter(bill => {
+        const text = (bill.id+" "+bill.patient+" "+bill.service).toLowerCase();
+        return text.includes(q) && (status === "all" || bill.status === status);
+    });
+
+    billingList.innerHTML = "";
+
+    visible.forEach(bill => {
+        const card = document.createElement("article");
+        card.className = "billing-card";
+
+        const action = bill.status === "Pending"
+            ? `<button type="button" class="billing-action-btn primary" data-pay="${bill.id}">
+                    ${billingRole === "receptionist" ? "Mark as Paid" : "Pay Now"}
+               </button>`
+            : `<button type="button" class="billing-action-btn secondary" disabled>Paid</button>`;
+
+        card.innerHTML = `
+            <div class="billing-card-top">
+                <div>
+                    <h3>${bill.service}</h3>
+                    <p>Bill ID: ${bill.id}</p>
+                </div>
+                <span class="billing-status ${bill.status.toLowerCase()}">${bill.status}</span>
+            </div>
+
+            <div class="billing-meta">
+                <div><span>Patient</span><strong>${bill.patient}</strong></div>
+                <div><span>Date</span><strong>${formatBillingDate(bill.date)}</strong></div>
+                <div><span>Service</span><strong>${bill.service}</strong></div>
+                <div><span>Status</span><strong>${bill.status}</strong></div>
+            </div>
+
+            <div class="billing-amount">
+                <span>Total Amount</span>
+                <strong>BDT ${bill.amount.toLocaleString()}</strong>
+            </div>
+
+            <div class="billing-actions">
+                <button type="button" class="billing-action-btn secondary">View Receipt</button>
+                ${action}
+            </div>
+        `;
+        billingList.appendChild(card);
+    });
+
+    billingEmpty.style.display = visible.length ? "none" : "block";
+
+    document.getElementById("billingTotal").textContent = bills.length;
+    document.getElementById("billingPaid").textContent = bills.filter(b => b.status === "Paid").length;
+    document.getElementById("billingPending").textContent = bills.filter(b => b.status === "Pending").length;
+
+    const pendingAmount = bills
+        .filter(b => b.status === "Pending")
+        .reduce((sum,b) => sum + b.amount, 0);
+
+    document.getElementById("billingPendingAmount").textContent =
+        "BDT " + pendingAmount.toLocaleString();
+}
+
+billingSearch.addEventListener("input", renderBills);
+billingStatusFilter.addEventListener("change", renderBills);
+document.getElementById("billingClearBtn").addEventListener("click", () => {
+    billingSearch.value = "";
+    billingStatusFilter.value = "all";
+    renderBills();
+});
+
+let selectedBillId = null;
+const paymentModal = document.getElementById("paymentModal");
+
+billingList.addEventListener("click", event => {
+    const btn = event.target.closest("[data-pay]");
+    if (!btn) return;
+    selectedBillId = btn.dataset.pay;
+    const bill = bills.find(b => b.id === selectedBillId);
+    if (!bill) return;
+
+    document.getElementById("paymentText").textContent =
+        billingRole === "receptionist"
+        ? `Mark ${bill.id} as paid in this prototype.`
+        : `Pay BDT ${bill.amount.toLocaleString()} for ${bill.service}.`;
+
+    paymentModal.classList.add("show");
+});
+
+document.getElementById("paymentCancel").addEventListener("click", () => paymentModal.classList.remove("show"));
+document.getElementById("paymentConfirm").addEventListener("click", () => {
+    const bill = bills.find(b => b.id === selectedBillId);
+    if (!bill) return;
+    bill.status = "Paid";
+    bill.paymentMethod = document.getElementById("paymentMethod").value;
+    localStorage.setItem("prototypeBills", JSON.stringify(bills));
+    paymentModal.classList.remove("show");
+    renderBills();
+});
+
+const billingLogoutModal = document.getElementById("billingLogoutModal");
+document.getElementById("billingLogoutBtn").addEventListener("click", () => billingLogoutModal.classList.add("show"));
+document.getElementById("billingCancelLogout").addEventListener("click", () => billingLogoutModal.classList.remove("show"));
+document.getElementById("billingConfirmLogout").addEventListener("click", () => window.location.href = "login.html");
+
+[paymentModal, billingLogoutModal].forEach(modal => {
+    modal.addEventListener("click", event => {
+        if (event.target === modal) modal.classList.remove("show");
+    });
+});
+
+document.querySelectorAll(".dashboard-menu-link,.dashboard-submenu-link").forEach(link => {
+    link.addEventListener("click", () => {
+        if (window.innerWidth <= 900) billingSidebar.classList.remove("open");
+    });
+});
+
+renderBills();
+</script>
 </body>
-
 </html>
