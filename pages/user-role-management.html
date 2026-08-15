@@ -1,1280 +1,552 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>User & Role Management | Smart Healthcare</title>
-
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+
+        /* COLLAPSIBLE SIDEBAR */
+        .dashboard-menu-group { width: 100%; }
+        .dashboard-menu-parent {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #dbe7ec;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+        .dashboard-menu-parent:hover,
+        .dashboard-menu-parent.active {
+            background-color: rgba(255,255,255,0.08);
+            color: #fff;
+        }
+        .menu-parent-left { display:flex; align-items:center; gap:10px; }
+        .submenu-arrow { font-size:9px; transition:transform .25s ease; }
+        .dashboard-menu-group.open .submenu-arrow { transform:rotate(180deg); }
+        .dashboard-submenu {
+            display:none;
+            margin:5px 0 7px 30px;
+            padding-left:13px;
+            border-left:1px solid rgba(255,255,255,.16);
+        }
+        .dashboard-menu-group.open .dashboard-submenu { display:block; }
+        .dashboard-submenu-link {
+            display:block;
+            padding:9px 11px;
+            margin:3px 0;
+            border-radius:7px;
+            color:#b9cbd3;
+            text-decoration:none;
+            font-size:12px;
+            transition:.2s ease;
+        }
+        .dashboard-submenu-link:hover {
+            background-color:rgba(255,255,255,.07);
+            color:#fff;
+        }
+        .dashboard-submenu-link.active {
+            background-color:rgba(255,255,255,.12);
+            color:#fff;
+            font-weight:600;
+        }
+
+        .user-page-header {
+            display:flex; justify-content:space-between; gap:20px; align-items:flex-start;
+            margin:28px 0 22px;
+        }
+        .user-page-header h1 { margin:5px 0 8px; color:#16324f; }
+        .user-page-header p { margin:0; color:#64748b; max-width:780px; line-height:1.6; }
+        .user-add-btn {
+            border:none; padding:11px 16px; border-radius:9px;
+            background:#176cc8; color:#fff; font-weight:600; cursor:pointer;
+        }
+        .user-summary-grid {
+            display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px;
+        }
+        .user-summary-card,.user-filter-card,.user-table-card {
+            background:#fff; border-radius:14px; box-shadow:0 8px 22px rgba(15,23,42,.06);
+        }
+        .user-summary-card { padding:18px; }
+        .user-summary-card span { display:block; color:#64748b; font-size:12px; margin-bottom:5px; }
+        .user-summary-card strong { color:#16324f; font-size:25px; }
+        .user-filter-card { padding:18px; margin-bottom:20px; }
+        .user-filter-grid {
+            display:grid; grid-template-columns:1.5fr 1fr auto; gap:12px; align-items:end;
+        }
+        .user-field label {
+            display:block; margin-bottom:7px; color:#334155; font-size:13px; font-weight:600;
+        }
+        .user-field input,.user-field select {
+            width:100%; min-height:42px; border:1px solid #d8e0e8;
+            border-radius:8px; padding:9px 11px; outline:none; background:#fff;
+        }
+        .user-clear-btn {
+            min-height:42px; padding:0 16px; border:1px solid #d8e0e8; border-radius:8px;
+            background:#fff; color:#475569; cursor:pointer; font-weight:600;
+        }
+        .user-table-card { overflow:hidden; margin-bottom:28px; }
+        .user-table-wrap { overflow-x:auto; }
+        .user-table { width:100%; border-collapse:collapse; min-width:900px; }
+        .user-table th,.user-table td {
+            padding:13px 15px; text-align:left; border-bottom:1px solid #edf1f5; font-size:12px;
+        }
+        .user-table th {
+            background:#f8fafc; color:#64748b; text-transform:uppercase; font-size:10px;
+        }
+        .user-table td { color:#334155; }
+        .user-status {
+            display:inline-flex; padding:6px 9px; border-radius:999px; font-size:10px; font-weight:700;
+        }
+        .user-status.active { background:#e8f8ef; color:#22844b; }
+        .user-status.inactive { background:#fdecec; color:#b42318; }
+        .user-action-btn {
+            min-height:34px; padding:0 10px; border:1px solid #d8e0e8; border-radius:7px;
+            background:#fff; color:#475569; font-size:11px; font-weight:600; cursor:pointer;
+        }
+        .user-empty { display:none; padding:30px; text-align:center; color:#64748b; }
+        .user-modal {
+            position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+            padding:20px; background:rgba(15,23,42,.55); z-index:9999;
+        }
+        .user-modal.show { display:flex; }
+        .user-modal-card {
+            width:min(600px,100%); background:#fff; border-radius:16px; padding:24px;
+            box-shadow:0 20px 50px rgba(15,23,42,.2);
+        }
+        .user-modal-card h2 { margin:0 0 8px; color:#16324f; }
+        .user-modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:13px; }
+        .user-modal-field label {
+            display:block; margin-bottom:6px; color:#334155; font-size:12px; font-weight:600;
+        }
+        .user-modal-field input,.user-modal-field select {
+            width:100%; min-height:42px; border:1px solid #d8e0e8; border-radius:8px; padding:9px 11px;
+        }
+        .user-modal-actions { display:flex; justify-content:flex-end; gap:9px; margin-top:18px; }
+        .user-modal-actions button {
+            min-height:40px; padding:0 16px; border-radius:8px; font-weight:600; cursor:pointer;
+        }
+        .user-cancel { border:1px solid #d8e0e8; background:#fff; color:#475569; }
+        .user-save { border:none; background:#176cc8; color:#fff; }
+        @media(max-width:980px){.user-summary-grid{grid-template-columns:repeat(2,1fr);}}
+        @media(max-width:650px){
+            .user-page-header{flex-direction:column;}
+            .user-summary-grid,.user-filter-grid,.user-modal-grid{grid-template-columns:1fr;}
+            .user-add-btn{width:100%;}
+        }
+    </style>
 </head>
-
 <body class="dashboard-body">
+<div class="dashboard-layout">
 
-    <div class="dashboard-layout">
+    <aside class="dashboard-sidebar" id="userSidebar">
+        <div class="dashboard-sidebar-header">
+            <a href="../index.html" class="dashboard-logo">Smart<span>Healthcare</span></a>
+            <p>Administrator Portal</p>
+        </div>
 
-        <!-- SIDEBAR -->
-        <aside class="dashboard-sidebar" id="userRoleSidebar">
+        <nav class="dashboard-menu">
+            <a href="admin-dashboard.html" class="dashboard-menu-link">
+                <span class="menu-icon">D</span>Dashboard
+            </a>
 
-            <div class="dashboard-sidebar-header">
-
-                <a href="../index.html" class="dashboard-logo">
-                    Smart<span>Healthcare</span>
-                </a>
-
-                <p>Administrator Portal</p>
-
-            </div>
-
-
-            <nav class="dashboard-menu">
-
-                <a href="admin-dashboard.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">D</span>
-                    Dashboard
-
-                </a>
-
-
-                <a href="user-role-management.html"
-                   class="dashboard-menu-link active">
-
-                    <span class="menu-icon">UM</span>
-                    User Management
-
-                </a>
-
-
-                <a href="user-role-management.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">RP</span>
-                    Roles & Permissions
-
-                </a>
-
-
-                <a href="feedback-complaint.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">C</span>
-                    Complaints
-
-                </a>
-
-
-                <a href="feedback-complaint.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">F</span>
-                    Feedback
-
-                </a>
-
-
-                <a href="administrative-monitoring.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">SA</span>
-                    System Activities
-
-                </a>
-
-
-                <a href="administrative-monitoring.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">AL</span>
-                    Audit Logs
-
-                </a>
-
-            </nav>
-
-
-            <div class="dashboard-sidebar-footer">
-
-                <button
-                    type="button"
-                    class="dashboard-logout-btn"
-                    id="userRoleLogoutBtn"
-                >
-                    Logout
+            <div class="dashboard-menu-group open">
+                <button type="button" class="dashboard-menu-parent active">
+                    <span class="menu-parent-left"><span class="menu-icon">U</span>User Management</span>
+                    <span class="submenu-arrow">▼</span>
                 </button>
 
+                <div class="dashboard-submenu">
+                    <a href="user-role-management.html" class="dashboard-submenu-link active">Users & Roles</a>
+                    <a href="user-role-management.html" class="dashboard-submenu-link">Roles & Permissions</a>
+                </div>
             </div>
 
-        </aside>
+            <div class="dashboard-menu-group">
+                <button type="button" class="dashboard-menu-parent">
+                    <span class="menu-parent-left"><span class="menu-icon">F</span>Feedback & Complaints</span>
+                    <span class="submenu-arrow">▼</span>
+                </button>
 
-
-        <!-- MAIN CONTENT -->
-        <main class="dashboard-main">
-
-            <!-- TOPBAR -->
-            <header class="dashboard-topbar">
-
-                <div class="dashboard-topbar-left">
-
-                    <button
-                        type="button"
-                        class="dashboard-menu-toggle"
-                        id="userRoleMenuToggle"
-                        aria-label="Toggle navigation menu"
-                    >
-                        ☰
-                    </button>
-
-
-                    <div>
-
-                        <p>Administrator Portal</p>
-
-                        <h2>User & Role Management</h2>
-
-                    </div>
-
+                <div class="dashboard-submenu">
+                    <a href="feedback-complaint.html" class="dashboard-submenu-link">Complaints</a>
+                    <a href="feedback-complaint.html" class="dashboard-submenu-link">Feedback</a>
                 </div>
+            </div>
 
+            <div class="dashboard-menu-group">
+                <button type="button" class="dashboard-menu-parent">
+                    <span class="menu-parent-left"><span class="menu-icon">S</span>System Monitoring</span>
+                    <span class="submenu-arrow">▼</span>
+                </button>
 
-                <div class="dashboard-user">
-
-                    <div class="dashboard-user-info">
-
-                        <div class="admin-avatar">
-                            AD
-                        </div>
-
-                        <div>
-
-                            <strong>Administrator</strong>
-
-                            <span>System Administrator</span>
-
-                        </div>
-
-                    </div>
-
+                <div class="dashboard-submenu">
+                    <a href="administrative-monitoring.html" class="dashboard-submenu-link">System Activities</a>
+                    <a href="administrative-monitoring.html" class="dashboard-submenu-link">Audit Logs</a>
+                    <a href="administrative-monitoring.html" class="dashboard-submenu-link">System Settings</a>
                 </div>
+            </div>
+        </nav>
 
-            </header>
+        <div class="dashboard-sidebar-footer">
+            <button type="button" class="dashboard-logout-btn" id="userLogoutBtn">Logout</button>
+        </div>
+    </aside>
 
-
-            <!-- PAGE HEADER -->
-            <section class="user-role-header-card">
-
+    <main class="dashboard-main">
+        <header class="dashboard-topbar">
+            <div class="dashboard-topbar-left">
+                <button type="button" class="dashboard-menu-toggle" id="userMenuToggle">☰</button>
                 <div>
-
-                    <p class="small-title">
-                        Access Management
-                    </p>
-
-                    <h1>
-                        Manage System Users & Roles
-                    </h1>
-
-                    <p>
-                        Review registered users, monitor account status
-                        and manage role assignments across the healthcare
-                        management system.
-                    </p>
-
+                    <p>Administrator Portal</p>
+                    <h2>User & Role Management</h2>
                 </div>
+            </div>
 
-
-                <div class="user-role-header-icon">
-                    UR
-                </div>
-
-            </section>
-
-
-            <!-- SUMMARY -->
-            <section class="user-role-summary-grid">
-
-                <div class="user-role-summary-card">
-
-                    <div class="user-role-summary-icon">
-                        U
-                    </div>
-
+            <div class="dashboard-user">
+                <div class="dashboard-notification">3</div>
+                <div class="dashboard-user-info">
+                    <div class="dashboard-user-avatar">A</div>
                     <div>
-
-                        <p>Total Users</p>
-
-                        <h3 id="totalUsersCount">
-                            8
-                        </h3>
-
-                        <span>Registered accounts</span>
-
+                        <strong>Administrator</strong>
+                        <span>User Administration</span>
                     </div>
-
                 </div>
-
-
-                <div class="user-role-summary-card">
-
-                    <div class="user-role-summary-icon">
-                        A
-                    </div>
-
-                    <div>
-
-                        <p>Active</p>
-
-                        <h3 id="activeUsersCount">
-                            7
-                        </h3>
-
-                        <span>Active accounts</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="user-role-summary-card">
-
-                    <div class="user-role-summary-icon">
-                        I
-                    </div>
-
-                    <div>
-
-                        <p>Inactive</p>
-
-                        <h3 id="inactiveUsersCount">
-                            1
-                        </h3>
-
-                        <span>Inactive accounts</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="user-role-summary-card">
-
-                    <div class="user-role-summary-icon">
-                        R
-                    </div>
-
-                    <div>
-
-                        <p>System Roles</p>
-
-                        <h3>
-                            6
-                        </h3>
-
-                        <span>Configured user roles</span>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- ROLE OVERVIEW -->
-            <section class="user-role-overview-card">
-
-                <div class="user-role-overview-heading">
-
-                    <div>
-
-                        <h3>
-                            System Role Overview
-                        </h3>
-
-                        <p>
-                            Main authorized user groups
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="user-role-overview-grid">
-
-                    <div class="user-role-item">
-
-                        <span>P</span>
-
-                        <div>
-
-                            <h4>Patient</h4>
-
-                            <p>
-                                Personal healthcare access
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="user-role-item">
-
-                        <span>DR</span>
-
-                        <div>
-
-                            <h4>Doctor</h4>
-
-                            <p>
-                                Clinical consultation access
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="user-role-item">
-
-                        <span>RC</span>
-
-                        <div>
-
-                            <h4>Receptionist</h4>
-
-                            <p>
-                                Front desk management
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="user-role-item">
-
-                        <span>PH</span>
-
-                        <div>
-
-                            <h4>Pharmacist</h4>
-
-                            <p>
-                                Pharmacy management
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="user-role-item">
-
-                        <span>LT</span>
-
-                        <div>
-
-                            <h4>Lab Technician</h4>
-
-                            <p>
-                                Laboratory management
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="user-role-item">
-
-                        <span>AD</span>
-
-                        <div>
-
-                            <h4>Administrator</h4>
-
-                            <p>
-                                System administration
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- FILTER -->
-            <section class="user-role-filter-card">
-
-                <div class="user-role-search-group">
-
-                    <label for="userSearch">
-                        Search User
-                    </label>
-
-                    <input
-                        type="text"
-                        id="userSearch"
-                        placeholder="Search by user ID or name..."
-                    >
-
-                </div>
-
-
-                <div class="user-role-filter-group">
-
-                    <label for="roleFilter">
-                        Role
-                    </label>
-
-                    <select id="roleFilter">
-
-                        <option value="all">
-                            All Roles
-                        </option>
-
-                        <option value="patient">
-                            Patient
-                        </option>
-
-                        <option value="doctor">
-                            Doctor
-                        </option>
-
-                        <option value="receptionist">
-                            Receptionist
-                        </option>
-
-                        <option value="pharmacist">
-                            Pharmacist
-                        </option>
-
-                        <option value="lab">
-                            Lab Technician
-                        </option>
-
-                        <option value="admin">
-                            Administrator
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="user-role-filter-group">
-
-                    <label for="userStatusFilter">
-                        Status
-                    </label>
-
-                    <select id="userStatusFilter">
-
-                        <option value="all">
-                            All Status
-                        </option>
-
-                        <option value="active">
-                            Active
-                        </option>
-
-                        <option value="inactive">
-                            Inactive
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </section>
-
-
-            <!-- USER TABLE -->
-            <section class="user-role-table-card">
-
-                <div class="user-role-table-heading">
-
-                    <div>
-
-                        <h3>
-                            Registered Users
-                        </h3>
-
-                        <p id="userResultCount">
-                            Showing 8 users
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="user-role-table-wrapper">
-
-                    <table class="user-role-table">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>User ID</th>
-
-                                <th>User</th>
-
-                                <th>Role</th>
-
-                                <th>Account Status</th>
-
-                                <th>Last Activity</th>
-
-                                <th>Action</th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-                            <tr
-                                class="user-management-row"
-                                data-search="p1024 patient 1024"
-                                data-role="patient"
-                                data-status="active"
-                                data-id="P1024"
-                                data-name="Patient #P1024"
-                            >
-
-                                <td>#P1024</td>
-
-                                <td>
-
-                                    <strong>
-                                        Patient #P1024
-                                    </strong>
-
-                                    <span>
-                                        Patient Account
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-role-badge patient">
-                                        Patient
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-status-badge active">
-                                        Active
-                                    </span>
-
-                                </td>
-
-                                <td>11 Aug 2026</td>
-
-                                <td>
-
-                                    <button
-                                        type="button"
-                                        class="user-manage-btn"
-                                    >
-                                        Manage
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-
-                            <tr
-                                class="user-management-row"
-                                data-search="d201 sarah ahmed doctor"
-                                data-role="doctor"
-                                data-status="active"
-                                data-id="D201"
-                                data-name="Dr. Sarah Ahmed"
-                            >
-
-                                <td>#D201</td>
-
-                                <td>
-
-                                    <strong>
-                                        Dr. Sarah Ahmed
-                                    </strong>
-
-                                    <span>
-                                        Medical Professional
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-role-badge doctor">
-                                        Doctor
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-status-badge active">
-                                        Active
-                                    </span>
-
-                                </td>
-
-                                <td>11 Aug 2026</td>
-
-                                <td>
-
-                                    <button
-                                        type="button"
-                                        class="user-manage-btn"
-                                    >
-                                        Manage
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-
-                            <tr
-                                class="user-management-row"
-                                data-search="d202 mahmud hasan doctor"
-                                data-role="doctor"
-                                data-status="active"
-                                data-id="D202"
-                                data-name="Dr. Mahmud Hasan"
-                            >
-
-                                <td>#D202</td>
-
-                                <td>
-
-                                    <strong>
-                                        Dr. Mahmud Hasan
-                                    </strong>
-
-                                    <span>
-                                        Medical Professional
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-role-badge doctor">
-                                        Doctor
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-status-badge active">
-                                        Active
-                                    </span>
-
-                                </td>
-
-                                <td>10 Aug 2026</td>
-
-                                <td>
-
-                                    <button
-                                        type="button"
-                                        class="user-manage-btn"
-                                    >
-                                        Manage
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-
-                            <tr
-                                class="user-management-row"
-                                data-search="r301 receptionist"
-                                data-role="receptionist"
-                                data-status="active"
-                                data-id="R301"
-                                data-name="Receptionist #R301"
-                            >
-
-                                <td>#R301</td>
-
-                                <td>
-
-                                    <strong>
-                                        Receptionist #R301
-                                    </strong>
-
-                                    <span>
-                                        Front Desk Staff
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-role-badge receptionist">
-                                        Receptionist
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-status-badge active">
-                                        Active
-                                    </span>
-
-                                </td>
-
-                                <td>11 Aug 2026</td>
-
-                                <td>
-
-                                    <button
-                                        type="button"
-                                        class="user-manage-btn"
-                                    >
-                                        Manage
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-
-                            <tr
-                                class="user-management-row"
-                                data-search="ph401 pharmacist"
-                                data-role="pharmacist"
-                                data-status="active"
-                                data-id="PH401"
-                                data-name="Pharmacist #PH401"
-                            >
-
-                                <td>#PH401</td>
-
-                                <td>
-
-                                    <strong>
-                                        Pharmacist #PH401
-                                    </strong>
-
-                                    <span>
-                                        Pharmacy Staff
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-role-badge pharmacist">
-                                        Pharmacist
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-status-badge active">
-                                        Active
-                                    </span>
-
-                                </td>
-
-                                <td>11 Aug 2026</td>
-
-                                <td>
-
-                                    <button
-                                        type="button"
-                                        class="user-manage-btn"
-                                    >
-                                        Manage
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-
-                            <tr
-                                class="user-management-row"
-                                data-search="lt501 laboratory technician"
-                                data-role="lab"
-                                data-status="active"
-                                data-id="LT501"
-                                data-name="Lab Technician #LT501"
-                            >
-
-                                <td>#LT501</td>
-
-                                <td>
-
-                                    <strong>
-                                        Lab Technician #LT501
-                                    </strong>
-
-                                    <span>
-                                        Laboratory Staff
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-role-badge lab">
-                                        Lab Technician
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-status-badge active">
-                                        Active
-                                    </span>
-
-                                </td>
-
-                                <td>10 Aug 2026</td>
-
-                                <td>
-
-                                    <button
-                                        type="button"
-                                        class="user-manage-btn"
-                                    >
-                                        Manage
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-
-                            <tr
-                                class="user-management-row"
-                                data-search="p1087 patient 1087"
-                                data-role="patient"
-                                data-status="inactive"
-                                data-id="P1087"
-                                data-name="Patient #P1087"
-                            >
-
-                                <td>#P1087</td>
-
-                                <td>
-
-                                    <strong>
-                                        Patient #P1087
-                                    </strong>
-
-                                    <span>
-                                        Patient Account
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-role-badge patient">
-                                        Patient
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-status-badge inactive">
-                                        Inactive
-                                    </span>
-
-                                </td>
-
-                                <td>03 Aug 2026</td>
-
-                                <td>
-
-                                    <button
-                                        type="button"
-                                        class="user-manage-btn"
-                                    >
-                                        Manage
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-
-                            <tr
-                                class="user-management-row"
-                                data-search="ad001 administrator admin"
-                                data-role="admin"
-                                data-status="active"
-                                data-id="AD001"
-                                data-name="Administrator #AD001"
-                            >
-
-                                <td>#AD001</td>
-
-                                <td>
-
-                                    <strong>
-                                        Administrator #AD001
-                                    </strong>
-
-                                    <span>
-                                        System Administrator
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-role-badge admin">
-                                        Administrator
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="user-status-badge active">
-                                        Active
-                                    </span>
-
-                                </td>
-
-                                <td>11 Aug 2026</td>
-
-                                <td>
-
-                                    <button
-                                        type="button"
-                                        class="user-manage-btn"
-                                    >
-                                        Manage
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-
-                <!-- NO RESULTS -->
-                <div
-                    class="user-role-no-results"
-                    id="userRoleNoResults"
-                >
-
-                    <div>
-                        !
-                    </div>
-
-                    <h3>
-                        No Users Found
-                    </h3>
-
-                    <p>
-                        Try changing your search or user filters.
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- ACCESS NOTE -->
-            <section class="user-role-note-card">
-
-                <div class="user-role-note-icon">
-                    i
-                </div>
-
-
-                <div>
-
-                    <h3>
-                        Role-Based Access Control
-                    </h3>
-
-                    <p>
-                        Each user role should only access authorized
-                        system functions. Permanent role assignments,
-                        permissions and account changes will be enforced
-                        through backend authentication and authorization.
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- FOOTER -->
-            <footer class="patient-dashboard-footer">
-
+            </div>
+        </header>
+
+        <section class="user-page-header">
+            <div>
+                <p class="small-title">User and Role Management</p>
+                <h1>Users, Roles & Permissions</h1>
                 <p>
-                    © 2026 Smart Healthcare and Management with AI System
+                    Review user accounts, assign system roles, and manage prototype account status.
                 </p>
+            </div>
 
-            </footer>
+            <button type="button" class="user-add-btn" id="userAddBtn">Add User</button>
+        </section>
 
-        </main>
+        <section class="user-summary-grid">
+            <div class="user-summary-card"><span>Total Users</span><strong id="userTotal">0</strong></div>
+            <div class="user-summary-card"><span>Patients</span><strong id="userPatients">0</strong></div>
+            <div class="user-summary-card"><span>Staff</span><strong id="userStaff">0</strong></div>
+            <div class="user-summary-card"><span>Inactive</span><strong id="userInactive">0</strong></div>
+        </section>
 
-    </div>
-
-
-    <!-- MANAGE USER MODAL -->
-    <div
-        class="user-manage-modal"
-        id="userManageModal"
-    >
-
-        <div class="user-manage-modal-card">
-
-            <div class="user-manage-modal-header">
-
-                <div>
-
-                    <p>
-                        User Account Management
-                    </p>
-
-                    <h2 id="manageUserName">
-                        User
-                    </h2>
-
+        <section class="user-filter-card">
+            <div class="user-filter-grid">
+                <div class="user-field">
+                    <label for="userSearch">Search User</label>
+                    <input type="text" id="userSearch" placeholder="Search name, email, or role">
                 </div>
 
+                <div class="user-field">
+                    <label for="userRoleFilter">Role</label>
+                    <select id="userRoleFilter">
+                        <option value="all">All Roles</option>
+                        <option value="Patient">Patient</option>
+                        <option value="Doctor">Doctor</option>
+                        <option value="Receptionist">Receptionist</option>
+                        <option value="Pharmacist">Pharmacist</option>
+                        <option value="Lab Technician">Lab Technician</option>
+                        <option value="Administrator">Administrator</option>
+                    </select>
+                </div>
 
-                <button
-                    type="button"
-                    class="user-manage-modal-close"
-                    id="userManageModalClose"
-                >
-                    ×
-                </button>
+                <button type="button" class="user-clear-btn" id="userClearBtn">Clear</button>
+            </div>
+        </section>
 
+        <section class="user-table-card">
+            <div class="user-table-wrap">
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Account ID</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody"></tbody>
+                </table>
             </div>
 
+            <div class="user-empty" id="userEmpty">No user matches the current filter.</div>
+        </section>
 
-            <div class="user-manage-id-card">
+        <footer class="patient-dashboard-footer">
+            <p>© 2026 Smart Healthcare and Management with AI System</p>
+        </footer>
+    </main>
+</div>
 
-                <span>
-                    User ID
-                </span>
+<div class="user-modal" id="userModal">
+    <div class="user-modal-card">
+        <h2 id="userModalTitle">Add User</h2>
 
-                <strong id="manageUserId">
-                    -
-                </strong>
-
+        <div class="user-modal-grid">
+            <div class="user-modal-field">
+                <label for="userNameInput">Name</label>
+                <input type="text" id="userNameInput">
             </div>
 
+            <div class="user-modal-field">
+                <label for="userEmailInput">Email</label>
+                <input type="email" id="userEmailInput">
+            </div>
 
-            <div class="user-manage-form-group">
-
-                <label for="manageUserRole">
-                    Assigned Role
-                </label>
-
-                <select id="manageUserRole">
-
-                    <option value="patient">
-                        Patient
-                    </option>
-
-                    <option value="doctor">
-                        Doctor
-                    </option>
-
-                    <option value="receptionist">
-                        Receptionist
-                    </option>
-
-                    <option value="pharmacist">
-                        Pharmacist
-                    </option>
-
-                    <option value="lab">
-                        Lab Technician
-                    </option>
-
-                    <option value="admin">
-                        Administrator
-                    </option>
-
+            <div class="user-modal-field">
+                <label for="userRoleInput">Role</label>
+                <select id="userRoleInput">
+                    <option value="Patient">Patient</option>
+                    <option value="Doctor">Doctor</option>
+                    <option value="Receptionist">Receptionist</option>
+                    <option value="Pharmacist">Pharmacist</option>
+                    <option value="Lab Technician">Lab Technician</option>
+                    <option value="Administrator">Administrator</option>
                 </select>
-
             </div>
 
-
-            <div class="user-manage-form-group">
-
-                <label for="manageUserStatus">
-                    Account Status
-                </label>
-
-                <select id="manageUserStatus">
-
-                    <option value="active">
-                        Active
-                    </option>
-
-                    <option value="inactive">
-                        Inactive
-                    </option>
-
+            <div class="user-modal-field">
+                <label for="userStatusInput">Status</label>
+                <select id="userStatusInput">
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
                 </select>
-
             </div>
-
-
-            <div
-                class="user-manage-error"
-                id="userManageError"
-            ></div>
-
-
-            <div class="user-manage-modal-actions">
-
-                <button
-                    type="button"
-                    class="user-manage-cancel-btn"
-                    id="userManageCancelBtn"
-                >
-                    Cancel
-                </button>
-
-
-                <button
-                    type="button"
-                    class="user-manage-save-btn"
-                    id="userManageSaveBtn"
-                >
-                    Save Changes
-                </button>
-
-            </div>
-
         </div>
 
-    </div>
-
-
-    <!-- SUCCESS MODAL -->
-    <div
-        class="user-role-success-modal"
-        id="userRoleSuccessModal"
-    >
-
-        <div class="user-role-success-card">
-
-            <div class="user-role-success-icon">
-                ✓
-            </div>
-
-
-            <h2>
-                User Updated
-            </h2>
-
-
-            <p>
-                The user role and account status have been updated
-                successfully in this prototype session.
-            </p>
-
-
-            <button
-                type="button"
-                class="user-role-success-btn"
-                id="userRoleSuccessBtn"
-            >
-                Done
-            </button>
-
+        <div class="user-modal-actions">
+            <button type="button" class="user-cancel" id="userModalCancel">Cancel</button>
+            <button type="button" class="user-save" id="userModalSave">Save User</button>
         </div>
-
     </div>
+</div>
 
+<div class="logout-modal" id="userLogoutModal">
+    <div class="logout-modal-card">
+        <div class="logout-modal-icon">?</div>
+        <h2>Logout from Account?</h2>
+        <p>Are you sure you want to leave the Administrator Portal?</p>
 
-    <!-- LOGOUT MODAL -->
-    <div
-        class="logout-modal"
-        id="userRoleLogoutModal"
-    >
-
-        <div class="logout-modal-card">
-
-            <div class="logout-modal-icon">
-                ?
-            </div>
-
-
-            <h2>
-                Logout from Account?
-            </h2>
-
-
-            <p>
-                Are you sure you want to leave the Administrator Portal?
-            </p>
-
-
-            <div class="logout-modal-actions">
-
-                <button
-                    type="button"
-                    class="logout-cancel-btn"
-                    id="userRoleCancelLogout"
-                >
-                    Cancel
-                </button>
-
-
-                <button
-                    type="button"
-                    class="logout-confirm-btn"
-                    id="userRoleConfirmLogout"
-                >
-                    Logout
-                </button>
-
-            </div>
-
+        <div class="logout-modal-actions">
+            <button type="button" class="logout-cancel-btn" id="userCancelLogout">Cancel</button>
+            <button type="button" class="logout-confirm-btn" id="userConfirmLogout">Logout</button>
         </div>
-
     </div>
+</div>
 
+<script>
+localStorage.setItem("healthcareActiveRole", "admin");
 
-    <script src="../js/user-role-management.js"></script>
+const groups = document.querySelectorAll(".dashboard-menu-group");
 
+groups.forEach(group => {
+    const button = group.querySelector(".dashboard-menu-parent");
+
+    button.addEventListener("click", () => {
+        groups.forEach(other => {
+            if (other !== group) {
+                other.classList.remove("open");
+                const otherButton = other.querySelector(".dashboard-menu-parent");
+                if (otherButton) otherButton.classList.remove("active");
+            }
+        });
+
+        group.classList.toggle("open");
+        button.classList.toggle("active", group.classList.contains("open"));
+    });
+});
+
+const userSidebar = document.getElementById("userSidebar");
+
+document.getElementById("userMenuToggle").addEventListener("click", () => {
+    userSidebar.classList.toggle("open");
+});
+
+const defaultUsers = [
+    {id:"USR-1001", name:"Patient User", email:"patient@example.com", role:"Patient", status:"Active"},
+    {id:"USR-1002", name:"Dr. Sarah Ahmed", email:"sarah@healthcare.com", role:"Doctor", status:"Active"},
+    {id:"USR-1003", name:"Front Desk User", email:"reception@healthcare.com", role:"Receptionist", status:"Active"},
+    {id:"USR-1004", name:"Pharmacy User", email:"pharmacy@healthcare.com", role:"Pharmacist", status:"Active"},
+    {id:"USR-1005", name:"Laboratory User", email:"lab@healthcare.com", role:"Lab Technician", status:"Active"},
+    {id:"USR-1006", name:"Admin User", email:"admin@healthcare.com", role:"Administrator", status:"Active"},
+    {id:"USR-1007", name:"Old Patient", email:"oldpatient@example.com", role:"Patient", status:"Inactive"}
+];
+
+let users = JSON.parse(localStorage.getItem("prototypeUsers"));
+
+if (!Array.isArray(users)) {
+    users = defaultUsers;
+    localStorage.setItem("prototypeUsers", JSON.stringify(users));
+}
+
+const userTableBody = document.getElementById("userTableBody");
+const userSearch = document.getElementById("userSearch");
+const userRoleFilter = document.getElementById("userRoleFilter");
+const userEmpty = document.getElementById("userEmpty");
+
+function renderUsers() {
+    const q = userSearch.value.trim().toLowerCase();
+    const role = userRoleFilter.value;
+
+    const visible = users.filter(user => {
+        const text = (user.name + " " + user.email + " " + user.role).toLowerCase();
+        return text.includes(q) && (role === "all" || user.role === role);
+    });
+
+    userTableBody.innerHTML = "";
+
+    visible.forEach(user => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td><strong>${user.name}</strong></td>
+            <td>${user.email}</td>
+            <td>${user.role}</td>
+            <td>${user.id}</td>
+            <td><span class="user-status ${user.status.toLowerCase()}">${user.status}</span></td>
+            <td>
+                <button type="button" class="user-action-btn" data-edit="${user.id}">Edit</button>
+            </td>
+        `;
+
+        userTableBody.appendChild(row);
+    });
+
+    userEmpty.style.display = visible.length ? "none" : "block";
+
+    document.getElementById("userTotal").textContent = users.length;
+    document.getElementById("userPatients").textContent =
+        users.filter(user => user.role === "Patient").length;
+    document.getElementById("userStaff").textContent =
+        users.filter(user => user.role !== "Patient").length;
+    document.getElementById("userInactive").textContent =
+        users.filter(user => user.status === "Inactive").length;
+}
+
+userSearch.addEventListener("input", renderUsers);
+userRoleFilter.addEventListener("change", renderUsers);
+
+document.getElementById("userClearBtn").addEventListener("click", () => {
+    userSearch.value = "";
+    userRoleFilter.value = "all";
+    renderUsers();
+});
+
+const userModal = document.getElementById("userModal");
+let editingUserId = null;
+
+function openUserModal(user = null) {
+    editingUserId = user ? user.id : null;
+
+    document.getElementById("userModalTitle").textContent =
+        user ? "Edit User" : "Add User";
+
+    document.getElementById("userNameInput").value =
+        user ? user.name : "";
+
+    document.getElementById("userEmailInput").value =
+        user ? user.email : "";
+
+    document.getElementById("userRoleInput").value =
+        user ? user.role : "Patient";
+
+    document.getElementById("userStatusInput").value =
+        user ? user.status : "Active";
+
+    userModal.classList.add("show");
+}
+
+document.getElementById("userAddBtn").addEventListener("click", () => {
+    openUserModal();
+});
+
+userTableBody.addEventListener("click", event => {
+    const button = event.target.closest("[data-edit]");
+    if (!button) return;
+
+    const user = users.find(item => item.id === button.dataset.edit);
+
+    if (user) openUserModal(user);
+});
+
+document.getElementById("userModalCancel").addEventListener("click", () => {
+    userModal.classList.remove("show");
+});
+
+document.getElementById("userModalSave").addEventListener("click", () => {
+    const name = document.getElementById("userNameInput").value.trim();
+    const email = document.getElementById("userEmailInput").value.trim();
+    const role = document.getElementById("userRoleInput").value;
+    const status = document.getElementById("userStatusInput").value;
+
+    if (!name || !email) return;
+
+    if (editingUserId) {
+        const user = users.find(item => item.id === editingUserId);
+
+        if (user) {
+            user.name = name;
+            user.email = email;
+            user.role = role;
+            user.status = status;
+        }
+    } else {
+        users.unshift({
+            id: "USR-" + String(Date.now()).slice(-4),
+            name,
+            email,
+            role,
+            status
+        });
+    }
+
+    localStorage.setItem("prototypeUsers", JSON.stringify(users));
+
+    userModal.classList.remove("show");
+    renderUsers();
+});
+
+const logoutModal = document.getElementById("userLogoutModal");
+
+document.getElementById("userLogoutBtn").addEventListener("click", () => {
+    logoutModal.classList.add("show");
+});
+
+document.getElementById("userCancelLogout").addEventListener("click", () => {
+    logoutModal.classList.remove("show");
+});
+
+document.getElementById("userConfirmLogout").addEventListener("click", () => {
+    window.location.href = "login.html";
+});
+
+[userModal, logoutModal].forEach(modal => {
+    modal.addEventListener("click", event => {
+        if (event.target === modal) modal.classList.remove("show");
+    });
+});
+
+document.querySelectorAll(".dashboard-menu-link,.dashboard-submenu-link").forEach(link => {
+    link.addEventListener("click", () => {
+        if (window.innerWidth <= 900) userSidebar.classList.remove("open");
+    });
+});
+
+renderUsers();
+</script>
 </body>
-
 </html>
