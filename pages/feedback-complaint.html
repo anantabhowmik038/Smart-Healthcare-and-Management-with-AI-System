@@ -1,1040 +1,531 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Feedback & Complaint | Smart Healthcare</title>
-
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+
+        /* COLLAPSIBLE SIDEBAR */
+        .dashboard-menu-group { width: 100%; }
+        .dashboard-menu-parent {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #dbe7ec;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+        .dashboard-menu-parent:hover,
+        .dashboard-menu-parent.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+        .menu-parent-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .submenu-arrow {
+            font-size: 9px;
+            transition: transform 0.25s ease;
+        }
+        .dashboard-menu-group.open .submenu-arrow { transform: rotate(180deg); }
+        .dashboard-submenu {
+            display: none;
+            margin: 5px 0 7px 30px;
+            padding-left: 13px;
+            border-left: 1px solid rgba(255,255,255,0.16);
+        }
+        .dashboard-menu-group.open .dashboard-submenu { display: block; }
+        .dashboard-submenu-link {
+            display: block;
+            padding: 9px 11px;
+            margin: 3px 0;
+            border-radius: 7px;
+            color: #b9cbd3;
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.2s ease;
+        }
+        .dashboard-submenu-link:hover {
+            background-color: rgba(255,255,255,0.07);
+            color: #ffffff;
+        }
+        .dashboard-submenu-link.active {
+            background-color: rgba(255,255,255,0.12);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .feedback-page-header {
+            margin:28px 0 22px;
+        }
+        .feedback-page-header h1 { margin:5px 0 8px; color:#16324f; }
+        .feedback-page-header p { margin:0; color:#64748b; line-height:1.6; max-width:780px; }
+        .feedback-layout {
+            display:grid; grid-template-columns:minmax(0,1.3fr) minmax(300px,.8fr);
+            gap:20px; align-items:start;
+        }
+        .feedback-card,.feedback-history-card {
+            background:#fff; border-radius:14px; box-shadow:0 8px 22px rgba(15,23,42,.06);
+        }
+        .feedback-card { padding:22px; }
+        .feedback-card h2,.feedback-history-card h2 { margin:0 0 5px; color:#16324f; }
+        .feedback-card > p,.feedback-history-card > p { margin:0 0 18px; color:#64748b; font-size:13px; line-height:1.6; }
+        .feedback-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        .feedback-field { display:flex; flex-direction:column; gap:7px; }
+        .feedback-field.full { grid-column:1/-1; }
+        .feedback-field label { color:#334155; font-size:12px; font-weight:600; }
+        .feedback-field input,.feedback-field select,.feedback-field textarea {
+            width:100%; border:1px solid #d8e0e8; border-radius:8px; padding:9px 11px; font:inherit; outline:none;
+        }
+        .feedback-field input,.feedback-field select { min-height:42px; }
+        .feedback-field textarea { min-height:115px; resize:vertical; }
+        .feedback-error { min-height:18px; margin:12px 0 0; color:#b42318; font-size:12px; }
+        .feedback-actions { display:flex; justify-content:flex-end; gap:9px; margin-top:14px; }
+        .feedback-actions button {
+            min-height:40px; padding:0 16px; border-radius:8px; font-weight:600; cursor:pointer;
+        }
+        .feedback-reset { border:1px solid #d8e0e8; background:#fff; color:#475569; }
+        .feedback-submit { border:none; background:#176cc8; color:#fff; }
+        .feedback-history-card { padding:20px; }
+        .feedback-history-list { display:grid; gap:12px; }
+        .feedback-history-item {
+            padding:13px; border:1px solid #edf1f5; border-radius:10px; background:#fbfcfe;
+        }
+        .feedback-history-top { display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+        .feedback-history-top strong { color:#334155; font-size:13px; }
+        .feedback-history-top span {
+            padding:5px 8px; border-radius:999px; font-size:10px; font-weight:700;
+            background:#fff6db; color:#9a6b00;
+        }
+        .feedback-history-top span.resolved { background:#e8f8ef; color:#22844b; }
+        .feedback-history-item p { margin:8px 0 0; color:#64748b; font-size:12px; line-height:1.5; }
+        .feedback-admin-btn {
+            margin-top:10px; border:none; border-radius:8px; min-height:34px; padding:0 11px;
+            background:#176cc8; color:#fff; font-size:11px; font-weight:600; cursor:pointer;
+        }
+        .feedback-success {
+            display:none; margin-top:14px; padding:12px 14px; border-radius:9px;
+            background:#e8f8ef; color:#22844b; font-size:12px; font-weight:600;
+        }
+        .feedback-success.show { display:block; }
+        @media(max-width:980px){.feedback-layout{grid-template-columns:1fr;}}
+        @media(max-width:650px){
+            .feedback-grid{grid-template-columns:1fr;}
+            .feedback-field.full{grid-column:auto;}
+            .feedback-actions{flex-direction:column;}
+            .feedback-actions button{width:100%;}
+        }
+    </style>
 </head>
-
 <body class="dashboard-body">
-
-    <div class="dashboard-layout">
-
-        <!-- SIDEBAR -->
-        <aside class="dashboard-sidebar" id="feedbackSidebar">
-
-            <div class="dashboard-sidebar-header">
-
-                <a href="../index.html" class="dashboard-logo">
-                    Smart<span>Healthcare</span>
-                </a>
-
-                <p>Patient Portal</p>
-
-            </div>
-
-
-            <nav class="dashboard-menu">
-
-                <a href="patient-dashboard.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">D</span>
-                    Dashboard
-
-                </a>
-
-
-                <a href="patient-profile.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">P</span>
-                    My Profile
-
-                </a>
-
-
-                <a href="doctor-availability.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">DA</span>
-                    Doctor Availability
-
-                </a>
-
-
-                <a href="appointment-booking.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">BA</span>
-                    Book Appointment
-
-                </a>
-
-
-                <a href="appointment-management.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">A</span>
-                    My Appointments
-
-                </a>
-
-
-                <a href="ai-symptom-assessment.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">AI</span>
-                    AI Symptom Assessment
-
-                </a>
-
-
-                <a href="medical-records.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">MR</span>
-                    Medical Records
-
-                </a>
-
-
-                <a href="billing-payment.html"
-                   class="dashboard-menu-link">
-
-                    <span class="menu-icon">BP</span>
-                    Billing & Payment
-
-                </a>
-
-
-                <a href="feedback-complaint.html"
-                   class="dashboard-menu-link active">
-
-                    <span class="menu-icon">FC</span>
-                    Feedback & Complaint
-
-                </a>
-
-            </nav>
-
-
-            <div class="dashboard-sidebar-footer">
-
-                <button
-                    type="button"
-                    class="dashboard-logout-btn"
-                    id="feedbackLogoutBtn"
-                >
-                    Logout
-                </button>
-
-            </div>
-
-        </aside>
-
-
-        <!-- MAIN CONTENT -->
-        <main class="dashboard-main">
-
-            <!-- TOPBAR -->
-            <header class="dashboard-topbar">
-
-                <div class="dashboard-topbar-left">
-
-                    <button
-                        type="button"
-                        class="dashboard-menu-toggle"
-                        id="feedbackMenuToggle"
-                        aria-label="Toggle navigation menu"
-                    >
-                        ☰
-                    </button>
-
-
-                    <div>
-
-                        <p>Patient Portal</p>
-
-                        <h2>Feedback & Complaint</h2>
-
-                    </div>
-
-                </div>
-
-
-                <div class="dashboard-user">
-
-                    <div class="dashboard-user-info">
-
-                        <div class="dashboard-user-avatar">
-                            P
-                        </div>
-
-                        <div>
-
-                            <strong>Patient</strong>
-
-                            <span>Patient Account</span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </header>
-
-
-            <!-- PAGE HEADER -->
-            <section class="feedback-header-card">
-
+<div class="dashboard-layout">
+
+    <aside class="dashboard-sidebar" id="feedbackSidebar">
+        <div class="dashboard-sidebar-header">
+            <a href="../index.html" class="dashboard-logo">Smart<span>Healthcare</span></a>
+            <p id="feedbackPortalName">Patient Portal</p>
+        </div>
+
+        <nav class="dashboard-menu" id="feedbackSidebarMenu"></nav>
+
+        <div class="dashboard-sidebar-footer">
+            <button type="button" class="dashboard-logout-btn" id="feedbackLogoutBtn">Logout</button>
+        </div>
+    </aside>
+
+    <main class="dashboard-main">
+        <header class="dashboard-topbar">
+            <div class="dashboard-topbar-left">
+                <button type="button" class="dashboard-menu-toggle" id="feedbackMenuToggle">☰</button>
                 <div>
-
-                    <p class="small-title">
-                        Patient Support
-                    </p>
-
-                    <h1>
-                        Share Feedback or Submit a Complaint
-                    </h1>
-
-                    <p>
-                        Help improve healthcare services by providing
-                        feedback or submitting a complaint for
-                        administrative review.
-                    </p>
-
+                    <p id="feedbackTopPortalName">Patient Portal</p>
+                    <h2>Feedback & Complaint</h2>
                 </div>
-
-
-                <div class="feedback-header-icon">
-                    FC
-                </div>
-
-            </section>
-
-
-            <!-- SUMMARY -->
-            <section class="feedback-summary-grid">
-
-                <div class="feedback-summary-card">
-
-                    <div class="feedback-summary-icon">
-                        T
-                    </div>
-
-                    <div>
-
-                        <p>Total Submissions</p>
-
-                        <h3>
-                            4
-                        </h3>
-
-                        <span>Previous records</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="feedback-summary-card">
-
-                    <div class="feedback-summary-icon">
-                        F
-                    </div>
-
-                    <div>
-
-                        <p>Feedback</p>
-
-                        <h3>
-                            2
-                        </h3>
-
-                        <span>Feedback records</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="feedback-summary-card">
-
-                    <div class="feedback-summary-icon">
-                        C
-                    </div>
-
-                    <div>
-
-                        <p>Complaints</p>
-
-                        <h3>
-                            2
-                        </h3>
-
-                        <span>Complaint records</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="feedback-summary-card">
-
-                    <div class="feedback-summary-icon">
-                        R
-                    </div>
-
-                    <div>
-
-                        <p>Resolved</p>
-
-                        <h3>
-                            3
-                        </h3>
-
-                        <span>Reviewed submissions</span>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- FORM LAYOUT -->
-            <section class="feedback-layout">
-
-                <!-- SUBMISSION FORM -->
-                <div class="feedback-form-card">
-
-                    <div class="feedback-section-heading">
-
-                        <div>
-
-                            <h3>
-                                New Submission
-                            </h3>
-
-                            <p>
-                                Complete the information below
-                            </p>
-
-                        </div>
-
-
-                        <span>
-                            01
-                        </span>
-
-                    </div>
-
-
-                    <form id="feedbackForm">
-
-                        <div
-                            class="feedback-error"
-                            id="feedbackError"
-                        ></div>
-
-
-                        <div class="feedback-form-grid">
-
-                            <!-- TYPE -->
-                            <div class="feedback-form-group">
-
-                                <label for="submissionType">
-                                    Submission Type
-                                </label>
-
-                                <select id="submissionType">
-
-                                    <option value="">
-                                        Select Type
-                                    </option>
-
-                                    <option value="feedback">
-                                        Feedback
-                                    </option>
-
-                                    <option value="complaint">
-                                        Complaint
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <!-- CATEGORY -->
-                            <div class="feedback-form-group">
-
-                                <label for="submissionCategory">
-                                    Service Category
-                                </label>
-
-                                <select id="submissionCategory">
-
-                                    <option value="">
-                                        Select Category
-                                    </option>
-
-                                    <option value="appointment">
-                                        Appointment Service
-                                    </option>
-
-                                    <option value="doctor">
-                                        Doctor Consultation
-                                    </option>
-
-                                    <option value="laboratory">
-                                        Laboratory Service
-                                    </option>
-
-                                    <option value="pharmacy">
-                                        Pharmacy Service
-                                    </option>
-
-                                    <option value="billing">
-                                        Billing & Payment
-                                    </option>
-
-                                    <option value="technical">
-                                        Technical Support
-                                    </option>
-
-                                    <option value="other">
-                                        Other
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- FEEDBACK RATING -->
-                        <div
-                            class="feedback-form-group feedback-dynamic-group"
-                            id="feedbackRatingGroup"
-                        >
-
-                            <label for="feedbackRating">
-                                Service Rating
-                            </label>
-
-                            <select id="feedbackRating">
-
-                                <option value="">
-                                    Select Rating
-                                </option>
-
-                                <option value="5">
-                                    5 - Excellent
-                                </option>
-
-                                <option value="4">
-                                    4 - Very Good
-                                </option>
-
-                                <option value="3">
-                                    3 - Good
-                                </option>
-
-                                <option value="2">
-                                    2 - Fair
-                                </option>
-
-                                <option value="1">
-                                    1 - Needs Improvement
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <!-- COMPLAINT PRIORITY -->
-                        <div
-                            class="feedback-form-group feedback-dynamic-group"
-                            id="complaintPriorityGroup"
-                        >
-
-                            <label for="complaintPriority">
-                                Complaint Priority
-                            </label>
-
-                            <select id="complaintPriority">
-
-                                <option value="">
-                                    Select Priority
-                                </option>
-
-                                <option value="normal">
-                                    Normal
-                                </option>
-
-                                <option value="important">
-                                    Important
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <!-- SUBJECT -->
-                        <div class="feedback-form-group">
-
-                            <label for="submissionSubject">
-                                Subject
-                            </label>
-
-                            <input
-                                type="text"
-                                id="submissionSubject"
-                                placeholder="Enter a short subject"
-                            >
-
-                        </div>
-
-
-                        <!-- MESSAGE -->
-                        <div class="feedback-form-group">
-
-                            <label for="submissionMessage">
-                                Description
-                            </label>
-
-                            <textarea
-                                id="submissionMessage"
-                                rows="6"
-                                placeholder="Describe your feedback or complaint clearly..."
-                            ></textarea>
-
-                            <small>
-                                Please provide enough information for review.
-                            </small>
-
-                        </div>
-
-
-                        <!-- REFERENCE -->
-                        <div class="feedback-form-group">
-
-                            <label for="submissionReference">
-                                Related Reference ID
-                            </label>
-
-                            <input
-                                type="text"
-                                id="submissionReference"
-                                placeholder="Optional: Appointment, Bill or Report ID"
-                            >
-
-                        </div>
-
-
-                        <!-- CONFIRMATION -->
-                        <label class="feedback-confirmation">
-
-                            <input
-                                type="checkbox"
-                                id="feedbackConfirmation"
-                            >
-
-                            <span>
-                                I confirm that the information provided
-                                in this submission is accurate.
-                            </span>
-
-                        </label>
-
-
-                        <!-- ACTIONS -->
-                        <div class="feedback-form-actions">
-
-                            <button
-                                type="reset"
-                                class="feedback-reset-btn"
-                                id="feedbackResetBtn"
-                            >
-                                Clear Form
-                            </button>
-
-
-                            <button
-                                type="submit"
-                                class="feedback-submit-btn"
-                            >
-                                Submit
-                            </button>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-
-                <!-- INFORMATION -->
-                <aside class="feedback-info-card">
-
-                    <div class="feedback-info-heading">
-
-                        <h3>
-                            Submission Process
-                        </h3>
-
-                        <p>
-                            What happens after submission
-                        </p>
-
-                    </div>
-
-
-                    <div class="feedback-process-item">
-
-                        <span>
-                            1
-                        </span>
-
-                        <div>
-
-                            <h4>
-                                Submit Information
-                            </h4>
-
-                            <p>
-                                Provide feedback or complaint details.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="feedback-process-line"></div>
-
-
-                    <div class="feedback-process-item">
-
-                        <span>
-                            2
-                        </span>
-
-                        <div>
-
-                            <h4>
-                                Administrative Review
-                            </h4>
-
-                            <p>
-                                The submission is sent for review.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="feedback-process-line"></div>
-
-
-                    <div class="feedback-process-item">
-
-                        <span>
-                            3
-                        </span>
-
-                        <div>
-
-                            <h4>
-                                Status Update
-                            </h4>
-
-                            <p>
-                                Complaint status can be updated after review.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="feedback-info-note">
-
-                        <strong>
-                            Administrative Monitoring
-                        </strong>
-
-                        <p>
-                            Complaints are intended to be reviewed and
-                            resolved by authorized administrative staff.
-                        </p>
-
-                    </div>
-
-                </aside>
-
-            </section>
-
-
-            <!-- HISTORY -->
-            <section class="feedback-history-card">
-
-                <div class="feedback-history-heading">
-
-                    <div>
-
-                        <h3>
-                            Previous Submissions
-                        </h3>
-
-                        <p>
-                            Recent feedback and complaint records
-                        </p>
-
-                    </div>
-
-
-                    <div class="feedback-history-filters">
-
-                        <button
-                            type="button"
-                            class="feedback-history-filter active"
-                            data-filter="all"
-                        >
-                            All
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="feedback-history-filter"
-                            data-filter="feedback"
-                        >
-                            Feedback
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="feedback-history-filter"
-                            data-filter="complaint"
-                        >
-                            Complaint
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div
-                    class="feedback-history-list"
-                    id="feedbackHistoryList"
-                >
-
-                    <!-- RECORD 1 -->
-                    <div
-                        class="feedback-history-row"
-                        data-type="complaint"
-                    >
-
-                        <div class="feedback-history-icon complaint">
-                            C
-                        </div>
-
-
-                        <div class="feedback-history-main">
-
-                            <h4>
-                                Appointment Waiting Time
-                            </h4>
-
-                            <p>
-                                Complaint ID: #CMP1042
-                            </p>
-
-                        </div>
-
-
-                        <span class="feedback-history-date">
-                            07 Aug 2026
-                        </span>
-
-
-                        <span class="feedback-history-status review">
-                            Under Review
-                        </span>
-
-                    </div>
-
-
-                    <!-- RECORD 2 -->
-                    <div
-                        class="feedback-history-row"
-                        data-type="feedback"
-                    >
-
-                        <div class="feedback-history-icon">
-                            F
-                        </div>
-
-
-                        <div class="feedback-history-main">
-
-                            <h4>
-                                Laboratory Service Feedback
-                            </h4>
-
-                            <p>
-                                Feedback ID: #FDB1034
-                            </p>
-
-                        </div>
-
-
-                        <span class="feedback-history-date">
-                            28 Jul 2026
-                        </span>
-
-
-                        <span class="feedback-history-status resolved">
-                            Reviewed
-                        </span>
-
-                    </div>
-
-
-                    <!-- RECORD 3 -->
-                    <div
-                        class="feedback-history-row"
-                        data-type="complaint"
-                    >
-
-                        <div class="feedback-history-icon complaint">
-                            C
-                        </div>
-
-
-                        <div class="feedback-history-main">
-
-                            <h4>
-                                Billing Information Issue
-                            </h4>
-
-                            <p>
-                                Complaint ID: #CMP1018
-                            </p>
-
-                        </div>
-
-
-                        <span class="feedback-history-date">
-                            16 Jul 2026
-                        </span>
-
-
-                        <span class="feedback-history-status resolved">
-                            Resolved
-                        </span>
-
-                    </div>
-
-
-                    <!-- RECORD 4 -->
-                    <div
-                        class="feedback-history-row"
-                        data-type="feedback"
-                    >
-
-                        <div class="feedback-history-icon">
-                            F
-                        </div>
-
-
-                        <div class="feedback-history-main">
-
-                            <h4>
-                                Consultation Service Feedback
-                            </h4>
-
-                            <p>
-                                Feedback ID: #FDB1009
-                            </p>
-
-                        </div>
-
-
-                        <span class="feedback-history-date">
-                            30 Jun 2026
-                        </span>
-
-
-                        <span class="feedback-history-status resolved">
-                            Reviewed
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <!-- NO HISTORY RESULTS -->
-                <div
-                    class="feedback-no-history"
-                    id="feedbackNoHistory"
-                >
-
-                    <p>
-                        No submissions found for this category.
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- NOTE -->
-            <section class="feedback-note-card">
-
-                <div class="feedback-note-icon">
-                    i
-                </div>
-
-
-                <div>
-
-                    <h3>
-                        Prototype Feedback & Complaint Module
-                    </h3>
-
-                    <p>
-                        Submissions on this page are demonstration records.
-                        Permanent complaint tracking, administrator responses
-                        and notification updates will be handled during
-                        backend and database integration.
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- FOOTER -->
-            <footer class="patient-dashboard-footer">
-
-                <p>
-                    © 2026 Smart Healthcare and Management with AI System
-                </p>
-
-            </footer>
-
-        </main>
-
-    </div>
-
-
-    <!-- SUCCESS MODAL -->
-    <div
-        class="feedback-success-modal"
-        id="feedbackSuccessModal"
-    >
-
-        <div class="feedback-success-card">
-
-            <div class="feedback-success-icon">
-                ✓
             </div>
 
+            <div class="dashboard-user">
+                <div class="dashboard-notification">1</div>
+                <div class="dashboard-user-info">
+                    <div class="dashboard-user-avatar" id="feedbackRoleAvatar">P</div>
+                    <div>
+                        <strong id="feedbackRoleName">Patient</strong>
+                        <span>Support Services</span>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-            <h2>
-                Submission Received
-            </h2>
-
-
-            <p id="feedbackSuccessMessage">
-                Your submission has been recorded successfully
-                in this prototype session.
+        <section class="feedback-page-header">
+            <p class="small-title">Feedback, Complaint & Administrative Monitoring</p>
+            <h1 id="feedbackPageTitle">Submit Feedback or Complaint</h1>
+            <p id="feedbackPageDescription">
+                Share feedback, report service issues, or submit a complaint for review.
             </p>
+        </section>
 
+        <div class="feedback-layout">
+            <section class="feedback-card" id="feedbackFormCard">
+                <h2>New Submission</h2>
+                <p>Complete the form below. This prototype stores submissions locally in the browser.</p>
 
-            <div class="feedback-success-reference">
+                <form id="feedbackForm" novalidate>
+                    <div class="feedback-grid">
+                        <div class="feedback-field">
+                            <label for="feedbackType">Type *</label>
+                            <select id="feedbackType">
+                                <option value="">Select Type</option>
+                                <option value="Feedback">Feedback</option>
+                                <option value="Complaint">Complaint</option>
+                            </select>
+                        </div>
 
-                <span>
-                    Reference ID
-                </span>
+                        <div class="feedback-field">
+                            <label for="feedbackCategory">Category *</label>
+                            <select id="feedbackCategory">
+                                <option value="">Select Category</option>
+                                <option value="Appointment">Appointment</option>
+                                <option value="Billing">Billing</option>
+                                <option value="Laboratory">Laboratory</option>
+                                <option value="Pharmacy">Pharmacy</option>
+                                <option value="AI Support">AI Support</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
 
-                <strong id="feedbackReferenceId">
-                    -
-                </strong>
+                        <div class="feedback-field full">
+                            <label for="feedbackSubject">Subject *</label>
+                            <input type="text" id="feedbackSubject" placeholder="Enter a short subject">
+                        </div>
 
-            </div>
+                        <div class="feedback-field full">
+                            <label for="feedbackMessage">Message *</label>
+                            <textarea id="feedbackMessage" placeholder="Describe your feedback or complaint"></textarea>
+                        </div>
+                    </div>
 
+                    <p class="feedback-error" id="feedbackError"></p>
 
-            <button
-                type="button"
-                class="feedback-success-btn"
-                id="feedbackSuccessBtn"
-            >
-                Done
+                    <div class="feedback-actions">
+                        <button type="reset" class="feedback-reset" id="feedbackResetBtn">Clear</button>
+                        <button type="submit" class="feedback-submit">Submit</button>
+                    </div>
+
+                    <div class="feedback-success" id="feedbackSuccess">
+                        Submission saved successfully.
+                    </div>
+                </form>
+            </section>
+
+            <aside class="feedback-history-card">
+                <h2 id="feedbackHistoryTitle">My Recent Submissions</h2>
+                <p id="feedbackHistoryText">Track your recent feedback and complaint status.</p>
+                <div class="feedback-history-list" id="feedbackHistoryList"></div>
+            </aside>
+        </div>
+
+        <footer class="patient-dashboard-footer">
+            <p>© 2026 Smart Healthcare and Management with AI System</p>
+        </footer>
+    </main>
+</div>
+
+<div class="logout-modal" id="feedbackLogoutModal">
+    <div class="logout-modal-card">
+        <div class="logout-modal-icon">?</div>
+        <h2>Logout from Account?</h2>
+        <p>Are you sure you want to leave the system?</p>
+        <div class="logout-modal-actions">
+            <button type="button" class="logout-cancel-btn" id="feedbackCancelLogout">Cancel</button>
+            <button type="button" class="logout-confirm-btn" id="feedbackConfirmLogout">Logout</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function detectFeedbackRole() {
+    const ref = document.referrer.toLowerCase();
+
+    if (ref.includes("admin-dashboard") || ref.includes("administrative-monitoring") ||
+        ref.includes("user-role-management")) {
+        localStorage.setItem("healthcareActiveRole", "admin");
+        return "admin";
+    }
+
+    if (ref.includes("patient-dashboard") || ref.includes("patient-profile") ||
+        ref.includes("billing-payment")) {
+        localStorage.setItem("healthcareActiveRole", "patient");
+        return "patient";
+    }
+
+    return localStorage.getItem("healthcareActiveRole") || "patient";
+}
+
+const feedbackRole = detectFeedbackRole();
+
+function patientSidebar() {
+    return `
+        <a href="patient-dashboard.html" class="dashboard-menu-link"><span class="menu-icon">D</span>Dashboard</a>
+        <a href="patient-profile.html" class="dashboard-menu-link"><span class="menu-icon">P</span>My Profile</a>
+
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">A</span>Appointments</span>
+                <span class="submenu-arrow">▼</span>
             </button>
-
+            <div class="dashboard-submenu">
+                <a href="doctor-availability.html" class="dashboard-submenu-link">Doctor Availability</a>
+                <a href="appointment-booking.html" class="dashboard-submenu-link">Book Appointment</a>
+                <a href="appointment-management.html" class="dashboard-submenu-link">My Appointments</a>
+            </div>
         </div>
 
-    </div>
-
-
-    <!-- LOGOUT MODAL -->
-    <div
-        class="logout-modal"
-        id="feedbackLogoutModal"
-    >
-
-        <div class="logout-modal-card">
-
-            <div class="logout-modal-icon">
-                ?
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">H</span>Health Services</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="ai-symptom-assessment.html" class="dashboard-submenu-link">AI Symptom Assessment</a>
+                <a href="medical-records.html" class="dashboard-submenu-link">Medical Records</a>
             </div>
-
-
-            <h2>
-                Logout from Account?
-            </h2>
-
-
-            <p>
-                Are you sure you want to leave the Patient Portal?
-            </p>
-
-
-            <div class="logout-modal-actions">
-
-                <button
-                    type="button"
-                    class="logout-cancel-btn"
-                    id="feedbackCancelLogout"
-                >
-                    Cancel
-                </button>
-
-
-                <button
-                    type="button"
-                    class="logout-confirm-btn"
-                    id="feedbackConfirmLogout"
-                >
-                    Logout
-                </button>
-
-            </div>
-
         </div>
 
-    </div>
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">R</span>Reports & Treatment</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="digital-prescription.html" class="dashboard-submenu-link">Prescriptions</a>
+                <a href="laboratory-results.html" class="dashboard-submenu-link">Laboratory Reports</a>
+            </div>
+        </div>
 
+        <div class="dashboard-menu-group open">
+            <button type="button" class="dashboard-menu-parent active">
+                <span class="menu-parent-left"><span class="menu-icon">S</span>Billing & Support</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="billing-payment.html" class="dashboard-submenu-link">Billing & Payment</a>
+                <a href="feedback-complaint.html" class="dashboard-submenu-link active">Feedback & Complaint</a>
+            </div>
+        </div>
+    `;
+}
 
-    <script src="../js/feedback-complaint.js"></script>
+function adminSidebar() {
+    return `
+        <a href="admin-dashboard.html" class="dashboard-menu-link"><span class="menu-icon">D</span>Dashboard</a>
 
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">U</span>User Management</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="user-role-management.html" class="dashboard-submenu-link">Users & Roles</a>
+                <a href="user-role-management.html" class="dashboard-submenu-link">Roles & Permissions</a>
+            </div>
+        </div>
+
+        <div class="dashboard-menu-group open">
+            <button type="button" class="dashboard-menu-parent active">
+                <span class="menu-parent-left"><span class="menu-icon">F</span>Feedback & Complaints</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="feedback-complaint.html" class="dashboard-submenu-link active">Complaints</a>
+                <a href="feedback-complaint.html" class="dashboard-submenu-link">Feedback</a>
+            </div>
+        </div>
+
+        <div class="dashboard-menu-group">
+            <button type="button" class="dashboard-menu-parent">
+                <span class="menu-parent-left"><span class="menu-icon">S</span>System Monitoring</span>
+                <span class="submenu-arrow">▼</span>
+            </button>
+            <div class="dashboard-submenu">
+                <a href="administrative-monitoring.html" class="dashboard-submenu-link">System Activities</a>
+                <a href="administrative-monitoring.html" class="dashboard-submenu-link">Audit Logs</a>
+                <a href="administrative-monitoring.html" class="dashboard-submenu-link">System Settings</a>
+            </div>
+        </div>
+    `;
+}
+
+const feedbackSidebarMenu = document.getElementById("feedbackSidebarMenu");
+
+if (feedbackRole === "admin") {
+    document.getElementById("feedbackPortalName").textContent = "Administrator Portal";
+    document.getElementById("feedbackTopPortalName").textContent = "Administrator Portal";
+    document.getElementById("feedbackRoleAvatar").textContent = "A";
+    document.getElementById("feedbackRoleName").textContent = "Administrator";
+    document.getElementById("feedbackPageTitle").textContent = "Feedback & Complaint Review";
+    document.getElementById("feedbackPageDescription").textContent =
+        "Review patient complaints and feedback and update resolution status.";
+    document.getElementById("feedbackFormCard").style.display = "none";
+    document.getElementById("feedbackHistoryTitle").textContent = "All Submissions";
+    document.getElementById("feedbackHistoryText").textContent =
+        "Review and resolve submitted feedback and complaints.";
+    feedbackSidebarMenu.innerHTML = adminSidebar();
+} else {
+    feedbackSidebarMenu.innerHTML = patientSidebar();
+}
+
+const groups = document.querySelectorAll(".dashboard-menu-group");
+groups.forEach(group => {
+    const btn = group.querySelector(".dashboard-menu-parent");
+    btn.addEventListener("click", () => {
+        groups.forEach(other => {
+            if (other !== group) {
+                other.classList.remove("open");
+                const b = other.querySelector(".dashboard-menu-parent");
+                if (b) b.classList.remove("active");
+            }
+        });
+        group.classList.toggle("open");
+        btn.classList.toggle("active", group.classList.contains("open"));
+    });
+});
+
+const feedbackSidebar = document.getElementById("feedbackSidebar");
+document.getElementById("feedbackMenuToggle").addEventListener("click", () => feedbackSidebar.classList.toggle("open"));
+
+const defaultFeedback = [
+    {
+        id:"FB-1002", type:"Feedback", category:"Appointment",
+        subject:"Easy appointment booking", message:"The appointment booking process was simple to use.",
+        status:"Resolved", created:"2026-08-10"
+    },
+    {
+        id:"CP-1001", type:"Complaint", category:"Laboratory",
+        subject:"Report delay", message:"My laboratory report was not available at the expected time.",
+        status:"Pending", created:"2026-08-14"
+    }
+];
+
+let feedbackItems = JSON.parse(localStorage.getItem("prototypeFeedbackItems"));
+if (!Array.isArray(feedbackItems)) {
+    feedbackItems = defaultFeedback;
+    localStorage.setItem("prototypeFeedbackItems", JSON.stringify(feedbackItems));
+}
+
+const feedbackHistoryList = document.getElementById("feedbackHistoryList");
+
+function formatFeedbackDate(value) {
+    return new Date(value + "T00:00:00").toLocaleDateString("en-GB", {
+        day:"2-digit", month:"short", year:"numeric"
+    });
+}
+
+function renderFeedback() {
+    feedbackHistoryList.innerHTML = "";
+
+    feedbackItems.forEach(item => {
+        const box = document.createElement("div");
+        box.className = "feedback-history-item";
+
+        const adminButton = feedbackRole === "admin" && item.status !== "Resolved"
+            ? `<button type="button" class="feedback-admin-btn" data-resolve="${item.id}">Mark Resolved</button>`
+            : "";
+
+        box.innerHTML = `
+            <div class="feedback-history-top">
+                <strong>${item.type} — ${item.subject}</strong>
+                <span class="${item.status === "Resolved" ? "resolved" : ""}">${item.status}</span>
+            </div>
+
+            <p>${item.category} • ${formatFeedbackDate(item.created)}</p>
+            <p>${item.message}</p>
+            ${adminButton}
+        `;
+
+        feedbackHistoryList.appendChild(box);
+    });
+}
+
+if (feedbackRole !== "admin") {
+    const feedbackForm = document.getElementById("feedbackForm");
+    const feedbackError = document.getElementById("feedbackError");
+    const feedbackSuccess = document.getElementById("feedbackSuccess");
+
+    feedbackForm.addEventListener("submit", event => {
+        event.preventDefault();
+        feedbackError.textContent = "";
+        feedbackSuccess.classList.remove("show");
+
+        const type = document.getElementById("feedbackType").value;
+        const category = document.getElementById("feedbackCategory").value;
+        const subject = document.getElementById("feedbackSubject").value.trim();
+        const message = document.getElementById("feedbackMessage").value.trim();
+
+        if (!type || !category || !subject || message.length < 10) {
+            feedbackError.textContent = "Please complete all required fields and provide a clear message.";
+            return;
+        }
+
+        const now = new Date();
+        const date = now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
+
+        feedbackItems.unshift({
+            id:(type === "Complaint" ? "CP-" : "FB-") + String(Date.now()).slice(-4),
+            type, category, subject, message, status:"Pending", created:date
+        });
+
+        localStorage.setItem("prototypeFeedbackItems", JSON.stringify(feedbackItems));
+        feedbackForm.reset();
+        feedbackSuccess.classList.add("show");
+        renderFeedback();
+    });
+
+    document.getElementById("feedbackResetBtn").addEventListener("click", () => {
+        setTimeout(() => {
+            feedbackError.textContent = "";
+            feedbackSuccess.classList.remove("show");
+        }, 0);
+    });
+}
+
+feedbackHistoryList.addEventListener("click", event => {
+    const btn = event.target.closest("[data-resolve]");
+    if (!btn) return;
+
+    const item = feedbackItems.find(x => x.id === btn.dataset.resolve);
+    if (!item) return;
+
+    item.status = "Resolved";
+    localStorage.setItem("prototypeFeedbackItems", JSON.stringify(feedbackItems));
+    renderFeedback();
+});
+
+const feedbackLogoutModal = document.getElementById("feedbackLogoutModal");
+document.getElementById("feedbackLogoutBtn").addEventListener("click", () => feedbackLogoutModal.classList.add("show"));
+document.getElementById("feedbackCancelLogout").addEventListener("click", () => feedbackLogoutModal.classList.remove("show"));
+document.getElementById("feedbackConfirmLogout").addEventListener("click", () => window.location.href = "login.html");
+
+feedbackLogoutModal.addEventListener("click", event => {
+    if (event.target === feedbackLogoutModal) feedbackLogoutModal.classList.remove("show");
+});
+
+document.querySelectorAll(".dashboard-menu-link,.dashboard-submenu-link").forEach(link => {
+    link.addEventListener("click", () => {
+        if (window.innerWidth <= 900) feedbackSidebar.classList.remove("open");
+    });
+});
+
+renderFeedback();
+</script>
 </body>
-
 </html>
